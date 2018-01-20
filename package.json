@@ -1,0 +1,58 @@
+{
+  "name": "validstack",
+  "version": "0.0.1",
+  "description": "Full-stack schema definition, validation, and fake api generation",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js --exec babel-node --inspect",
+    "build": "babel src/ --ignore node_modules,__tests__,__mocks__ --out-dir dist/",
+    "serve": "node dist/index.js",
+    "test": "jest --ci",
+    "test:update": "jest -u",
+    "test:watch": "jest --watch --coverage -u",
+    "test:coverage": "jest --coverage --collectCoverageFrom=src/**/*{.js,.jsx} ",
+    "flow": "flow",
+    "lint": "eslint src --fix ",
+    "precommit": "lint-staged"
+  },
+  "author": "Stevche Radevski <sradevski@live.com>",
+  "license": "MIT",
+  "jest": {
+    "rootDir": "src",
+    "testMatch": [
+      "**/__tests__/**/*.?(m)js?(x)",
+      "**/?(*.)(spec|test).?(m)js?(x)"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "mjs",
+      "node"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,mjs,jsx,json,css}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.2",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-preset-flow": "^6.23.0",
+    "concurrently": "^3.5.0",
+    "eslint": "^4.3.0",
+    "eslint-plugin-flowtype": "^2.39.1",
+    "eslint-plugin-jest": "^21.3.2",
+    "eslint-plugin-prettier": "^2.1.2",
+    "flow-bin": "^0.58.0",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "lint-staged": "^4.0.2",
+    "nodemon": "^1.12.1",
+    "prettier": "^1.5.3"
+  },
+  "dependencies": {}
+}

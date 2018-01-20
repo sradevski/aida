@@ -1,0 +1,50 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest/globals": true
+  },
+  "plugins": [
+    "prettier",
+    "jest",
+    "flowtype"
+  ],
+  "extends": [
+      "eslint:recommended",
+      "plugin:flowtype/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    ecmaFeatures: {
+      impliedStrict: true,
+      experimentalObjectRestSpread: true
+    }
+  },
+  "rules": {
+    "prettier/prettier": ["error", {"singleQuote": true, "trailingComma":"all"}],
+    "no-console": 0,
+    "no-unused-vars": 1,
+    "no-constant-condition": "error",
+    "complexity": "warn",
+    "max-depth": "warn",
+    "max-statements": ["warn", 15],
+    "no-eq-null": "warn",
+    "no-implicit-coercion": "error",
+    "no-return-assign": ["warn", "always"],
+    "no-unmodified-loop-condition": "warn",
+    "no-useless-call": "warn",
+    "no-useless-escape": "warn",
+    "no-useless-return": "warn",
+    "yoda": "warn",
+    "no-duplicate-imports": "warn",
+    "prefer-arrow-callback": "warn",
+    "prefer-template": "warn",
+
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/valid-expect": "error",
+  }
+}
