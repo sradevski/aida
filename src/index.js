@@ -1,9 +1,9 @@
 import validstack from './validstack';
-import fakeApi from './injectors/fakeApi';
+import axiosMockApi from './injectors/axiosMockApi';
 import validate from './injectors/validate';
 
 const config = {
-  injectors: [fakeApi, validate],
+  injectors: [axiosMockApi, validate],
   definitions: {
     location: './definitions',
     blacklist: ['helpers.js'],

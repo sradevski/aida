@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.11.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
@@ -54,5 +55,8 @@
     "nodemon": "^1.12.1",
     "prettier": "^1.5.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.17.1",
+    "faker": "^4.1.0"
+  }
 }

@@ -1,13 +1,10 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-/src/media/storage/*
-!/src/media/storage/testimage.png
-
 # dependencies
 /node_modules
-
 # testing
 /coverage
+src/coverage/
 
 # production
 /build
