@@ -69,6 +69,16 @@ describe('The faker function', () => {
     ).toThrow();
   });
 
+  test("returns undefined for properties that don't have faker specified", () => {
+    expect(
+      populateWithFaker({
+        id: {
+          type: 'string',
+        },
+      }).id,
+    ).toBe(null);
+  });
+
   test('returns the same value for the same passed seed', () => {
     const func = () =>
       populateWithFaker(

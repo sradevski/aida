@@ -75,7 +75,26 @@ function getDefinedRoute(requestConfig, routes) {
     );
   });
 
-  return matchedRoutes.length && routes[matchedRoutes[0]];
+  console.log(getBestMatchedRouteUrl(matchedRoutes));
+  return matchedRoutes.length && routes[getBestMatchedRouteUrl(matchedRoutes)];
+}
+
+function getBestMatchedRouteUrl(matchedRoutes) {
+  const firstTemplateOccurences = matchedRoutes.map(route => {
+    return getTemplatePathSegmentIndex(route);
+  });
+
+  if (firstTemplateOccurences.includes(-1)) {
+    return matchedRoutes[firstTemplateOccurences.indexOf(-1)];
+  }
+
+  const bestMatchIndex = firstTemplateOccurences.indexOf(
+    firstTemplateOccurences.includes(-1)
+      ? -1
+      : Math.max.apply(Math, firstTemplateOccurences),
+  );
+
+  return matchedRoutes[bestMatchIndex];
 }
 
 function doBodiesMatch(requestBody = {}, routeBody = {}) {
@@ -105,14 +124,18 @@ function doPathsMatch(requestPathname, templatePathname) {
   for (let i = 0; i < requestPaths.length; i++) {
     if (
       requestPaths[i] !== templatePaths[i] &&
-      //The encoded characters are { and } respectively.
-      !templatePaths[i].match(/%7B[a-zA-Z0-9]*%7D/)
+      getTemplatePathSegmentIndex(templatePaths[i]) === -1
     ) {
       return false;
     }
   }
 
   return true;
+}
+
+function getTemplatePathSegmentIndex(pathSegment) {
+  //The encoded characters are { and } respectively.
+  return pathSegment.search(/(%7B|{)[a-zA-Z0-9]*(%7D|})/);
 }
 
 function respondToRequest(requestConfig, definedRoute) {

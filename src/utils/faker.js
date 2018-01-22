@@ -24,9 +24,11 @@ export function populateWithFaker(definition, options) {
       populatedObject[field] = getPopulatedArray(property.of, fullOptions);
     } else if (definition[field].type === 'object') {
       populatedObject[field] = populateWithFaker(property.of, fullOptions);
-    } else {
+    } else if (property.faker) {
       const [type, method] = property.faker.split('.');
       populatedObject[field] = faker[type][method]();
+    } else {
+      populatedObject[field] = null;
     }
 
     return populatedObject;

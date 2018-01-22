@@ -51,6 +51,17 @@ describe('The api mocking function GET statement', () => {
     );
   });
 
+  test('with ambiguous path parameter returns data for best match (status 200)', async () => {
+    expect.assertions(1);
+    const response = await axios.get(`${rootUri}/users/details`);
+    expect(Object.keys(response.data)).toEqual(
+      Object.keys({
+        ...definitions.User._raw.response,
+        details: { type: 'string' },
+      }),
+    );
+  });
+
   test('to unexistent url returns status 500', async () => {
     expect.assertions(2);
     try {
