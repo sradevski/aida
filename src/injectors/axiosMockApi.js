@@ -7,7 +7,7 @@ export default function axiosMockApi(definitions) {
   const routes = extractRoutes(definitions);
   const createMockApi = configureMocking(routes);
 
-  return { ...definitions, mocker: createMockApi };
+  return { ...definitions, axiosMockApi: createMockApi };
 }
 
 function extractRoutes(definitions) {
@@ -42,16 +42,17 @@ function mockAxiosCalls(routes) {
   const mock = new mockAdapter(axios);
 
   mock.onAny().reply(requestConfig => {
-    if (!isRequestDefined(requestConfig, routes)) {
+    const definedRoute = getDefinedRoute(requestConfig, routes);
+    if (!definedRoute) {
       //TODO: Request path and method don't exist. Return an error specified in the config as well.
       return [500, {}];
     }
 
-    return respondToRequest(requestConfig, routes);
+    return respondToRequest(requestConfig, definedRoute);
   });
 }
 
-function isRequestDefined(requestConfig, routes) {
+function getDefinedRoute(requestConfig, routes) {
   const method = requestConfig.method.toLowerCase();
   const requestUrl = new URL(requestConfig.url);
 
@@ -67,24 +68,29 @@ function isRequestDefined(requestConfig, routes) {
         routes[routeKey][method].request.query,
       ) &&
       (!['put', 'post'].includes(method) ||
-        doBodiesMatch(requestConfig.data, routes[routeKey].request.body))
+        doBodiesMatch(
+          requestConfig.data,
+          routes[routeKey][method].request.body,
+        ))
     );
   });
 
-  return Boolean(matchedRoutes.length);
+  return matchedRoutes.length && routes[matchedRoutes[0]];
 }
 
-function doBodiesMatch(requestBody, routeBody) {
+function doBodiesMatch(requestBody = {}, routeBody = {}) {
   const routeBodyKeys = Object.keys(routeBody);
 
   return !Object.keys(requestBody).filter(bodyField => {
-    return routeBodyKeys.includes(bodyField);
+    return (
+      !routeBodyKeys.includes(bodyField) && requestBody[bodyField].required
+    );
   }).length;
 }
 
-function doParamsMatch(requestParams, routeParams) {
+function doParamsMatch(requestParams = {}, routeParams = {}) {
   return !Object.keys(routeParams).filter(routeParam => {
-    return requestParams.has(routeParam);
+    return !requestParams.has(routeParam) && routeParams[routeParam].required;
   }).length;
 }
 
@@ -99,7 +105,8 @@ function doPathsMatch(requestPathname, templatePathname) {
   for (let i = 0; i < requestPaths.length; i++) {
     if (
       requestPaths[i] !== templatePaths[i] &&
-      !templatePaths[i].match(/{:([a-zA-Z0-9]*)}/)
+      //The encoded characters are { and } respectively.
+      !templatePaths[i].match(/%7B[a-zA-Z0-9]*%7D/)
     ) {
       return false;
     }
@@ -108,8 +115,8 @@ function doPathsMatch(requestPathname, templatePathname) {
   return true;
 }
 
-function respondToRequest(requestConfig, routes) {
-  const { request, response } = routes[requestConfig.url][requestConfig.method];
+function respondToRequest(requestConfig, definedRoute) {
+  const { request, response } = definedRoute[requestConfig.method];
   if (!response['200']) {
     return [500, {}];
   }
