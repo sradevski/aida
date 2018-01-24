@@ -1,13 +1,13 @@
 import validstack from './validstack';
 import axiosMockApi from './injectors/axiosMockApi';
-import validate from './injectors/validate';
+import swagger from './injectors/swagger';
 
 const config = {
-  injectors: [axiosMockApi, validate],
+  injectors: [axiosMockApi, swagger],
   definitions: {
     location: './definitions',
     blacklist: ['helpers.js'],
   },
 };
 
-console.log(validstack(config));
+console.log(validstack(config).getSwaggerDocs());

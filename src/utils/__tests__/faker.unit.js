@@ -8,9 +8,10 @@ describe('The faker function', () => {
   test('populates a flat object', () => {
     const populatedObject = populateWithFaker({
       id: {
+        type: 'uuid',
         faker: 'random.uuid',
       },
-      name: { faker: 'name.findName' },
+      name: { type: 'string', faker: 'name.findName' },
     });
 
     expect(populatedObject).toHaveProperty('id');
@@ -22,15 +23,10 @@ describe('The faker function', () => {
   test('populates a nested object', () => {
     const populatedObject = populateWithFaker({
       addressbook: {
-        type: 'object',
-        of: {
-          names: {
-            type: 'object',
-            of: {
-              firstName: {
-                faker: 'name.findName',
-              },
-            },
+        names: {
+          firstName: {
+            type: 'string',
+            faker: 'name.findName',
           },
         },
       },
@@ -41,19 +37,26 @@ describe('The faker function', () => {
   });
 
   test('populates an array with nested object', () => {
-    const populatedObject = populateWithFaker({
-      type: 'array',
-      of: {
+    const populatedObject = populateWithFaker([
+      {
         names: {
-          type: 'object',
-          of: {
-            firstName: {
-              faker: 'name.findName',
-            },
+          firstName: {
+            type: 'string',
+            faker: 'name.findName',
           },
+          middleNames: [
+            {
+              firstOne: {
+                type: 'string',
+              },
+              secondOne: {
+                type: 'string',
+              },
+            },
+          ],
         },
       },
-    });
+    ]);
 
     expect(populatedObject).toHaveLength(8);
     expect(populatedObject[0]).toHaveProperty('names.firstName');
@@ -63,6 +66,7 @@ describe('The faker function', () => {
     expect(() =>
       populateWithFaker({
         id: {
+          type: 'uuid',
           faker: 'some.nonfunction',
         },
       }),
@@ -84,6 +88,7 @@ describe('The faker function', () => {
       populateWithFaker(
         {
           id: {
+            type: 'uuid',
             faker: 'random.uuid',
           },
         },

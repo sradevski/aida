@@ -14,7 +14,7 @@ function executeInjectors(config) {
 }
 
 function generateDefinitionsObject(definitionsConfig) {
-  const definitions = {};
+  const definitions = { _raw: {} };
   const { location, blacklist } = definitionsConfig;
   const extendedBlacklist = [...blacklist, '.DS_Store'];
 
@@ -27,11 +27,11 @@ function generateDefinitionsObject(definitionsConfig) {
     const fileContent = require(fileinfo.location).default;
     const [modelName, modelType] = fileinfo.filename.split('.');
 
-    if (!definitions[modelName]) {
-      definitions[modelName] = { _raw: {} };
+    if (!definitions._raw[modelName]) {
+      definitions._raw[modelName] = {};
     }
 
-    definitions[modelName]._raw[modelType] = fileContent;
+    definitions._raw[modelName][modelType] = fileContent;
   });
 
   return definitions;

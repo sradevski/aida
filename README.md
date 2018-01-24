@@ -21,7 +21,7 @@ password	string	password	A hint to UIs to obscure input.
 
 ### Architecture
 
-The main function will read each of the files in each of the folders in definitions, and pipe that object through each of the injectors (validation, databases, etc.). Each of them will return a new superset of the received object, with injected functions (.validate(), .getFlowTypes(), etc.) and objects (.mongooseSchema, etc.). The injectors have to be pure and they should not alter the structure of the raw object as output. The results can also be piped to an output module that can output to a file, console, etc.
+The main function will read each of the files in each of the folders in definitions, and pipe that object through each of the injectors (validation, databases, etc.). Each of them will return a new superset of the received object, with injected functions (.validate(), .getFlowTypes(), etc.) and objects (.mongooseSchema, etc.). The injectors have to be pure and they should not alter the structure of the raw object as output. The results can also be piped to an output module that can output to a file, console, etc. Note that you can depend on a previous injector, but you have to manage the order of execution by yourself for now.
 
 An example object passed to the injectors:
 ```

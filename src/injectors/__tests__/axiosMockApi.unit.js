@@ -17,9 +17,10 @@ let definitions = {};
 beforeAll(() => {
   definitions = validstack(config);
   definitions.axiosMockApi();
-  rootUri = `${definitions.User._raw.endpoints.schemes[0]}://${
-    definitions.User._raw.endpoints.host
-  }${definitions.User._raw.endpoints.basePath}`;
+
+  rootUri = `${definitions._raw.User.endpoints.schemes[0]}://${
+    definitions._raw.User.endpoints.host
+  }${definitions._raw.User.endpoints.basePath}`;
 });
 
 describe('The api mocking function GET statement', () => {
@@ -31,7 +32,7 @@ describe('The api mocking function GET statement', () => {
       },
     });
     expect(Object.keys(response.data[0])).toEqual(
-      Object.keys(definitions.User._raw.response),
+      Object.keys(definitions._raw.User.response),
     );
   });
 
@@ -39,7 +40,7 @@ describe('The api mocking function GET statement', () => {
     expect.assertions(1);
     const response = await axios.get(`${rootUri}/users`);
     expect(Object.keys(response.data[0])).toEqual(
-      Object.keys(definitions.User._raw.response),
+      Object.keys(definitions._raw.User.response),
     );
   });
 
@@ -47,7 +48,7 @@ describe('The api mocking function GET statement', () => {
     expect.assertions(1);
     const response = await axios.get(`${rootUri}/users/12355`);
     expect(Object.keys(response.data)).toEqual(
-      Object.keys(definitions.User._raw.response),
+      Object.keys(definitions._raw.User.response),
     );
   });
 
@@ -56,7 +57,7 @@ describe('The api mocking function GET statement', () => {
     const response = await axios.get(`${rootUri}/users/details`);
     expect(Object.keys(response.data)).toEqual(
       Object.keys({
-        ...definitions.User._raw.response,
+        ...definitions._raw.User.response,
         details: { type: 'string' },
       }),
     );
@@ -82,7 +83,7 @@ describe('The api mocking function POST statement', () => {
     });
 
     expect(Object.keys(response.data)).toEqual(
-      Object.keys(definitions.User._raw.response),
+      Object.keys(definitions._raw.User.response),
     );
   });
 });

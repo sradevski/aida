@@ -2,40 +2,13 @@ import axios from 'axios';
 import mockAdapter from 'axios-mock-adapter';
 import { URL } from 'url';
 import { populateWithFaker } from '../utils/faker';
+import { getFlatRoutes } from '../utils/configParsers';
 
 export default function axiosMockApi(definitions) {
-  const routes = extractRoutes(definitions);
-  const createMockApi = configureMocking(routes);
-
-  return { ...definitions, axiosMockApi: createMockApi };
-}
-
-function extractRoutes(definitions) {
-  return Object.values(definitions).reduce((flatRoutes, definition) => {
-    if (!definition._raw.endpoints) {
-      return flatRoutes;
-    }
-
-    const endpointData = definition._raw.endpoints;
-    const rootUri = `${endpointData.schemes[0]}://${endpointData.host}${
-      endpointData.basePath
-    }`;
-
-    const definitionRoutes = Object.keys(endpointData.paths).reduce(
-      (definitionPaths, path) => {
-        definitionPaths[rootUri + path] = endpointData.paths[path];
-        return definitionPaths;
-      },
-      {},
-    );
-
-    flatRoutes = { ...flatRoutes, ...definitionRoutes };
-    return flatRoutes;
-  }, {});
-}
-
-function configureMocking(routes) {
-  return () => mockAxiosCalls(routes);
+  return {
+    ...definitions,
+    axiosMockApi: () => mockAxiosCalls(getFlatRoutes(definitions)),
+  };
 }
 
 function mockAxiosCalls(routes) {
@@ -75,7 +48,6 @@ function getDefinedRoute(requestConfig, routes) {
     );
   });
 
-  console.log(getBestMatchedRouteUrl(matchedRoutes));
   return matchedRoutes.length && routes[getBestMatchedRouteUrl(matchedRoutes)];
 }
 
@@ -144,8 +116,5 @@ function respondToRequest(requestConfig, definedRoute) {
     return [500, {}];
   }
 
-  if (response['200'].isArray) {
-    return [200, [populateWithFaker(response['200'].body, { seed: 25 })]];
-  }
   return [200, populateWithFaker(response['200'].body, { seed: 123 })];
 }

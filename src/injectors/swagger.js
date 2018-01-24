@@ -1,4 +1,6 @@
-const rootProperties = {
+import { getFlatRoutes, getDefinitionType } from '../utils/configParsers';
+
+const defaultRootProperties = {
   openapi: '3.0.0',
   info: {
     title: 'The title of the application',
@@ -6,24 +8,133 @@ const rootProperties = {
   },
 };
 
+const httpMethods = [
+  'get',
+  'put',
+  'post',
+  'delete',
+  'options',
+  'head',
+  'patch',
+  'trace',
+];
+
 export default function swagger(definitions) {
   return {
     ...definitions,
-    getSwaggerDocs: () => generateSwaggerDocs(definitions),
+    getSwaggerDocs: (rootProps = {}) =>
+      generateSwaggerDocs(definitions, {
+        ...defaultRootProperties,
+        ...rootProps,
+      }),
   };
 }
 
-function generateSwaggerDocs(definitions) {
-  const pathsForDefinitions = Object.keys(definitions).map(definitionKey => ({
-    swagger: getSwaggerForDefinition(definitions[definitionKey]),
-  }));
+function generateSwaggerDocs(definitions, rootProperties) {
+  const swaggerFormattedPaths = getSwaggerForRoutes(
+    getFlatRoutes(definitions, false),
+  );
 
   const swaggerDocs = {
     ...rootProperties,
-    ...pathsForDefinitions,
+    paths: swaggerFormattedPaths,
   };
 
   return swaggerDocs;
 }
 
-function getSwaggerForDefinition(definition) {}
+function getSwaggerForRoutes(routes) {
+  Object.keys(routes).reduce((swaggerRoutes, routeName) => {
+    swaggerRoutes[routeName] = {
+      description: routes[routeName].description,
+      ...getSwaggerForRouteMethods(routes[routeName]),
+    };
+
+    return swaggerRoutes;
+  }, {});
+}
+
+function getSwaggerForRouteMethods(route) {
+  return Object.keys(route)
+    .filter(routeField => httpMethods.includes(routeField))
+    .reduce((methods, methodName) => {
+      methods[methodName] = getSwaggerForMethod(route[methodName]);
+      return methods;
+    }, {});
+}
+
+function getSwaggerForMethod(method) {
+  return {
+    description: method.description,
+    responses: Object.keys(method).reduce((responses, responseCode) => {
+      responses[responseCode] = getSwaggerForResponse(method[responseCode]);
+      return responses;
+    }, {}),
+  };
+}
+
+function getSwaggerForResponse(response) {
+  return {
+    description: response.description,
+    content: {
+      'application/json': {
+        schema: getSwaggerForDefinition(response.body),
+      },
+    },
+  };
+}
+
+function getSwaggerForDefinition(definition) {
+  const defType = getDefinitionType(definition);
+  if (defType === 'array') {
+    return {
+      type: 'array',
+      items: getSwaggerForDefinition(definition[0]),
+    };
+  }
+
+  if (defType === 'object') {
+    return {
+      required: getRequiredChildrenNames(definition),
+      properties: Object.keys(definition).reduce((properties, field) => {
+        properties[field] = getSwaggerForDefinition(definition[field]);
+        return properties;
+      }, {}),
+    };
+  }
+
+  return { type: defType };
+}
+
+function getRequiredChildrenNames(definition) {
+  return Object.keys(definition).filter(child => {
+    const defType = getDefinitionType(definition[child]);
+    if (defType === 'array' || defType === 'object') {
+      return hasRequiredDescendant(definition[child]);
+    }
+
+    return Boolean(definition[child].required);
+  });
+}
+
+//If a definition has a required descendant, it automatically makes it required.
+function hasRequiredDescendant(definition) {
+  const defType = getDefinitionType(definition);
+  if (defType === 'array') {
+    return hasRequiredDescendant(definition[0]);
+  }
+
+  return Object.keys(definition).reduce((hasRequired, field) => {
+    const property = definition[field];
+    const propType = getDefinitionType(property);
+    if (propType === 'array') {
+      hasRequired = hasRequired || hasRequiredDescendant(property[0]);
+    } else if (propType === 'object') {
+      hasRequired = hasRequired || hasRequiredDescendant(property);
+    } else {
+      hasRequired = hasRequired || property.required;
+    }
+
+    return hasRequired;
+  }, false);
+}

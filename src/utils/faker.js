@@ -1,4 +1,5 @@
 import faker from 'faker';
+import { getDefinitionType } from './configParsers';
 
 const defaultOptions = {
   seed: 1,
@@ -11,19 +12,21 @@ const entriesPerArray = 8;
 export function populateWithFaker(definition, options) {
   const fullOptions = { ...defaultOptions, ...options };
   const { locale, seed } = fullOptions;
-
   faker.locale = locale;
   faker.seed(seed);
 
+  if (getDefinitionType(definition) === 'array') {
+    return getPopulatedArray(definition[0], fullOptions);
+  }
+
   return Object.keys(definition).reduce((populatedObject, field) => {
     const property = definition[field];
+    const propType = getDefinitionType(property);
 
-    if (definition.type && definition.type === 'array') {
-      populatedObject = getPopulatedArray(definition.of, fullOptions);
-    } else if (property.type === 'array') {
-      populatedObject[field] = getPopulatedArray(property.of, fullOptions);
-    } else if (definition[field].type === 'object') {
-      populatedObject[field] = populateWithFaker(property.of, fullOptions);
+    if (propType === 'array') {
+      populatedObject[field] = getPopulatedArray(property, fullOptions);
+    } else if (propType === 'object') {
+      populatedObject[field] = populateWithFaker(property, fullOptions);
     } else if (property.faker) {
       const [type, method] = property.faker.split('.');
       populatedObject[field] = faker[type][method]();
