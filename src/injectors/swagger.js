@@ -44,7 +44,7 @@ function generateSwaggerDocs(definitions, rootProperties) {
 }
 
 function getSwaggerForRoutes(routes) {
-  Object.keys(routes).reduce((swaggerRoutes, routeName) => {
+  return Object.keys(routes).reduce((swaggerRoutes, routeName) => {
     swaggerRoutes[routeName] = {
       description: routes[routeName].description,
       ...getSwaggerForRouteMethods(routes[routeName]),
@@ -56,7 +56,7 @@ function getSwaggerForRoutes(routes) {
 
 function getSwaggerForRouteMethods(route) {
   return Object.keys(route)
-    .filter(routeField => httpMethods.includes(routeField))
+    .filter(methodName => httpMethods.includes(methodName))
     .reduce((methods, methodName) => {
       methods[methodName] = getSwaggerForMethod(route[methodName]);
       return methods;
@@ -66,21 +66,32 @@ function getSwaggerForRouteMethods(route) {
 function getSwaggerForMethod(method) {
   return {
     description: method.description,
-    responses: Object.keys(method).reduce((responses, responseCode) => {
-      responses[responseCode] = getSwaggerForResponse(method[responseCode]);
-      return responses;
-    }, {}),
+    responses: Object.keys(method.response).reduce(
+      (responses, responseCode) => {
+        responses[responseCode] = getSwaggerForResponse(
+          method.response[responseCode],
+        );
+        return responses;
+      },
+      {},
+    ),
   };
 }
 
 function getSwaggerForResponse(response) {
+  const responseContent = response.body
+    ? {
+        content: {
+          'application/json': {
+            schema: getSwaggerForDefinition(response.body),
+          },
+        },
+      }
+    : {};
+
   return {
     description: response.description,
-    content: {
-      'application/json': {
-        schema: getSwaggerForDefinition(response.body),
-      },
-    },
+    ...responseContent,
   };
 }
 
@@ -89,7 +100,9 @@ function getSwaggerForDefinition(definition) {
   if (defType === 'array') {
     return {
       type: 'array',
-      items: getSwaggerForDefinition(definition[0]),
+      items: {
+        ...getSwaggerForDefinition(definition[0]),
+      },
     };
   }
 

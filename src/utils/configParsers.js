@@ -1,7 +1,5 @@
 export function getFlatRoutes(definitions, includeRootUri = true) {
   return Object.values(definitions._raw).reduce((flatRoutes, definition) => {
-    console.log(definition);
-
     if (!definition.endpoints) {
       return flatRoutes;
     }
