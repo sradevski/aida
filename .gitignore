@@ -9,6 +9,7 @@ src/coverage/
 # production
 /build
 /dist
+/output
 
 # misc
 .DS_Store

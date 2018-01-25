@@ -1,4 +1,5 @@
 import fs from 'fs';
+import util from 'util';
 import path from 'path';
 
 export function traverseFileSystem(pathToTraverse) {
@@ -20,4 +21,9 @@ export function traverseFileSystem(pathToTraverse) {
 
   recursiveTraversal(resolvedPath);
   return fileslist;
+}
+
+const promiseWrite = util.promisify(fs.writeFile);
+export function outputToFile(content, path) {
+  return promiseWrite(path, content);
 }

@@ -107,8 +107,9 @@ function getSwaggerForDefinition(definition) {
   }
 
   if (defType === 'object') {
+    const requiredChildren = getRequiredChildrenNames(definition);
     return {
-      required: getRequiredChildrenNames(definition),
+      required: requiredChildren.length > 0 ? requiredChildren : undefined,
       properties: Object.keys(definition).reduce((properties, field) => {
         properties[field] = getSwaggerForDefinition(definition[field]);
         return properties;
