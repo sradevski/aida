@@ -1,8 +1,4 @@
-import {
-  getFlatRoutes,
-  getDefinitionType,
-  getHttpMethods,
-} from '../utils/configParsers';
+import { getDefinitionType, getHttpMethods } from '../utils/configParsers';
 
 const defaultRootProperties = {
   openapi: '3.0.0',
@@ -16,17 +12,15 @@ export default function swagger(definitions) {
   return {
     ...definitions,
     getSwaggerDocs: (rootProps = {}) =>
-      generateSwaggerDocs(definitions, {
+      generateSwaggerDocs(definitions.getRoutes(false), {
         ...defaultRootProperties,
         ...rootProps,
       }),
   };
 }
 
-function generateSwaggerDocs(definitions, rootProperties) {
-  const swaggerFormattedPaths = getSwaggerForRoutes(
-    getFlatRoutes(definitions, false),
-  );
+function generateSwaggerDocs(routes, rootProperties) {
+  const swaggerFormattedPaths = getSwaggerForRoutes(routes);
 
   const swaggerDocs = {
     ...rootProperties,

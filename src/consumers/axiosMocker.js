@@ -1,17 +1,9 @@
 import axios from 'axios';
 import mockAdapter from 'axios-mock-adapter';
-import { URL } from 'url';
+import URL from 'url-parse';
 import { populateWithFaker } from '../utils/faker';
-import { getFlatRoutes } from '../utils/configParsers';
 
-export default function axiosMockApi(definitions) {
-  return {
-    ...definitions,
-    axiosMockApi: () => mockAxiosCalls(getFlatRoutes(definitions)),
-  };
-}
-
-function mockAxiosCalls(routes) {
+export default function axiosMockApi(routes) {
   const mock = new mockAdapter(axios);
 
   mock.onAny().reply(requestConfig => {
@@ -27,7 +19,7 @@ function mockAxiosCalls(routes) {
 
 function getDefinedRoute(requestConfig, routes) {
   const method = requestConfig.method.toLowerCase();
-  const requestUrl = new URL(requestConfig.url);
+  const requestUrl = new URL(requestConfig.url, undefined, true);
 
   const matchedRoutes = Object.keys(routes).filter(routeKey => {
     const routeUrl = new URL(routeKey);
@@ -36,10 +28,7 @@ function getDefinedRoute(requestConfig, routes) {
       routes[routeKey][method] &&
       requestUrl.host === routeUrl.host &&
       doPathsMatch(requestUrl.pathname, routeUrl.pathname) &&
-      doParamsMatch(
-        requestUrl.searchParams,
-        routes[routeKey][method].request.query,
-      ) &&
+      doParamsMatch(requestUrl.query, routes[routeKey][method].request.query) &&
       (!['put', 'post'].includes(method) ||
         doBodiesMatch(
           requestConfig.data,
@@ -81,7 +70,7 @@ function doBodiesMatch(requestBody = {}, routeBody = {}) {
 
 function doParamsMatch(requestParams = {}, routeParams = {}) {
   return !Object.keys(routeParams).filter(routeParam => {
-    return !requestParams.has(routeParam) && routeParams[routeParam].required;
+    return !requestParams[routeParam] && routeParams[routeParam].required;
   }).length;
 }
 

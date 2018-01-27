@@ -1,12 +1,12 @@
 import validstack from './validstack';
-import axiosMockApi from './injectors/axiosMockApi';
+import routes from './injectors/routes';
 import swagger from './injectors/swagger';
-import routesList from './injectors/routesList';
+import routesMap from './injectors/routesMap';
 import { outputToFile } from './utils/filesystem';
 
 function main(args) {
   const config = {
-    injectors: [axiosMockApi, swagger, routesList],
+    injectors: [routes, routesMap, swagger],
     definitions: {
       location: args[0],
       blacklist: ['helpers.js'],

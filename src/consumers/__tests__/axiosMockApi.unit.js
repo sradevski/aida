@@ -1,10 +1,11 @@
 import axios from 'axios';
 
 import validstack from '../../validstack';
-import axiosMockApi from '../axiosMockApi';
+import axiosMocker from '../axiosMocker';
+import routes from '../../injectors/routes';
 
 const config = {
-  injectors: [axiosMockApi],
+  injectors: [routes],
   definitions: {
     location: './src/definitions',
     blacklist: ['helpers.js'],
@@ -16,7 +17,7 @@ let definitions = {};
 
 beforeAll(() => {
   definitions = validstack(config);
-  definitions.axiosMockApi();
+  axiosMocker(definitions.getRoutes());
 
   rootUri = `${definitions._raw.User.endpoints.schemes[0]}://${
     definitions._raw.User.endpoints.host
