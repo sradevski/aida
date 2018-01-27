@@ -1,4 +1,8 @@
-import { getFlatRoutes, getDefinitionType } from '../utils/configParsers';
+import {
+  getFlatRoutes,
+  getDefinitionType,
+  getHttpMethods,
+} from '../utils/configParsers';
 
 const defaultRootProperties = {
   openapi: '3.0.0',
@@ -7,17 +11,6 @@ const defaultRootProperties = {
     version: '1.0.0',
   },
 };
-
-const httpMethods = [
-  'get',
-  'put',
-  'post',
-  'delete',
-  'options',
-  'head',
-  'patch',
-  'trace',
-];
 
 export default function swagger(definitions) {
   return {
@@ -55,12 +48,10 @@ function getSwaggerForRoutes(routes) {
 }
 
 function getSwaggerForRouteMethods(route) {
-  return Object.keys(route)
-    .filter(methodName => httpMethods.includes(methodName))
-    .reduce((methods, methodName) => {
-      methods[methodName] = getSwaggerForMethod(route[methodName]);
-      return methods;
-    }, {});
+  return getHttpMethods(route).reduce((methods, methodName) => {
+    methods[methodName] = getSwaggerForMethod(route[methodName]);
+    return methods;
+  }, {});
 }
 
 function getSwaggerForMethod(method) {

@@ -23,7 +23,7 @@ export function traverseFileSystem(pathToTraverse) {
   return fileslist;
 }
 
-const promiseWrite = util.promisify(fs.writeFile);
-export function outputToFile(content, path) {
-  return promiseWrite(path, content);
+export function outputToFile(content, relativePath) {
+  const absolutePath = path.resolve(relativePath);
+  return fs.writeFileSync(absolutePath, content);
 }

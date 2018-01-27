@@ -35,3 +35,20 @@ export function getDefinitionType(definition) {
 
   return definition.type;
 }
+
+const httpMethods = [
+  'get',
+  'put',
+  'post',
+  'delete',
+  'options',
+  'head',
+  'patch',
+  'trace',
+];
+
+export function getHttpMethods(route) {
+  return Object.keys(route).filter(methodName =>
+    httpMethods.includes(methodName),
+  );
+}

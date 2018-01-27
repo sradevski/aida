@@ -6,7 +6,7 @@ import axiosMockApi from '../axiosMockApi';
 const config = {
   injectors: [axiosMockApi],
   definitions: {
-    location: './definitions',
+    location: './src/definitions',
     blacklist: ['helpers.js'],
   },
 };
