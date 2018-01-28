@@ -36,7 +36,7 @@ describe('The faker function', () => {
     expect(typeof populatedObject.addressbook.names.firstName).toBe('string');
   });
 
-  test('populates an array with nested object', () => {
+  test('populates an array with nested complex object', () => {
     const populatedObject = populateWithFaker([
       {
         names: {
@@ -52,6 +52,27 @@ describe('The faker function', () => {
               secondOne: {
                 type: 'string',
               },
+            },
+          ],
+        },
+      },
+    ]);
+
+    expect(populatedObject).toHaveLength(8);
+    expect(populatedObject[0]).toHaveProperty('names.firstName');
+  });
+
+  test('populates an array with nested primitive object', () => {
+    const populatedObject = populateWithFaker([
+      {
+        names: {
+          firstName: {
+            type: 'string',
+            faker: 'name.findName',
+          },
+          middleNames: [
+            {
+              type: 'string',
             },
           ],
         },

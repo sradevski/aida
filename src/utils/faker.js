@@ -14,8 +14,17 @@ export function populateWithFaker(definition, options) {
   faker.locale = locale;
   faker.seed(seed);
 
-  if (getDefinitionType(definition) === 'array') {
+  const defType = getDefinitionType(definition);
+  if (defType === 'array') {
     return getPopulatedArray(definition[0], fullOptions);
+  }
+
+  if (defType !== 'object') {
+    if (definition.faker) {
+      return getFakerValue(definition.faker);
+    }
+
+    return null;
   }
 
   return Object.keys(definition).reduce((populatedObject, field) => {
@@ -27,19 +36,22 @@ export function populateWithFaker(definition, options) {
     } else if (propType === 'object') {
       populatedObject[field] = populateWithFaker(property, fullOptions);
     } else if (property.faker) {
-      if (Array.isArray(property.faker)) {
-        populatedObject[field] =
-          property.faker[Math.floor(Math.random() * property.faker.length)];
-      } else {
-        const [type, method] = property.faker.split('.');
-        populatedObject[field] = faker[type][method]();
-      }
+      populatedObject[field] = getFakerValue(property.faker);
     } else {
       populatedObject[field] = null;
     }
 
     return populatedObject;
   }, {});
+}
+
+function getFakerValue(fakerVal) {
+  if (Array.isArray(fakerVal)) {
+    return fakerVal[Math.floor(Math.random() * fakerVal.length)];
+  } else {
+    const [type, method] = fakerVal.split('.');
+    return faker[type][method]();
+  }
 }
 
 function getPopulatedArray(property, options) {
