@@ -1,27 +1,29 @@
 import axios from 'axios';
-
-import validstack from '../../validstack';
 import axiosMocker from '../axiosMocker';
-import routes from '../../injectors/routes';
+import definitionRoutes from './routes.json';
 
-const config = {
-  injectors: [routes],
-  definitions: {
-    location: './src/definitions',
-    blacklist: ['helpers.js'],
+let rootUri = 'http://localhost:4000/api';
+const expectedResponse = {
+  id: {
+    type: 'string',
+    required: true,
+    faker: 'random.uuid',
+  },
+  name: {
+    type: 'string',
+    required: true,
+    faker: 'name.findName',
+  },
+  somethingelse: {
+    firstfield: {
+      type: 'string',
+      faker: 'name.findName',
+    },
   },
 };
 
-let rootUri = '';
-let definitions = {};
-
 beforeAll(() => {
-  definitions = validstack(config);
-  axiosMocker(definitions.getRoutes());
-
-  rootUri = `${definitions._raw.User.endpoints.schemes[0]}://${
-    definitions._raw.User.endpoints.host
-  }${definitions._raw.User.endpoints.basePath}`;
+  axiosMocker(definitionRoutes);
 });
 
 describe('The api mocking function GET statement', () => {
@@ -33,7 +35,7 @@ describe('The api mocking function GET statement', () => {
       },
     });
     expect(Object.keys(response.data[0])).toEqual(
-      Object.keys(definitions._raw.User.response),
+      Object.keys(expectedResponse),
     );
   });
 
@@ -41,26 +43,24 @@ describe('The api mocking function GET statement', () => {
     expect.assertions(1);
     const response = await axios.get(`${rootUri}/users`);
     expect(Object.keys(response.data[0])).toEqual(
-      Object.keys(definitions._raw.User.response),
+      Object.keys(expectedResponse),
     );
   });
 
   test('with path parameter returns data (status 200)', async () => {
     expect.assertions(1);
     const response = await axios.get(`${rootUri}/users/12355`);
-    expect(Object.keys(response.data)).toEqual(
-      Object.keys(definitions._raw.User.response),
-    );
+    expect(Object.keys(response.data)).toEqual(Object.keys(expectedResponse));
   });
 
   test('with ambiguous path parameter returns data for best match (status 200)', async () => {
     expect.assertions(1);
     const response = await axios.get(`${rootUri}/users/details`);
-    expect(Object.keys(response.data)).toEqual(
+    expect(Object.keys(response.data).sort()).toEqual(
       Object.keys({
-        ...definitions._raw.User.response,
+        ...expectedResponse,
         details: { type: 'string' },
-      }),
+      }).sort(),
     );
   });
 
@@ -83,8 +83,6 @@ describe('The api mocking function POST statement', () => {
       name: 'Flintstone',
     });
 
-    expect(Object.keys(response.data)).toEqual(
-      Object.keys(definitions._raw.User.response),
-    );
+    expect(Object.keys(response.data)).toEqual(Object.keys(expectedResponse));
   });
 });

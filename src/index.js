@@ -5,25 +5,39 @@ import routesMap from './injectors/routesMap';
 import { outputToFile } from './utils/filesystem';
 
 function main(args) {
+  let location = './src/definitions';
+  let outputDestination = './output';
+
+  if (args && args.length >= 2) {
+    location = args[0];
+    outputDestination = args[1];
+  }
+
   const config = {
     injectors: [routes, routesMap, swagger],
     definitions: {
-      location: args[0],
-      blacklist: ['helpers.js'],
+      location,
+      blacklistFiles: ['helpers.js'],
+      blacklistDirectories: ['intermediate'],
     },
   };
 
   const validstackResults = validstack(config);
-
-  outputToFile(
-    JSON.stringify(validstackResults.getSwaggerDocs()),
-    `${args[1]}/swagger.json`,
-  );
-
-  outputToFile(
-    JSON.stringify(validstackResults.getRoutesList()),
-    `${args[1]}/endpoints.json`,
-  );
+  console.log(validstackResults);
+  // outputToFile(
+  //   JSON.stringify(validstackResults.getSwaggerDocs()),
+  //   `${outputDestination}/swagger.json`,
+  // );
+  //
+  // outputToFile(
+  //   JSON.stringify(validstackResults.getRoutes()),
+  //   `${outputDestination}/routes.json`,
+  // );
+  //
+  // outputToFile(
+  //   JSON.stringify(validstackResults.getRoutesMap()),
+  //   `${outputDestination}/endpoints.json`,
+  // );
 }
 
 main(process.argv.slice(2));

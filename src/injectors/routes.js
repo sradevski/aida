@@ -7,7 +7,7 @@ export default function routes(definitions) {
 
 function getFlatRoutes(definitions, includeRootUri = true) {
   return Object.values(definitions._raw).reduce((flatRoutes, definition) => {
-    if (!definition.endpoints) {
+    if (!definition.endpoints || !definition.endpoints.paths) {
       return flatRoutes;
     }
 

@@ -83,6 +83,18 @@ describe('The faker function', () => {
     ).toBe(null);
   });
 
+  test('returns a random element when passed an array of values', () => {
+    const values = ['first', 'second', 'third'];
+    const fakeId = populateWithFaker({
+      id: {
+        type: 'string',
+        faker: values,
+      },
+    }).id;
+
+    expect(values).toContain(fakeId);
+  });
+
   test('returns the same value for the same passed seed', () => {
     const func = () =>
       populateWithFaker(

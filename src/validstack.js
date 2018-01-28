@@ -15,12 +15,16 @@ function executeInjectors(config) {
 
 function generateDefinitionsObject(definitionsConfig) {
   const definitions = { _raw: {} };
-  const { location, blacklist } = definitionsConfig;
-  const extendedBlacklist = [...blacklist, '.DS_Store'];
+  const { location, blacklistFiles, blacklistDirectories } = definitionsConfig;
+  const extendedBlacklist = [...blacklistFiles, '.DS_Store'];
 
   const fileslist = traverseFileSystem(location);
   const filesToUse = fileslist.filter(
-    file => !extendedBlacklist.includes(file.filename),
+    file =>
+      !extendedBlacklist.includes(file.filename) &&
+      blacklistDirectories.findIndex(directoryPath =>
+        file.location.includes(directoryPath),
+      ) === -1,
   );
 
   filesToUse.forEach(fileinfo => {

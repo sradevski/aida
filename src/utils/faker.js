@@ -8,7 +8,6 @@ const defaultOptions = {
 
 const entriesPerArray = 8;
 
-//TODO: recursively iterate object and populate it. If type is array, create 5-10 entries and populate each.
 export function populateWithFaker(definition, options) {
   const fullOptions = { ...defaultOptions, ...options };
   const { locale, seed } = fullOptions;
@@ -28,8 +27,13 @@ export function populateWithFaker(definition, options) {
     } else if (propType === 'object') {
       populatedObject[field] = populateWithFaker(property, fullOptions);
     } else if (property.faker) {
-      const [type, method] = property.faker.split('.');
-      populatedObject[field] = faker[type][method]();
+      if (Array.isArray(property.faker)) {
+        populatedObject[field] =
+          property.faker[Math.floor(Math.random() * property.faker.length)];
+      } else {
+        const [type, method] = property.faker.split('.');
+        populatedObject[field] = faker[type][method]();
+      }
     } else {
       populatedObject[field] = null;
     }

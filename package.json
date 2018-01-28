@@ -2,11 +2,13 @@
   "name": "validstack",
   "version": "0.0.1",
   "description": "Full-stack schema definition, validation, and fake api generation",
+  "repository": "https://bitbucket.org/flencer/validstack",
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.js --exec babel-node --inspect",
     "build": "babel src/ --ignore node_modules,__tests__,__mocks__,coverage --out-dir dist/",
     "serve": "npm run build && node dist/index.js dist/definitions ./output",
+    "generate": "plop",
     "test": "jest --ci",
     "test:update": "jest -u",
     "test:watch": "jest --watch --coverage -u",
@@ -31,7 +33,7 @@
     ]
   },
   "lint-staged": {
-    "src/**/*.{js,mjs,jsx,json,css}": [
+    "src/**/*.{js,mjs,jsx,css}": [
       "eslint --fix",
       "git add"
     ]
@@ -53,6 +55,7 @@
     "jest": "^21.2.1",
     "lint-staged": "^4.0.2",
     "nodemon": "^1.12.1",
+    "plop": "^1.9.1",
     "prettier": "^1.5.3"
   },
   "dependencies": {

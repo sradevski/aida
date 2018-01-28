@@ -1,0 +1,225 @@
+{
+  "http://localhost:4000/api/users": {
+    "get": {
+      "description": "Optional extended description in CommonMark or HTML",
+      "operationId": "getAllUsers",
+      "request": {
+        "query": {
+          "company": {
+            "faker": "random.uuid",
+            "required": false,
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "200": {
+          "body": [
+            {
+              "id": {
+                "faker": "random.uuid",
+                "required": true,
+                "type": "string"
+              },
+              "name": {
+                "faker": "name.findName",
+                "required": true,
+                "type": "string"
+              },
+              "somethingelse": {
+                "firstfield": {
+                  "faker": "name.findName",
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "description": "pet response"
+        }
+      }
+    },
+    "post": {
+      "description": "Optional extended description in CommonMark or HTML",
+      "operationId": "createUser",
+      "request": {
+        "body": {
+          "id": {
+            "faker": "random.uuid",
+            "required": true,
+            "type": "string"
+          },
+          "name": {
+            "faker": "name.findName",
+            "required": true,
+            "type": "string"
+          },
+          "somethingelse": {
+            "firstfield": {
+              "faker": "name.findName",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "response": {
+        "200": {
+          "body": {
+            "id": {
+              "faker": "random.uuid",
+              "required": true,
+              "type": "string"
+            },
+            "name": {
+              "faker": "name.findName",
+              "required": true,
+              "type": "string"
+            },
+            "somethingelse": {
+              "firstfield": {
+                "faker": "name.findName",
+                "type": "string"
+              }
+            }
+          },
+          "description": "pet response"
+        }
+      }
+    }
+  },
+  "http://localhost:4000/api/users/details": {
+    "delete": {
+      "description": "deletes a single pet based on the ID supplied",
+      "operationId": "deleteUserDetails",
+      "request": {
+        "path": {
+          "id": {
+            "faker": "random.uuid",
+            "required": true,
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "204": {
+          "description": "pet deleted"
+        }
+      }
+    },
+    "get": {
+      "description": "Get a single user",
+      "operationId": "getUserDetails",
+      "request": {
+      },
+      "response": {
+        "200": {
+          "body": {
+            "details": {
+              "type": "string"
+            },
+            "id": {
+              "faker": "random.uuid",
+              "required": true,
+              "type": "string"
+            },
+            "name": {
+              "faker": "name.findName",
+              "required": true,
+              "type": "string"
+            },
+            "somethingelse": {
+              "firstfield": {
+                "faker": "name.findName",
+                "type": "string"
+              }
+            }
+          },
+          "description": "Returning the user model"
+        },
+        "default": {
+          "description": "Unexpected Error",
+          "error": {
+            "description": {
+              "faker": "lorem.sentences",
+              "required": true,
+              "type": "string"
+            },
+            "errorCode": {
+              "faker": "random.number",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "http://localhost:4000/api/users/{id}": {
+    "delete": {
+      "description": "deletes a single pet based on the ID supplied",
+      "operationId": "deleteUser",
+      "request": {
+        "path": {
+          "id": {
+            "faker": "random.uuid",
+            "required": true,
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "204": {
+          "description": "pet deleted"
+        }
+      }
+    },
+    "get": {
+      "description": "Get a single user",
+      "operationId": "getUser",
+      "request": {
+        "path": {
+          "id": {
+            "faker": "random.uuid",
+            "required": true,
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "200": {
+          "body": {
+            "id": {
+              "faker": "random.uuid",
+              "required": true,
+              "type": "string"
+            },
+            "name": {
+              "faker": "name.findName",
+              "required": true,
+              "type": "string"
+            },
+            "somethingelse": {
+              "firstfield": {
+                "faker": "name.findName",
+                "type": "string"
+              }
+            }
+          },
+          "description": "Returning the user model"
+        },
+        "default": {
+          "description": "Unexpected Error",
+          "error": {
+            "description": {
+              "faker": "lorem.sentences",
+              "required": true,
+              "type": "string"
+            },
+            "errorCode": {
+              "faker": "random.number",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}
