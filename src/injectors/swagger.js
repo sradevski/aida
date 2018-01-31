@@ -90,7 +90,7 @@ function getSwaggerForDefinition(definition) {
       },
     };
   }
-
+  console.log(definition, defType);
   if (defType === 'object') {
     const requiredChildren = getRequiredChildrenNames(definition);
     return {
@@ -121,6 +121,10 @@ function hasRequiredDescendant(definition) {
   const defType = getDefinitionType(definition);
   if (defType === 'array') {
     return hasRequiredDescendant(definition[0]);
+  }
+
+  if (defType !== 'object') {
+    return Boolean(definition.required);
   }
 
   return Object.keys(definition).reduce((hasRequired, field) => {

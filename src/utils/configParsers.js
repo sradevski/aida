@@ -1,13 +1,13 @@
 export function getDefinitionType(definition) {
+  if (definition.type) {
+    return definition.type;
+  }
+
   if (Array.isArray(definition)) {
     return 'array';
   }
 
-  if (!definition.type) {
-    return 'object';
-  }
-
-  return definition.type;
+  return 'object';
 }
 
 const httpMethods = [
