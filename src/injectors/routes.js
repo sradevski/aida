@@ -1,26 +1,21 @@
 export default function routes(definitions) {
   return {
     ...definitions,
-    getRoutes: includeRootUri => getFlatRoutes(definitions, includeRootUri),
+    getRoutes: baseUri => getFlatRoutes(definitions, baseUri),
   };
 }
 
-function getFlatRoutes(definitions, includeRootUri = true) {
+function getFlatRoutes(definitions, baseUri) {
   return Object.values(definitions._raw).reduce((flatRoutes, definition) => {
-    if (!definition.endpoints || !definition.endpoints.paths) {
+    if (!definition.endpoints) {
       return flatRoutes;
     }
 
     const endpointData = definition.endpoints;
-    const rootUri = includeRootUri
-      ? `${endpointData.schemes[0]}://${endpointData.host}${
-          endpointData.basePath
-        }`
-      : '';
 
-    const definitionRoutes = Object.keys(endpointData.paths).reduce(
+    const definitionRoutes = Object.keys(endpointData).reduce(
       (definitionPaths, path) => {
-        definitionPaths[rootUri + path] = endpointData.paths[path];
+        definitionPaths[baseUri + path] = endpointData[path];
         return definitionPaths;
       },
       {},

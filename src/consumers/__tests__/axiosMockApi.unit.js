@@ -4,22 +4,9 @@ import definitionRoutes from './routes.json';
 
 let rootUri = 'http://localhost:4000/api';
 const expectedResponse = {
-  id: {
-    type: 'string',
-    required: true,
-    faker: 'random.uuid',
-  },
-  name: {
-    type: 'string',
-    required: true,
-    faker: 'name.findName',
-  },
-  somethingelse: {
-    firstfield: {
-      type: 'string',
-      faker: 'name.findName',
-    },
-  },
+  id: '27bd418b-05e0-4e40-9fb2-54a9ff7de038',
+  email: 'Katlynn_Upton@gmail.com',
+  phoneNumber: '914.750.8191 x2376',
 };
 
 beforeAll(() => {

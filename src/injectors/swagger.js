@@ -12,7 +12,7 @@ export default function swagger(definitions) {
   return {
     ...definitions,
     getSwaggerDocs: (rootProps = {}) =>
-      generateSwaggerDocs(definitions.getRoutes(false), {
+      generateSwaggerDocs(definitions.getRoutes(''), {
         ...defaultRootProperties,
         ...rootProps,
       }),

@@ -6,35 +6,27 @@
       "request": {
         "query": {
           "company": {
-            "faker": "random.uuid",
+            "type": "string",
             "required": false,
-            "type": "string"
+            "faker": "random.uuid"
           }
         }
       },
       "response": {
         "200": {
+          "description": "pet response",
           "body": [
             {
-              "id": {
-                "faker": "random.uuid",
-                "required": true,
-                "type": "string"
-              },
-              "name": {
-                "faker": "name.findName",
-                "required": true,
-                "type": "string"
-              },
-              "somethingelse": {
-                "firstfield": {
-                  "faker": "name.findName",
-                  "type": "string"
-                }
-              }
+              "id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+              "email": "Katlynn_Upton@gmail.com",
+              "phoneNumber": "914.750.8191 x2376"
+            },
+            {
+              "id": "c93ddef2-fc7c-499c-8a6b-50a4e0bd757a",
+              "email": "Deshaun_Lehner@yahoo.com",
+              "phoneNumber": "631-972-9359"
             }
-          ],
-          "description": "pet response"
+          ]
         }
       }
     },
@@ -44,180 +36,131 @@
       "request": {
         "body": {
           "id": {
-            "faker": "random.uuid",
+            "type": "string",
             "required": true,
-            "type": "string"
+            "faker": "random.uuid"
           },
           "name": {
-            "faker": "name.findName",
-            "required": true,
-            "type": "string"
-          },
-          "somethingelse": {
-            "firstfield": {
-              "faker": "name.findName",
-              "type": "string"
-            }
+            "type": "string",
+            "faker": "name.findName"
           }
         }
       },
       "response": {
         "200": {
+          "description": "pet response",
           "body": {
-            "id": {
-              "faker": "random.uuid",
-              "required": true,
-              "type": "string"
-            },
-            "name": {
-              "faker": "name.findName",
-              "required": true,
-              "type": "string"
-            },
-            "somethingelse": {
-              "firstfield": {
-                "faker": "name.findName",
-                "type": "string"
-              }
-            }
-          },
-          "description": "pet response"
+            "id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+            "email": "Katlynn_Upton@gmail.com",
+            "phoneNumber": "914.750.8191 x2376"
+          }
         }
       }
     }
   },
   "http://localhost:4000/api/users/details": {
+    "get": {
+      "description": "Get a single user",
+      "operationId": "getUserDetails",
+      "request": {},
+      "response": {
+        "200": {
+          "description": "Returning the user model",
+          "body": {
+            "id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+            "email": "Katlynn_Upton@gmail.com",
+            "phoneNumber": "914.750.8191 x2376",
+            "details": null
+          }
+        },
+        "default": {
+          "description": "Unexpected Error",
+          "error": {
+            "description": {
+              "type": "string",
+              "required": true,
+              "faker": "lorem.sentences"
+            },
+            "errorCode": {
+              "type": "integer",
+              "faker": "random.number"
+            }
+          }
+        }
+      }
+    },
     "delete": {
       "description": "deletes a single pet based on the ID supplied",
       "operationId": "deleteUserDetails",
       "request": {
         "path": {
           "id": {
-            "faker": "random.uuid",
+            "type": "string",
             "required": true,
-            "type": "string"
+            "faker": "random.uuid"
           }
         }
       },
       "response": {
         "204": {
           "description": "pet deleted"
-        }
-      }
-    },
-    "get": {
-      "description": "Get a single user",
-      "operationId": "getUserDetails",
-      "request": {
-      },
-      "response": {
-        "200": {
-          "body": {
-            "details": {
-              "type": "string"
-            },
-            "id": {
-              "faker": "random.uuid",
-              "required": true,
-              "type": "string"
-            },
-            "name": {
-              "faker": "name.findName",
-              "required": true,
-              "type": "string"
-            },
-            "somethingelse": {
-              "firstfield": {
-                "faker": "name.findName",
-                "type": "string"
-              }
-            }
-          },
-          "description": "Returning the user model"
-        },
-        "default": {
-          "description": "Unexpected Error",
-          "error": {
-            "description": {
-              "faker": "lorem.sentences",
-              "required": true,
-              "type": "string"
-            },
-            "errorCode": {
-              "faker": "random.number",
-              "type": "integer"
-            }
-          }
         }
       }
     }
   },
   "http://localhost:4000/api/users/{id}": {
-    "delete": {
-      "description": "deletes a single pet based on the ID supplied",
-      "operationId": "deleteUser",
-      "request": {
-        "path": {
-          "id": {
-            "faker": "random.uuid",
-            "required": true,
-            "type": "string"
-          }
-        }
-      },
-      "response": {
-        "204": {
-          "description": "pet deleted"
-        }
-      }
-    },
     "get": {
       "description": "Get a single user",
       "operationId": "getUser",
       "request": {
         "path": {
           "id": {
-            "faker": "random.uuid",
+            "type": "string",
             "required": true,
-            "type": "string"
+            "faker": "random.uuid"
           }
         }
       },
       "response": {
         "200": {
+          "description": "Returning the user model",
           "body": {
-            "id": {
-              "faker": "random.uuid",
-              "required": true,
-              "type": "string"
-            },
-            "name": {
-              "faker": "name.findName",
-              "required": true,
-              "type": "string"
-            },
-            "somethingelse": {
-              "firstfield": {
-                "faker": "name.findName",
-                "type": "string"
-              }
-            }
-          },
-          "description": "Returning the user model"
+            "id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+            "email": "Katlynn_Upton@gmail.com",
+            "phoneNumber": "914.750.8191 x2376"
+          }
         },
         "default": {
           "description": "Unexpected Error",
           "error": {
             "description": {
-              "faker": "lorem.sentences",
+              "type": "string",
               "required": true,
-              "type": "string"
+              "faker": "lorem.sentences"
             },
             "errorCode": {
-              "faker": "random.number",
-              "type": "integer"
+              "type": "integer",
+              "faker": "random.number"
             }
           }
+        }
+      }
+    },
+    "delete": {
+      "description": "deletes a single pet based on the ID supplied",
+      "operationId": "deleteUser",
+      "request": {
+        "path": {
+          "id": {
+            "type": "string",
+            "required": true,
+            "faker": "random.uuid"
+          }
+        }
+      },
+      "response": {
+        "204": {
+          "description": "pet deleted"
         }
       }
     }

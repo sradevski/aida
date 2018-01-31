@@ -1,7 +1,6 @@
 import axios from 'axios';
 import mockAdapter from 'axios-mock-adapter';
 import URL from 'url-parse';
-import { populateWithFaker } from '../utils/faker';
 
 export default function axiosMockApi(routes) {
   const mock = new mockAdapter(axios);
@@ -101,9 +100,12 @@ function getTemplatePathSegmentIndex(pathSegment) {
 
 function respondToRequest(requestConfig, definedRoute) {
   const { request, response } = definedRoute[requestConfig.method];
-  if (!response['200']) {
-    return [500, {}];
+
+  if (response['200']) {
+    return [200, response['200'].body];
+  } else if (response['204']) {
+    return [204];
   }
 
-  return [200, populateWithFaker(response['200'].body, { seed: 123 })];
+  return [500, {}];
 }
