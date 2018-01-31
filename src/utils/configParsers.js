@@ -22,6 +22,7 @@ const httpMethods = [
 ];
 
 //TODO: Refactor this and faker functions as they are similar.
+//Crawls a definition and it replaces each primitive (not an array or object) with the value returned from the action passed. It returns the resulting object.
 export function crawlDefinition(rootDefinition, selector, action) {
   function crawler(definition) {
     const defType = getDefinitionType(definition);
@@ -33,7 +34,6 @@ export function crawlDefinition(rootDefinition, selector, action) {
       if (definition[selector]) {
         return action(definition[selector]);
       }
-
       return null;
     }
 
@@ -44,7 +44,6 @@ export function crawlDefinition(rootDefinition, selector, action) {
       if (propType === 'array') {
         populatedObject[field] = crawler(property[0]);
       } else if (propType === 'object') {
-        console.log(definition, property);
         populatedObject[field] = crawler(property);
       } else {
         populatedObject[field] = action(property[selector]);

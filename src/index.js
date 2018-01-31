@@ -24,7 +24,8 @@ function main(args) {
   };
 
   const validstackResults = validstack(config);
-  console.log(validstackResults.getValidators());
+  //console.log(validstackResults.getValidators());
+  //console.log(JSON.stringify(validstackResults._raw));
   // outputToFile(
   //   JSON.stringify(validstackResults.getSwaggerDocs()),
   //   `${outputDestination}/swagger.json`,
