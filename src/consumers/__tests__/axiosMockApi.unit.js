@@ -10,7 +10,7 @@ const expectedResponse = {
 };
 
 beforeAll(() => {
-  axiosMocker(definitionRoutes);
+  axiosMocker(definitionRoutes, rootUri);
 });
 
 describe('The api mocking function GET statement', () => {

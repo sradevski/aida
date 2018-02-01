@@ -2,11 +2,11 @@ import axios from 'axios';
 import mockAdapter from 'axios-mock-adapter';
 import URL from 'url-parse';
 
-export default function axiosMockApi(routes) {
+export default function axiosMockApi(routes, baseUri) {
   const mock = new mockAdapter(axios);
 
   mock.onAny().reply(requestConfig => {
-    const definedRoute = getDefinedRoute(requestConfig, routes);
+    const definedRoute = getDefinedRoute(requestConfig, routes, baseUri);
     if (!definedRoute) {
       //TODO: Request path and method don't exist. Return an error specified in the config as well.
       return [500, {}];
@@ -16,12 +16,12 @@ export default function axiosMockApi(routes) {
   });
 }
 
-function getDefinedRoute(requestConfig, routes) {
+function getDefinedRoute(requestConfig, routes, baseUri) {
   const method = requestConfig.method.toLowerCase();
   const requestUrl = new URL(requestConfig.url, undefined, true);
 
   const matchedRoutes = Object.keys(routes).filter(routeKey => {
-    const routeUrl = new URL(routeKey);
+    const routeUrl = new URL(baseUri + routeKey);
 
     return (
       routes[routeKey][method] &&
@@ -99,10 +99,10 @@ function getTemplatePathSegmentIndex(pathSegment) {
 }
 
 function respondToRequest(requestConfig, definedRoute) {
-  const { request, response } = definedRoute[requestConfig.method];
+  const { response } = definedRoute[requestConfig.method];
 
   if (response['200']) {
-    return [200, response['200'].body];
+    return [200, response['200']];
   } else if (response['204']) {
     return [204];
   }

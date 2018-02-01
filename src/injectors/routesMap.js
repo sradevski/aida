@@ -1,12 +1,10 @@
 import { getHttpMethods } from '../utils/configParsers';
 
-const server = 'http://localhost:4000/api';
-
 export default function routesMap(definitions) {
   return {
     ...definitions,
     getRoutesMap: appCategory =>
-      getRoutesMap(definitions.getRoutes(server, appCategory)),
+      getRoutesMap(definitions.getRoutes('', appCategory)),
   };
 }
 

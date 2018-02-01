@@ -29,11 +29,19 @@ describe('The faker function', () => {
             faker: 'name.findName',
           },
         },
+        nicknames: [
+          {
+            type: 'string',
+            faker: 'name.findName',
+          },
+        ],
       },
     });
 
     expect(populatedObject).toHaveProperty('addressbook.names.firstName');
     expect(typeof populatedObject.addressbook.names.firstName).toBe('string');
+    expect(populatedObject.addressbook.nicknames).toHaveLength(8);
+    expect(typeof populatedObject.addressbook.nicknames[0]).toBe('string');
   });
 
   test('populates an array with nested complex object', () => {
@@ -81,6 +89,19 @@ describe('The faker function', () => {
 
     expect(populatedObject).toHaveLength(8);
     expect(populatedObject[0]).toHaveProperty('names.firstName');
+    expect(populatedObject[0].names.middleNames).toHaveLength(8);
+  });
+
+  test('populates an array with primitive object', () => {
+    const populatedObject = populateWithFaker([
+      {
+        type: 'string',
+        faker: 'name.findName',
+      },
+    ]);
+
+    expect(populatedObject).toHaveLength(8);
+    expect(typeof populatedObject[0]).toBe('string');
   });
 
   test("throws an exception if function doesn't exist in faker", () => {

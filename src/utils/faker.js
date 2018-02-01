@@ -32,7 +32,7 @@ export function populateWithFaker(definition, options) {
     const propType = getDefinitionType(property);
 
     if (propType === 'array') {
-      populatedObject[field] = getPopulatedArray(property, fullOptions);
+      populatedObject[field] = getPopulatedArray(property[0], fullOptions);
     } else if (propType === 'object') {
       populatedObject[field] = populateWithFaker(property, fullOptions);
     } else if (property.faker) {

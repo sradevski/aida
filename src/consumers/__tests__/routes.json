@@ -1,168 +1,155 @@
 {
-  "http://localhost:4000/api/users": {
-    "get": {
-      "description": "Optional extended description in CommonMark or HTML",
-      "operationId": "getAllUsers",
-      "request": {
-        "query": {
-          "company": {
-            "type": "string",
-            "required": false,
-            "faker": "random.uuid"
-          }
-        }
-      },
-      "response": {
-        "200": {
-          "description": "pet response",
-          "body": [
-            {
-              "id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
-              "email": "Katlynn_Upton@gmail.com",
-              "phoneNumber": "914.750.8191 x2376"
-            },
-            {
-              "id": "c93ddef2-fc7c-499c-8a6b-50a4e0bd757a",
-              "email": "Deshaun_Lehner@yahoo.com",
-              "phoneNumber": "631-972-9359"
-            }
-          ]
-        }
-      }
-    },
-    "post": {
-      "description": "Optional extended description in CommonMark or HTML",
-      "operationId": "createUser",
-      "request": {
-        "body": {
-          "id": {
-            "type": "string",
-            "required": true,
-            "faker": "random.uuid"
-          },
-          "name": {
-            "type": "string",
-            "faker": "name.findName"
-          }
-        }
-      },
-      "response": {
-        "200": {
-          "description": "pet response",
-          "body": {
-            "id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
-            "email": "Katlynn_Upton@gmail.com",
-            "phoneNumber": "914.750.8191 x2376"
-          }
-        }
-      }
-    }
-  },
-  "http://localhost:4000/api/users/details": {
-    "get": {
-      "description": "Get a single user",
-      "operationId": "getUserDetails",
-      "request": {},
-      "response": {
-        "200": {
-          "description": "Returning the user model",
-          "body": {
-            "id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
-            "email": "Katlynn_Upton@gmail.com",
-            "phoneNumber": "914.750.8191 x2376",
-            "details": null
-          }
-        },
-        "default": {
-          "description": "Unexpected Error",
-          "error": {
-            "description": {
-              "type": "string",
-              "required": true,
-              "faker": "lorem.sentences"
-            },
-            "errorCode": {
-              "type": "integer",
-              "faker": "random.number"
-            }
-          }
-        }
-      }
-    },
-    "delete": {
-      "description": "deletes a single pet based on the ID supplied",
-      "operationId": "deleteUserDetails",
-      "request": {
-        "path": {
-          "id": {
-            "type": "string",
-            "required": true,
-            "faker": "random.uuid"
-          }
-        }
-      },
-      "response": {
-        "204": {
-          "description": "pet deleted"
-        }
-      }
-    }
-  },
-  "http://localhost:4000/api/users/{id}": {
-    "get": {
-      "description": "Get a single user",
-      "operationId": "getUser",
-      "request": {
-        "path": {
-          "id": {
-            "type": "string",
-            "required": true,
-            "faker": "random.uuid"
-          }
-        }
-      },
-      "response": {
-        "200": {
-          "description": "Returning the user model",
-          "body": {
-            "id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
-            "email": "Katlynn_Upton@gmail.com",
-            "phoneNumber": "914.750.8191 x2376"
-          }
-        },
-        "default": {
-          "description": "Unexpected Error",
-          "error": {
-            "description": {
-              "type": "string",
-              "required": true,
-              "faker": "lorem.sentences"
-            },
-            "errorCode": {
-              "type": "integer",
-              "faker": "random.number"
-            }
-          }
-        }
-      }
-    },
-    "delete": {
-      "description": "deletes a single pet based on the ID supplied",
-      "operationId": "deleteUser",
-      "request": {
-        "path": {
-          "id": {
-            "type": "string",
-            "required": true,
-            "faker": "random.uuid"
-          }
-        }
-      },
-      "response": {
-        "204": {
-          "description": "pet deleted"
-        }
-      }
-    }
-  }
+	"/users": {
+		"get": {
+			"description": "Optional extended description in CommonMark or HTML",
+			"operationId": "getAllUsers",
+			"request": {
+				"query": {
+					"company": {
+						"type": "string",
+						"required": false,
+						"faker": "random.uuid"
+					}
+				}
+			},
+			"response": {
+				"200": [{
+						"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+						"email": "Katlynn_Upton@gmail.com",
+						"phoneNumber": "914.750.8191 x2376"
+					},
+					{
+						"id": "c93ddef2-fc7c-499c-8a6b-50a4e0bd757a",
+						"email": "Deshaun_Lehner@yahoo.com",
+						"phoneNumber": "631-972-9359"
+					}
+				]
+			}
+		},
+		"post": {
+			"description": "Optional extended description in CommonMark or HTML",
+			"operationId": "createUser",
+			"request": {
+				"body": {
+					"id": {
+						"type": "string",
+						"required": true,
+						"faker": "random.uuid"
+					},
+					"name": {
+						"type": "string",
+						"faker": "name.findName"
+					}
+				}
+			},
+			"response": {
+				"200": {
+					"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+					"email": "Katlynn_Upton@gmail.com",
+					"phoneNumber": "914.750.8191 x2376"
+				}
+			}
+		}
+	},
+	"/users/details": {
+		"get": {
+			"description": "Get a single user",
+			"operationId": "getUserDetails",
+			"request": {},
+			"response": {
+				"200": {
+					"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+					"email": "Katlynn_Upton@gmail.com",
+					"phoneNumber": "914.750.8191 x2376",
+					"details": null
+				},
+				"default": {
+					"description": "Unexpected Error",
+					"error": {
+						"description": {
+							"type": "string",
+							"required": true,
+							"faker": "lorem.sentences"
+						},
+						"errorCode": {
+							"type": "integer",
+							"faker": "random.number"
+						}
+					}
+				}
+			}
+		},
+		"delete": {
+			"description": "deletes a single pet based on the ID supplied",
+			"operationId": "deleteUserDetails",
+			"request": {
+				"path": {
+					"id": {
+						"type": "string",
+						"required": true,
+						"faker": "random.uuid"
+					}
+				}
+			},
+			"response": {
+				"204": {
+					"description": "pet deleted"
+				}
+			}
+		}
+	},
+	"/users/{id}": {
+		"get": {
+			"description": "Get a single user",
+			"operationId": "getUser",
+			"request": {
+				"path": {
+					"id": {
+						"type": "string",
+						"required": true,
+						"faker": "random.uuid"
+					}
+				}
+			},
+			"response": {
+				"200": {
+					"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+					"email": "Katlynn_Upton@gmail.com",
+					"phoneNumber": "914.750.8191 x2376"
+				},
+				"default": {
+					"description": "Unexpected Error",
+					"error": {
+						"description": {
+							"type": "string",
+							"required": true,
+							"faker": "lorem.sentences"
+						},
+						"errorCode": {
+							"type": "integer",
+							"faker": "random.number"
+						}
+					}
+				}
+			}
+		},
+		"delete": {
+			"description": "deletes a single pet based on the ID supplied",
+			"operationId": "deleteUser",
+			"request": {
+				"path": {
+					"id": {
+						"type": "string",
+						"required": true,
+						"faker": "random.uuid"
+					}
+				}
+			},
+			"response": {
+				"204": {
+					"description": "pet deleted"
+				}
+			}
+		}
+	}
 }
