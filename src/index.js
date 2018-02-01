@@ -28,17 +28,17 @@ function main(args) {
   //console.log(validstackResults.getSwaggerDocs());
 
   outputToFile(
-    JSON.stringify(validstackResults.getSwaggerDocs()),
+    JSON.stringify(validstackResults.getSwaggerDocs('User')),
     `${outputDestination}/swagger.json`,
   );
 
   outputToFile(
-    JSON.stringify(validstackResults.getFakedDataRoutes()),
+    JSON.stringify(validstackResults.getFakedDataRoutes('User')),
     `${outputDestination}/routes.json`,
   );
 
   outputToFile(
-    JSON.stringify(validstackResults.getRoutesMap()),
+    JSON.stringify(validstackResults.getRoutesMap('User')),
     `${outputDestination}/endpoints.json`,
   );
 }

@@ -5,7 +5,8 @@ const server = 'http://localhost:4000/api';
 export default function routesMap(definitions) {
   return {
     ...definitions,
-    getRoutesMap: () => getRoutesMap(definitions.getRoutes(server)),
+    getRoutesMap: appCategory =>
+      getRoutesMap(definitions.getRoutes(server, appCategory)),
   };
 }
 

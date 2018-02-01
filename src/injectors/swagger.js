@@ -11,8 +11,8 @@ const defaultRootProperties = {
 export default function swagger(definitions) {
   return {
     ...definitions,
-    getSwaggerDocs: (rootProps = {}) =>
-      generateSwaggerDocs(definitions.getRoutes(''), {
+    getSwaggerDocs: (appCategory, rootProps = {}) =>
+      generateSwaggerDocs(definitions.getRoutes('', appCategory), {
         ...defaultRootProperties,
         ...rootProps,
       }),
@@ -90,7 +90,7 @@ function getSwaggerForDefinition(definition) {
       },
     };
   }
-  console.log(definition, defType);
+
   if (defType === 'object') {
     const requiredChildren = getRequiredChildrenNames(definition);
     return {
