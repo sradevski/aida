@@ -1,12 +1,10 @@
 import faker from 'faker';
-import { getDefinitionType } from './configParsers';
+import { crawlDefinition } from './configParsers';
 
 const defaultOptions = {
   seed: 1,
   locale: 'en',
 };
-
-const entriesPerArray = 8;
 
 export function populateWithFaker(definition, options) {
   const fullOptions = { ...defaultOptions, ...options };
@@ -14,60 +12,71 @@ export function populateWithFaker(definition, options) {
   faker.locale = locale;
   faker.seed(seed);
 
-  const defType = getDefinitionType(definition);
-  if (defType === 'array') {
-    return getPopulatedArray(definition[0], fullOptions);
-  }
+  return crawlDefinition(definition, 'faker', getFakerValue, getPopulatedArray);
+}
 
-  if (defType !== 'object') {
-    if (definition.faker) {
-      return getFakerValue(definition.faker);
+const defaultArrayFakerProps = {
+  fakerIterations: Math.round((Math.random() + 0.5) * 20),
+  areEntriesUnique: false,
+  uniqueOn: undefined,
+};
+
+const defaultFakerProps = {
+  faker: 'random.number',
+  options: undefined,
+};
+
+function getPopulatedArray(definition) {
+  const [property, passedArrayProps] = definition;
+  const { areEntriesUnique, uniqueOn, fakerIterations } = {
+    ...defaultArrayFakerProps,
+    ...(passedArrayProps ? passedArrayProps : {}),
+  };
+  const result = [];
+  for (let i = 1; i <= fakerIterations; i++) {
+    const newFakerVal = crawlDefinition(
+      property,
+      'faker',
+      getFakerValue,
+      getPopulatedArray,
+    );
+
+    if (areEntriesUnique) {
+      if (isEntryInArray(result, newFakerVal, uniqueOn)) {
+        continue;
+      }
     }
 
-    return null;
+    result.push(newFakerVal);
   }
 
-  return Object.keys(definition).reduce((populatedObject, field) => {
-    const property = definition[field];
-    const propType = getDefinitionType(property);
+  return result;
+}
 
-    if (propType === 'array') {
-      populatedObject[field] = getPopulatedArray(property[0], fullOptions);
-    } else if (propType === 'object') {
-      populatedObject[field] = populateWithFaker(property, fullOptions);
-    } else if (property.faker) {
-      populatedObject[field] = getFakerValue(property.faker);
-    } else {
-      populatedObject[field] = null;
-    }
-
-    return populatedObject;
-  }, {});
+function isEntryInArray(arr, entry, onProperty) {
+  return (
+    arr.findIndex(
+      x => (onProperty ? x[onProperty] === entry[onProperty] : x === entry),
+    ) !== -1
+  );
 }
 
 function getFakerValue(fakerVal) {
+  if (!fakerVal) {
+    return null;
+  }
+
   if (Array.isArray(fakerVal)) {
     return fakerVal[Math.floor(Math.random() * fakerVal.length)];
+  } else if (typeof fakerVal === 'object') {
+    const props = {
+      ...defaultFakerProps,
+      ...fakerVal,
+    };
+    const [type, method] = props.faker.split('.');
+    return faker[type][method](props.options);
   } else {
     const [type, method] = fakerVal.split('.');
     return faker[type][method]();
   }
-}
-
-function getPopulatedArray(property, options) {
-  let iterableSeed = options.seed;
-  const result = [];
-
-  for (let i = 1; i <= entriesPerArray; i++) {
-    result.push(
-      populateWithFaker(property, {
-        ...options,
-        seed: iterableSeed,
-      }),
-    );
-
-    iterableSeed = iterableSeed + 1;
-  }
-
-  return result;
 }

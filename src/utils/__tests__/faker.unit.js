@@ -8,7 +8,7 @@ describe('The faker function', () => {
   test('populates a flat object', () => {
     const populatedObject = populateWithFaker({
       id: {
-        type: 'uuid',
+        type: 'integer',
         faker: 'random.uuid',
       },
       name: { type: 'string', faker: 'name.findName' },
@@ -18,6 +18,25 @@ describe('The faker function', () => {
     expect(populatedObject).toHaveProperty('name');
     expect(typeof populatedObject.id).toBe('string');
     expect(typeof populatedObject.name).toBe('string');
+  });
+
+  test('populates object according to passed faker options', () => {
+    const populatedObject = populateWithFaker({
+      id: {
+        type: 'integer',
+        faker: {
+          faker: 'random.number',
+          options: {
+            min: 1000,
+            max: 1001,
+          },
+        },
+      },
+    });
+
+    expect(populatedObject).toHaveProperty('id');
+    expect(populatedObject.id).toBeGreaterThanOrEqual(1000);
+    expect(populatedObject.id).toBeLessThanOrEqual(1001);
   });
 
   test('populates a nested object', () => {
@@ -34,6 +53,9 @@ describe('The faker function', () => {
             type: 'string',
             faker: 'name.findName',
           },
+          {
+            fakerIterations: 8,
+          },
         ],
       },
     });
@@ -42,6 +64,87 @@ describe('The faker function', () => {
     expect(typeof populatedObject.addressbook.names.firstName).toBe('string');
     expect(populatedObject.addressbook.nicknames).toHaveLength(8);
     expect(typeof populatedObject.addressbook.nicknames[0]).toBe('string');
+  });
+
+  test('populates an array with primitive object', () => {
+    const populatedObject = populateWithFaker([
+      {
+        type: 'string',
+        faker: 'name.findName',
+      },
+      {
+        fakerIterations: 8,
+      },
+    ]);
+
+    expect(populatedObject).toHaveLength(8);
+    expect(typeof populatedObject[0]).toBe('string');
+  });
+
+  test('populates array according to settings', () => {
+    const populatedObject = populateWithFaker([
+      {
+        name: {
+          type: 'string',
+          faker: ['a', 'b', 'c'],
+        },
+        nicknames: [
+          {
+            type: 'string',
+            faker: ['l', 'm', 'n'],
+          },
+          {
+            fakerIterations: 8,
+            areEntriesUnique: true,
+          },
+        ],
+      },
+      {
+        fakerIterations: 8,
+        areEntriesUnique: true,
+        uniqueOn: 'name',
+      },
+    ]);
+
+    const topArrayLength = populatedObject.length;
+    const uniqueValuesLength = Array.from(
+      new Set(populatedObject.map(x => x.name)),
+    ).length;
+    expect(topArrayLength).toBe(uniqueValuesLength);
+
+    const nicknamesLength = populatedObject[0].nicknames.length;
+    const nicknamesUniqueLength = Array.from(
+      new Set(populatedObject[0].nicknames),
+    ).length;
+    expect(nicknamesLength).toBe(nicknamesUniqueLength);
+  });
+
+  test('populates an array with nested primitive object', () => {
+    const populatedObject = populateWithFaker([
+      {
+        names: {
+          firstName: {
+            type: 'string',
+            faker: 'name.findName',
+          },
+          middleNames: [
+            {
+              type: 'string',
+            },
+            {
+              fakerIterations: 8,
+            },
+          ],
+        },
+      },
+      {
+        fakerIterations: 8,
+      },
+    ]);
+
+    expect(populatedObject).toHaveLength(8);
+    expect(populatedObject[0]).toHaveProperty('names.firstName');
+    expect(populatedObject[0].names.middleNames).toHaveLength(8);
   });
 
   test('populates an array with nested complex object', () => {
@@ -61,54 +164,26 @@ describe('The faker function', () => {
                 type: 'string',
               },
             },
-          ],
-        },
-      },
-    ]);
-
-    expect(populatedObject).toHaveLength(8);
-    expect(populatedObject[0]).toHaveProperty('names.firstName');
-  });
-
-  test('populates an array with nested primitive object', () => {
-    const populatedObject = populateWithFaker([
-      {
-        names: {
-          firstName: {
-            type: 'string',
-            faker: 'name.findName',
-          },
-          middleNames: [
             {
-              type: 'string',
+              fakerIterations: 8,
             },
           ],
         },
       },
-    ]);
-
-    expect(populatedObject).toHaveLength(8);
-    expect(populatedObject[0]).toHaveProperty('names.firstName');
-    expect(populatedObject[0].names.middleNames).toHaveLength(8);
-  });
-
-  test('populates an array with primitive object', () => {
-    const populatedObject = populateWithFaker([
       {
-        type: 'string',
-        faker: 'name.findName',
+        fakerIterations: 8,
       },
     ]);
 
     expect(populatedObject).toHaveLength(8);
-    expect(typeof populatedObject[0]).toBe('string');
+    expect(populatedObject[0]).toHaveProperty('names.firstName');
   });
 
   test("throws an exception if function doesn't exist in faker", () => {
     expect(() =>
       populateWithFaker({
         id: {
-          type: 'uuid',
+          type: 'integer',
           faker: 'some.nonfunction',
         },
       }),
@@ -142,7 +217,7 @@ describe('The faker function', () => {
       populateWithFaker(
         {
           id: {
-            type: 'uuid',
+            type: 'integer',
             faker: 'random.uuid',
           },
         },
