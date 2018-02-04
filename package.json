@@ -6,9 +6,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.js --exec babel-node --inspect",
+    "generate": "babel-node src/index.js",
     "build": "babel src/ --ignore node_modules,__tests__,__mocks__,coverage --out-dir dist/",
     "serve": "npm run build && node dist/index.js dist/definitions ./output",
-    "generate": "plop",
+    "define": "plop",
     "test": "jest --ci",
     "test:update": "jest -u",
     "test:watch": "jest --watch --coverage -u",
