@@ -54,7 +54,7 @@ describe('The api mocking function GET statement', () => {
   test('to unexistent url returns status 500', async () => {
     expect.assertions(2);
     try {
-      await axios.get(`${rootUri}/users/nonexistent/12355`);
+      await axios.get(`www.google.com`);
     } catch (error) {
       expect(error.response.status).toEqual(500);
       expect(error.response.data).toEqual({});
