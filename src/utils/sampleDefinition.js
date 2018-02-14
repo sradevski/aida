@@ -34,11 +34,11 @@ export default {
             type: 'string',
             faker: 'address.city',
           },
-          zipCode: {
+          zip: {
             type: 'string',
             faker: 'address.zipCode',
           },
-          streetAddress: {
+          street: {
             type: 'string',
             faker: 'address.streetAddress',
           },

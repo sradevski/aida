@@ -18,7 +18,7 @@ describe('The api mocking function GET statement', () => {
     expect.assertions(1);
     const response = await axios.get(`${rootUri}/users`, {
       params: {
-        company: 12345,
+        business: 12345,
       },
     });
     expect(Object.keys(response.data[0])).toEqual(

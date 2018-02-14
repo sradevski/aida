@@ -5,7 +5,7 @@
 			"operationId": "getAllUsers",
 			"request": {
 				"query": {
-					"company": {
+					"business": {
 						"type": "string",
 						"required": false,
 						"faker": "random.uuid"
