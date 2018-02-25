@@ -3,7 +3,7 @@ import routes from './injectors/routes';
 import swagger from './injectors/swagger';
 import routesMap from './injectors/routesMap';
 import fakedDataRoutes from './injectors/fakedDataRoutes';
-import validate from './injectors/validate';
+import validate from './injectors/validation/validate';
 import { outputToFile } from './utils/filesystem';
 
 function main(args) {
@@ -25,7 +25,6 @@ function main(args) {
   };
 
   const validstackResults = validstack(config);
-  //console.log(validstackResults.getSwaggerDocs());
 
   outputToFile(
     JSON.stringify(validstackResults.getSwaggerDocs('User')),
@@ -38,7 +37,7 @@ function main(args) {
   );
 
   outputToFile(
-    JSON.stringify(validstackResults.getRoutesMap('User')),
+    JSON.stringify(validstackResults.getRoutesMap('User'), null, 2),
     `${outputDestination}/endpoints.json`,
   );
 }

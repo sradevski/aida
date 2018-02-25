@@ -2,9 +2,10 @@
 //0: Generic message (the {field} is invalid).
 
 const basicValidators = {
-  // integer:
+  integer: val => val,
   // decimal:
   // string:
+  range: (val, props) => val,
   // minLength:
   // maxLength:
   // min:
@@ -35,9 +36,10 @@ const compositeValidators = {
   // rewardType:
 };
 
-const validators = {
-  ...compositeValidators,
+export default {
   ...basicValidators,
+  ...compositeValidators,
+  age: () => true,
 };
 
 //All of the ones defined above can be set as type. Create a composite type -> swagger type map in swagger. For custom validators, you can use a 'validate' property and just leave them on the object as defined.

@@ -23,8 +23,7 @@
   "jest": {
     "rootDir": "src",
     "testMatch": [
-      "**/__tests__/**/*.?(m)js?(x)",
-      "**/?(*.)(spec|test).?(m)js?(x)"
+      "**/?(*.)(unit|test).?(m)js?(x)"
     ],
     "moduleFileExtensions": [
       "js",
@@ -57,10 +56,11 @@
     "lint-staged": "^4.0.2",
     "nodemon": "^1.12.1",
     "plop": "^1.9.1",
-    "prettier": "^1.5.3"
+    "prettier": "^1.10.2"
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "code-stringify": "^1.2.3",
     "faker": "^4.1.0",
     "url-parse": "^1.2.0"
   }

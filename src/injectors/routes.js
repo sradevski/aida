@@ -6,6 +6,7 @@ export default function routes(definitions) {
   };
 }
 
+//getFlatRoutes returns all the defined routes in a flat structure. This is used as the basis for several other injectors.
 function getFlatRoutes(definitions, baseUri, appCategory) {
   return Object.values(definitions._raw).reduce((flatRoutes, definition) => {
     if (!definition.endpoints) {

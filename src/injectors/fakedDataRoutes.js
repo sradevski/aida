@@ -2,6 +2,8 @@ import { getHttpMethods } from '../utils/configParsers';
 import { populateWithFaker } from '../utils/faker';
 
 const seed = 12;
+
+//fakedDataRoutes returns each of the defined endpoints with response and request parts populated with fake data.
 export default function fakedDataRoutes(definitions) {
   return {
     ...definitions,

@@ -33,16 +33,14 @@ export function crawlDefinition(
     const defType = getDefinitionType(definition);
     if (defType === 'array') {
       return (
-        arrayHandler(definition, selector, action, arrayHandler) ||
+        (arrayHandler &&
+          arrayHandler(definition, selector, action, arrayHandler)) ||
         crawler(definition[0])
       );
     }
 
     if (defType !== 'object') {
-      if (definition[selector]) {
-        return action(definition[selector]);
-      }
-      return null;
+      return action(definition[selector]);
     }
 
     return Object.keys(definition).reduce((populatedObject, field) => {
@@ -51,7 +49,8 @@ export function crawlDefinition(
 
       if (propType === 'array') {
         populatedObject[field] =
-          arrayHandler(property, selector, action, arrayHandler) ||
+          (arrayHandler &&
+            arrayHandler(property, selector, action, arrayHandler)) ||
           crawler(property[0]);
       } else if (propType === 'object') {
         populatedObject[field] = crawler(property);

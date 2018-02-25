@@ -8,6 +8,7 @@ const defaultRootProperties = {
   },
 };
 
+//generates a swagger.json file that can be used with any swagger-based tool.
 export default function swagger(definitions) {
   return {
     ...definitions,
