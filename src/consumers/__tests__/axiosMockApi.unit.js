@@ -46,7 +46,7 @@ describe('The api mocking function GET statement', () => {
     expect(Object.keys(response.data).sort()).toEqual(
       Object.keys({
         ...expectedResponse,
-        details: { type: 'string' },
+        details: { vtype: 'string' },
       }).sort(),
     );
   });

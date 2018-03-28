@@ -5,17 +5,17 @@ const validstackDefinitons = {
     User: {
       core: {
         id: {
-          type: 'string',
+          vtype: 'string',
           faker: 'random.uuid',
           validators: { integer: true, range: { max: 30 }, isId: val => val },
         },
         username: {
-          type: 'string',
+          vtype: 'string',
           faker: 'internet.userName',
         },
         tags: [
           {
-            type: 'string',
+            vtype: 'string',
             faker: 'commerce.productAdjective',
           },
           {
@@ -34,7 +34,9 @@ describe('The validate injector', () => {
       validate({
         _raw: {
           User: {
-            core: { id: { type: 'string', validators: { nonexistent: true } } },
+            core: {
+              id: { vtype: 'string', validators: { nonexistent: true } },
+            },
           },
         },
       }).getDefinitionsWithValidators(),

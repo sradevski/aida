@@ -1,6 +1,6 @@
 export function getDefinitionType(definition) {
-  if (definition.type) {
-    return definition.type;
+  if (definition.vtype) {
+    return definition.vtype;
   }
 
   if (Array.isArray(definition)) {

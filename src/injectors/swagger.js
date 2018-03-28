@@ -52,6 +52,8 @@ function getSwaggerForRouteMethods(route) {
 function getSwaggerForMethod(method) {
   return {
     description: method.description,
+    operationId: method.operationId,
+    parameters: getSwaggerForRequest(method.request),
     responses: Object.keys(method.response).reduce(
       (responses, responseCode) => {
         responses[responseCode] = getSwaggerForResponse(
@@ -62,6 +64,23 @@ function getSwaggerForMethod(method) {
       {},
     ),
   };
+}
+
+function getSwaggerForRequest(request) {
+  let swaggerRequest = [];
+
+  if (request.path) {
+    swaggerRequest = Object.keys(request.path).map(pathKey => {
+      return {
+        name: pathKey,
+        in: 'path',
+        required: true,
+        schema: getSwaggerForDefinition(request.path[pathKey]),
+      };
+    });
+  }
+
+  return swaggerRequest.length > 0 ? swaggerRequest : undefined;
 }
 
 function getSwaggerForResponse(response) {

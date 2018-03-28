@@ -8,10 +8,10 @@ describe('The faker function', () => {
   test('populates a flat object', () => {
     const populatedObject = populateWithFaker({
       id: {
-        type: 'integer',
+        vtype: 'integer',
         faker: 'random.uuid',
       },
-      name: { type: 'string', faker: 'name.findName' },
+      name: { vtype: 'string', faker: 'name.findName' },
     });
 
     expect(populatedObject).toHaveProperty('id');
@@ -23,7 +23,7 @@ describe('The faker function', () => {
   test('populates object according to passed faker options', () => {
     const populatedObject = populateWithFaker({
       id: {
-        type: 'integer',
+        vtype: 'integer',
         faker: {
           faker: 'random.number',
           options: {
@@ -44,13 +44,13 @@ describe('The faker function', () => {
       addressbook: {
         names: {
           firstName: {
-            type: 'string',
+            vtype: 'string',
             faker: 'name.findName',
           },
         },
         nicknames: [
           {
-            type: 'string',
+            vtype: 'string',
             faker: 'name.findName',
           },
           {
@@ -69,7 +69,7 @@ describe('The faker function', () => {
   test('populates an array with primitive object', () => {
     const populatedObject = populateWithFaker([
       {
-        type: 'string',
+        vtype: 'string',
         faker: 'name.findName',
       },
       {
@@ -85,12 +85,12 @@ describe('The faker function', () => {
     const populatedObject = populateWithFaker([
       {
         name: {
-          type: 'string',
+          vtype: 'string',
           faker: ['a', 'b', 'c'],
         },
         nicknames: [
           {
-            type: 'string',
+            vtype: 'string',
             faker: ['l', 'm', 'n'],
           },
           {
@@ -124,12 +124,12 @@ describe('The faker function', () => {
       {
         names: {
           firstName: {
-            type: 'string',
+            vtype: 'string',
             faker: 'name.findName',
           },
           middleNames: [
             {
-              type: 'string',
+              vtype: 'string',
             },
             {
               fakerIterations: 8,
@@ -152,16 +152,16 @@ describe('The faker function', () => {
       {
         names: {
           firstName: {
-            type: 'string',
+            vtype: 'string',
             faker: 'name.findName',
           },
           middleNames: [
             {
               firstOne: {
-                type: 'string',
+                vtype: 'string',
               },
               secondOne: {
-                type: 'string',
+                vtype: 'string',
               },
             },
             {
@@ -183,7 +183,7 @@ describe('The faker function', () => {
     expect(() =>
       populateWithFaker({
         id: {
-          type: 'integer',
+          vtype: 'integer',
           faker: 'some.nonfunction',
         },
       }),
@@ -194,7 +194,7 @@ describe('The faker function', () => {
     expect(
       populateWithFaker({
         id: {
-          type: 'string',
+          vtype: 'string',
         },
       }).id,
     ).toBe(null);
@@ -204,7 +204,7 @@ describe('The faker function', () => {
     const values = ['first', 'second', 'third'];
     const fakeId = populateWithFaker({
       id: {
-        type: 'string',
+        vtype: 'string',
         faker: values,
       },
     }).id;
@@ -217,7 +217,7 @@ describe('The faker function', () => {
       populateWithFaker(
         {
           id: {
-            type: 'integer',
+            vtype: 'integer',
             faker: 'random.uuid',
           },
         },

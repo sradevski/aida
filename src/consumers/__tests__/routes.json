@@ -6,7 +6,7 @@
 			"request": {
 				"query": {
 					"business": {
-						"type": "string",
+						"vtype": "string",
 						"required": false,
 						"faker": "random.uuid"
 					}
@@ -32,12 +32,12 @@
 			"request": {
 				"body": {
 					"id": {
-						"type": "string",
+						"vtype": "string",
 						"required": true,
 						"faker": "random.uuid"
 					},
 					"name": {
-						"type": "string",
+						"vtype": "string",
 						"faker": "name.findName"
 					}
 				}
@@ -67,12 +67,12 @@
 					"description": "Unexpected Error",
 					"error": {
 						"description": {
-							"type": "string",
+							"vtype": "string",
 							"required": true,
 							"faker": "lorem.sentences"
 						},
 						"errorCode": {
-							"type": "integer",
+							"vtype": "integer",
 							"faker": "random.number"
 						}
 					}
@@ -85,7 +85,7 @@
 			"request": {
 				"path": {
 					"id": {
-						"type": "string",
+						"vtype": "string",
 						"required": true,
 						"faker": "random.uuid"
 					}
@@ -105,7 +105,7 @@
 			"request": {
 				"path": {
 					"id": {
-						"type": "string",
+						"vtype": "string",
 						"required": true,
 						"faker": "random.uuid"
 					}
@@ -121,12 +121,12 @@
 					"description": "Unexpected Error",
 					"error": {
 						"description": {
-							"type": "string",
+							"vtype": "string",
 							"required": true,
 							"faker": "lorem.sentences"
 						},
 						"errorCode": {
-							"type": "integer",
+							"vtype": "integer",
 							"faker": "random.number"
 						}
 					}
@@ -139,7 +139,7 @@
 			"request": {
 				"path": {
 					"id": {
-						"type": "string",
+						"vtype": "string",
 						"required": true,
 						"faker": "random.uuid"
 					}

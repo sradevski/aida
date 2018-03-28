@@ -5,11 +5,11 @@ const validStackDefinitions = {
     User: {
       schema: {
         id: {
-          type: 'string',
+          vtype: 'string',
           faker: 'random.uuid',
         },
         username: {
-          type: 'string',
+          vtype: 'string',
           faker: 'internet.userName',
         },
       },
@@ -17,11 +17,11 @@ const validStackDefinitions = {
     Account: {
       schema: {
         id: {
-          type: 'string',
+          vtype: 'string',
           faker: 'random.uuid',
         },
         username: {
-          type: 'string',
+          vtype: 'string',
           faker: 'internet.userName',
         },
       },
@@ -29,7 +29,7 @@ const validStackDefinitions = {
     Profile: {
       core: {
         id: {
-          type: 'string',
+          vtype: 'string',
           faker: 'random.uuid',
         },
       },
