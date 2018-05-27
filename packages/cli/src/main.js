@@ -11,7 +11,7 @@ import {
 import initQuestions from './initQuestions';
 import generateQuestions from './generateQuestions';
 
-const CONFIG_FILENAME = '.validstackrc';
+const CONFIG_FILENAME = '.aidarc';
 
 export default function main() {
   program
@@ -36,7 +36,7 @@ export default function main() {
 
   program
     .command('init')
-    .description('Initialize a validstack config file.')
+    .description('Initialize a aida config file.')
     .action(() => {
       init();
     });
@@ -79,7 +79,7 @@ function init() {
   const configPath = getConfigFilePath(CONFIG_FILENAME, false);
   if (configPath) {
     console.log(
-      'A config file already exists. If you wish to reinitialize validstack, please delete it first.',
+      'A config file already exists. If you wish to reinitialize aida, please delete it first.',
     );
 
     process.exit();
@@ -143,7 +143,7 @@ function getConfig(cmdOptions) {
   const configPath = getConfigFilePath(CONFIG_FILENAME, true);
   if (!configPath) {
     console.log(
-      'Could not find a validstack config file. Please run "validstack init" first.',
+      'Could not find a aida config file. Please run "aida init" first.',
     );
 
     process.exit();
