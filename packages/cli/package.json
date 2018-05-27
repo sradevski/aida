@@ -1,0 +1,24 @@
+{
+  "name": "@aida/cli",
+  "version": "0.0.1",
+  "description": "Aida command line",
+  "repository": "https://bitbucket.org/flencer/validstack",
+  "author": "Stevche Radevski <sradevski@live.com>",
+  "license": "MIT",
+  "scripts": {
+    "cli": "babel-node ./index.js"
+  },
+  "bin": {
+    "aida": "./bin/aida.js"
+  },
+  "devDependencies": {
+    "@aida/core": "^0.0.1"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "chokidar": "^2.0.3",
+    "commander": "^2.15.1",
+    "inquirer": "^5.2.0",
+    "plop": "^2.0.0"
+  }
+}

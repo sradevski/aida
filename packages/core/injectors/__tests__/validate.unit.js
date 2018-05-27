@@ -1,6 +1,6 @@
 import validate from '../validation/validate';
 
-const validstackDefinitons = {
+const aidaDefinitons = {
   _raw: {
     User: {
       core: {
@@ -44,9 +44,7 @@ describe('The validate injector', () => {
   });
 
   test('returns all properties with assigned validator if specified, or null otherwise', () => {
-    const result = validate(
-      validstackDefinitons,
-    ).getDefinitionsWithValidators();
+    const result = validate(aidaDefinitons).getDefinitionsWithValidators();
 
     expect(result.User.core.username).toBeFalsy();
     expect(result.User.core.tags).toBeFalsy();
@@ -54,7 +52,7 @@ describe('The validate injector', () => {
   });
 
   test('returns all used validator functions', () => {
-    const validatingObj = validate(validstackDefinitons);
+    const validatingObj = validate(aidaDefinitons);
     validatingObj.getDefinitionsWithValidators();
     const validatorFunctions = validatingObj.getValidatorsAsString();
 

@@ -13,7 +13,7 @@ module.exports = function(plop) {
     ],
     actions: definitionTypes.map(definitionType => ({
       type: 'add',
-      path: `src/definitions/{{pascalCase name}}/{{pascalCase name}}.${definitionType}.js`,
+      path: `lib/definitions/{{pascalCase name}}/{{pascalCase name}}.${definitionType}.js`,
       template:
         'const {{pascalCase name}} = {};\n\nexport default {{pascalCase name}};\n',
     })),

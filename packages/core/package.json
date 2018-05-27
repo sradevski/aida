@@ -1,0 +1,22 @@
+{
+  "name": "@aida/core",
+  "version": "0.0.1",
+  "description": "Aida core library",
+  "repository": "https://bitbucket.org/flencer/validstack",
+  "author": "Stevche Radevski <sradevski@live.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon ./index.js --exec babel-node --inspect",
+    "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage --out-dir dist/",
+    "serve": "npm run build && node dist/index.js dist/definitions ./output"
+  },
+  "devDependencies": {
+    "axios-mock-adapter": "^1.11.0"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "code-stringify": "^1.2.3",
+    "faker": "^4.1.0",
+    "url-parse": "^1.2.0"
+  }
+}

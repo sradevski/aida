@@ -1,13 +1,14 @@
-import validstack from './validstack';
+import aida from './aida';
 import routes from './injectors/routes';
 import swagger from './injectors/swagger';
 import routesMap from './injectors/routesMap';
 import fakedDataRoutes from './injectors/fakedDataRoutes';
+import fakedSchema from './injectors/fakedSchema';
 import validate from './injectors/validation/validate';
 import { outputToFile } from './utils/filesystem';
 
 function main(args) {
-  let location = './src/definitions';
+  let location = './definitions';
   let outputDestination = './output';
 
   if (args && args.length >= 2) {
@@ -16,7 +17,14 @@ function main(args) {
   }
 
   const config = {
-    injectors: [routes, routesMap, fakedDataRoutes, swagger, validate],
+    injectors: [
+      routes,
+      routesMap,
+      fakedDataRoutes,
+      fakedSchema,
+      swagger,
+      validate,
+    ],
     definitions: {
       location,
       blacklistFiles: ['helpers.js'],
@@ -24,21 +32,31 @@ function main(args) {
     },
   };
 
-  const validstackResults = validstack(config);
+  const aidaResults = aida(config);
 
   outputToFile(
-    JSON.stringify(validstackResults.getSwaggerDocs('User')),
+    JSON.stringify(aidaResults.getSwaggerDocs('User')),
     `${outputDestination}/swagger.json`,
   );
 
   outputToFile(
-    JSON.stringify(validstackResults.getFakedDataRoutes('User')),
+    JSON.stringify(aidaResults.getFakedDataRoutes('User')),
     `${outputDestination}/routes.json`,
   );
 
   outputToFile(
-    JSON.stringify(validstackResults.getRoutesMap('User'), null, 2),
+    JSON.stringify(aidaResults.getRoutesMap('User'), null, 2),
     `${outputDestination}/endpoints.json`,
+  );
+
+  outputToFile(
+    JSON.stringify(
+      aidaResults.getFakedSchema({
+        whitelist: ['Campaign'],
+        itemsPerDefinition: 10,
+      }),
+    ),
+    `${outputDestination}/schema.json`,
   );
 }
 

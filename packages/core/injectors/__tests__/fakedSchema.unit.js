@@ -1,6 +1,6 @@
 import fakedSchema from '../fakedSchema';
 
-const validStackDefinitions = {
+const aidaDefinitions = {
   _raw: {
     User: {
       schema: {
@@ -39,7 +39,7 @@ const validStackDefinitions = {
 
 let getSchema;
 beforeAll(() => {
-  getSchema = fakedSchema(validStackDefinitions).getFakedSchema;
+  getSchema = fakedSchema(aidaDefinitions).getFakedSchema;
 });
 
 describe('Faked schema', () => {

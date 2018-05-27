@@ -2,7 +2,7 @@ import { traverseFileSystem } from './utils/filesystem';
 
 const pipe = (...fns) => fn => fns.reduce((prev, func) => func(prev), fn);
 
-export default function validstack(passedConfig = {}) {
+export default function aida(passedConfig = {}) {
   const config = { ...getDefaultConfig(), ...passedConfig };
   return executeInjectors(config);
 }
