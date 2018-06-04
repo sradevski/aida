@@ -6,7 +6,19 @@ function getCurrentDirectoryBase() {
   return path.normalize(process.cwd());
 }
 
-export function createSchemaFiles(options) {}
+export function createSchemaFiles(options) {
+  const dir = `${options.schemaDir}/${options.modelName}`;
+  fs.mkdirSync(dir);
+
+  options.modelTypes.forEach(modelType => {
+    const template = `const ${options.modelName} = {};
+
+export default ${options.modelName};
+`;
+
+    fs.writeFileSync(`${dir}/${options.modelName}.${modelType}.js`, template);
+  });
+}
 
 export function createConfigFile(configFilename, configData) {
   const currentDir = getCurrentDirectoryBase();

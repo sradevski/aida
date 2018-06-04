@@ -117,17 +117,25 @@ function init() {
     });
 }
 
+//TODO: This needs cleaning up.
 function generate(modelName) {
   try {
+    const configData = getConfig();
+    const modelTypes = ['core', 'endpoints', 'request', 'response', 'schema'];
+
     if (modelName) {
-      createSchemaFiles({ modelName });
+      createSchemaFiles({
+        schemaDir: configData.schemaDir,
+        modelName,
+        modelTypes,
+      });
+      console.log(chalk.green('Finished creating a new model.'));
     } else {
       inquirer.prompt(generateQuestions).then(answers => {
-        createSchemaFiles(answers);
+        createSchemaFiles({ schemaDir: configData.schemaDir, ...answers });
+        console.log(chalk.green('Finished creating a new model.'));
       });
     }
-
-    console.log(chalk.green('Finished creating a new model.'));
   } catch (err) {
     console.error(err);
     process.exit(1);
