@@ -16,11 +16,10 @@ describe('stringify function', () => {
 
     const funcAsString = stringifyFunction(func);
     const expectedVal = `function test() {
-  var a = 1;
-  var b = 2;
-  return a + b;
-}
-`;
+      var a = 1;
+      var b = 2;
+      return a + b;
+    }`;
 
     expect(funcAsString).toBe(expectedVal);
   });
@@ -34,11 +33,10 @@ describe('stringify function', () => {
 
     const funcAsString = stringifyFunction(func);
     const expectedVal = `() => {
-  const a = 1;
-  const b = 2;
-  return a + b;
-};
-`;
+      const a = 1;
+      const b = 2;
+      return a + b;
+    }`;
 
     expect(funcAsString).toBe(expectedVal);
   });
@@ -65,10 +63,9 @@ describe('stringify object', () => {
   a: 1,
   b: {
     c: 2,
-    d: 'test',
-  },
-};
-`;
+    d: "test"
+  }
+}`;
     expect(result).toBe(expected);
   });
 
@@ -87,11 +84,10 @@ describe('stringify object', () => {
   a: 1,
   b: {
     d: () => {
-      return 'test';
-    },
-  },
-};
-`;
+          return 'test';
+        }
+  }
+}`;
 
     expect(result).toBe(expected);
   });

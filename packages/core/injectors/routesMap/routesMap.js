@@ -1,4 +1,4 @@
-import { getHttpMethods } from '../utils/configParsers';
+import { getHttpMethods } from '../../utils/configParsers';
 
 //routesMap returns a map of operationId: route while maintaining the placeholders for path variables.
 export default function routesMap(definitions) {

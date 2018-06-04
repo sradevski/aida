@@ -1,4 +1,4 @@
-import { populateWithFaker } from '../utils/faker';
+import { populateWithFaker } from '../../utils/faker';
 
 const seed = 12;
 

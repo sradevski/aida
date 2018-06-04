@@ -1,4 +1,4 @@
-import validate from '../validation/validate';
+import validate from '../index';
 
 const aidaDefinitons = {
   _raw: {
@@ -56,19 +56,15 @@ describe('The validate injector', () => {
     validatingObj.getDefinitionsWithValidators();
     const validatorFunctions = validatingObj.getValidatorsAsString();
 
-    const sanitized = validatorFunctions
-      .replace(/.*istanbul ignore next.*\n/g, '')
-      .replace(/.*cov_.*\n/g, '');
+    const sanitized = validatorFunctions.replace(
+      /\/\* istanbul ignore next.*return/g,
+      'return',
+    );
 
     expect(sanitized).toBe(`const result = {
-  integer: val => {
-    return val;
-  },
-  range: (val, props) => {
-    return val;
-  },
-  '2dbf2607877600fd8ebcb1653d4d13bf': val => val,
-};
-`);
+  integer: val => {return val;},
+  range: (val, props) => {return val;},
+  \"88fe1edfc09662fb57bb2274c1edc88f\": val => val
+}`);
   });
 });

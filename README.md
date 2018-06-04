@@ -1,4 +1,5 @@
-Add a readme later.
+Needs and Usage of Aida
+https://docs.google.com/spreadsheets/d/1JBAAty461-kV2t9Qgmldb4Xt6Tsi76vDahcSWwd6h4A/edit#gid=0
 
 # Introduction
 

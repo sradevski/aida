@@ -1,4 +1,4 @@
-import { getDefinitionType, getHttpMethods } from '../utils/configParsers';
+import { getDefinitionType, getHttpMethods } from '../../utils/configParsers';
 
 const defaultRootProperties = {
   openapi: '3.0.0',
@@ -12,7 +12,7 @@ const defaultRootProperties = {
 export default function swagger(definitions) {
   return {
     ...definitions,
-    getSwaggerDocs: (appCategory, rootProps = {}) =>
+    swaggerOutput: (appCategory, rootProps = {}) =>
       generateSwaggerDocs(definitions.getRoutes('', appCategory), {
         ...defaultRootProperties,
         ...rootProps,
