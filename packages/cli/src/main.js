@@ -1,10 +1,13 @@
 import chalk from 'chalk';
 import program from 'commander';
 import inquirer from 'inquirer';
+import * as aida from '@aida/core';
+
 import {
   createConfigFile,
   createSchemaFiles,
   readConfig,
+  outputToFile,
   getConfigFilePath,
   watchSchema,
 } from './filesystem';
@@ -36,7 +39,7 @@ export default function main() {
 
   program
     .command('init')
-    .description('Initialize a aida config file.')
+    .description('Initialize an aida config file.')
     .action(() => {
       init();
     });
@@ -50,7 +53,9 @@ export default function main() {
 
   program
     .command('watch')
-    .description('Watches for changes to the schema and runs the pipeline.')
+    .description(
+      'Watch for changes to the schema and run the pipeline on schema change.',
+    )
     .action(() => {
       watch();
     });
@@ -68,11 +73,26 @@ function run(plugins, options) {
       `Running plugins: ${chalk.yellow.bold(pluginsToRun.join(', '))}`,
     ),
   );
-  console.log(
-    `All files will be outputed at ${chalk.bold(configData.outputDir)}`,
-  );
 
-  //TODO: run the plugins here.
+  const config = {
+    injectors: pluginsToRun.map(pluginName => aida[pluginName]), //[aida.routes, aida.routesMap, aida.swagger],
+    definitions: {
+      location: configData.schemaDir,
+      blacklistFiles: ['helpers.js'],
+      blacklistDirectories: ['intermediate'],
+    },
+  };
+
+  const aidaResults = aida.run(config);
+  configData.plugins.forEach(plugin => {
+    if (plugin.outputType === 'file') {
+      const outputLocation = plugin.outputDir || configData.outputDir;
+      outputToFile(
+        JSON.stringify(aidaResults.getSwaggerDocs('User')),
+        `${outputLocation}/${plugin.name}`,
+      );
+    }
+  });
 }
 
 function init() {

@@ -1,3 +1,18 @@
+const pluginChoices = [
+  {
+    title: 'Routes',
+    value: 'routes',
+  },
+  {
+    title: 'Routes Map',
+    value: 'routesMap',
+  },
+  {
+    title: 'Swagger',
+    value: 'swagger',
+  },
+];
+
 const basic = [
   {
     type: 'input',
@@ -13,33 +28,46 @@ const basic = [
     type: 'checkbox',
     name: 'plugins',
     message: 'Select all plugins you wish to run',
-    choices: [
-      {
-        title: 'Swagger',
-        value: 'swagger',
-      },
-      {
-        title: 'Validate',
-        value: 'validate',
-      },
-    ],
+    choices: pluginChoices,
   },
 ];
 
-const swagger = [
-  {
-    type: 'input',
-    name: 'swagger.outputDir',
-    message:
-      'Specify the output directory for Swagger (leave empty for default)',
-    when: answers => answers.plugins.includes('swagger'),
+const pluginQuestions = pluginChoices.reduce(
+  (pluginQuestions, pluginChoice) => {
+    return [
+      ...pluginQuestions,
+      ...getPluginQuestions(pluginChoice.title, pluginChoice.value),
+    ];
   },
-  {
-    type: 'input',
-    name: 'swagger.otherParam',
-    message: 'Specify some other param',
-    when: answers => answers.plugins.includes('swagger'),
-  },
-];
+  [],
+);
 
-export default [...basic, ...swagger];
+function getPluginQuestions(name, value) {
+  return [
+    {
+      type: 'list',
+      name: `${value}.outputType`,
+      choices: [
+        {
+          title: 'None',
+          value: 'none',
+        },
+        {
+          title: 'File',
+          value: 'file',
+        },
+      ],
+      message: `Specify the type of output for ${name}.`,
+      when: answers => answers.plugins.includes(value),
+    },
+    {
+      type: 'input',
+      name: `${value}.outputDir`,
+      message: `Specify the output directory for ${name} (leave empty for default)`,
+      when: answers => {
+        answers.plugins.includes(value) && answers[value].outputType === 'file';
+      },
+    },
+  ];
+}
+export default [...basic, ...pluginQuestions];

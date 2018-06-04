@@ -21,8 +21,3 @@ export function traverseFileSystem(pathToTraverse) {
   recursiveTraversal(resolvedPath);
   return fileslist;
 }
-
-export function outputToFile(content, relativePath) {
-  const absolutePath = path.resolve(relativePath);
-  return fs.writeFileSync(absolutePath, content);
-}

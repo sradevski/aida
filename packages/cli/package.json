@@ -5,16 +5,19 @@
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",
+  "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "cli": "babel-node ./index.js"
+    "cli": "babel-node ./index.js",
+    "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage --out-dir dist/"
   },
   "bin": {
-    "aida": "./bin/aida.js"
-  },
-  "devDependencies": {
-    "@aida/core": "^0.0.1"
+    "aida": "./dist/index.js"
   },
   "dependencies": {
+    "@aida/core": "^0.0.1",
     "chalk": "^2.4.1",
     "chokidar": "^2.0.3",
     "commander": "^2.15.1",

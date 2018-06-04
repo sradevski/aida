@@ -3,3 +3,5 @@
 #EFAA52
 #AB3E16
 #48120E
+
+background: #2F3655

@@ -5,6 +5,10 @@
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",
+  "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "start": "nodemon ./index.js --exec babel-node --inspect",
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage --out-dir dist/",

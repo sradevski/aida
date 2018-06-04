@@ -28,6 +28,10 @@ function fileExists(filePath) {
   }
 }
 
+export function outputToFile(content, path) {
+  return fs.writeFileSync(path, content);
+}
+
 export function getConfigFilePath(configFilename, shouldSearchRecursively) {
   let startDir = ['/', ...getCurrentDirectoryBase().split('/')];
 
