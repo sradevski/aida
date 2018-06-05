@@ -12,7 +12,7 @@ const defaultRootProperties = {
 export default function swagger(definitions) {
   return {
     ...definitions,
-    swaggerOutput: (appCategory, rootProps = {}) =>
+    getSwagger: (appCategory, rootProps = {}) =>
       generateSwaggerDocs(definitions.getRoutes('', appCategory), {
         ...defaultRootProperties,
         ...rootProps,
@@ -53,11 +53,13 @@ function getSwaggerForMethod(method) {
   return {
     description: method.description,
     operationId: method.operationId,
-    parameters: getSwaggerForRequest(method.request),
+    ...getRequestParams(method.request),
+
     responses: Object.keys(method.response).reduce(
       (responses, responseCode) => {
-        responses[responseCode] = getSwaggerForResponse(
-          method.response[responseCode],
+        responses[responseCode] = getResponseRequestBody(
+          method.response[responseCode].body,
+          method.response[responseCode].description,
         );
         return responses;
       },
@@ -66,16 +68,26 @@ function getSwaggerForMethod(method) {
   };
 }
 
-function getSwaggerForRequest(request) {
+function getRequestParams(request) {
+  if (request) {
+    return {
+      parameters: getRequestPathParameters(request.path),
+      requestBody: getResponseRequestBody(request.body, request.description),
+    };
+  }
+  return {};
+}
+
+function getRequestPathParameters(requestPath) {
   let swaggerRequest = [];
 
-  if (request.path) {
-    swaggerRequest = Object.keys(request.path).map(pathKey => {
+  if (requestPath) {
+    swaggerRequest = Object.keys(requestPath).map(pathKey => {
       return {
         name: pathKey,
         in: 'path',
         required: true,
-        schema: getSwaggerForDefinition(request.path[pathKey]),
+        schema: getSwaggerForDefinition(requestPath[pathKey]),
       };
     });
   }
@@ -83,21 +95,25 @@ function getSwaggerForRequest(request) {
   return swaggerRequest.length > 0 ? swaggerRequest : undefined;
 }
 
-function getSwaggerForResponse(response) {
-  const responseContent = response.body
-    ? {
-        content: {
-          'application/json': {
-            schema: getSwaggerForDefinition(response.body),
+function getResponseRequestBody(body, description) {
+  if (body) {
+    const responseContent = body
+      ? {
+          content: {
+            'application/json': {
+              schema: getSwaggerForDefinition(body),
+            },
           },
-        },
-      }
-    : {};
+        }
+      : {};
 
-  return {
-    description: response.description,
-    ...responseContent,
-  };
+    return {
+      description: description,
+      ...responseContent,
+    };
+  }
+
+  return undefined;
 }
 
 function getSwaggerForDefinition(definition) {

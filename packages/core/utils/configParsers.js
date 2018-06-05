@@ -21,7 +21,6 @@ const httpMethods = [
   'trace',
 ];
 
-//TODO: Refactor this and faker functions as they are similar.
 //Crawls a definition and it replaces each primitive (not an array or object) with the value returned from the action passed. It returns the resulting object.
 export function crawlDefinition(
   rootDefinition,

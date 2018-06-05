@@ -15,7 +15,8 @@
     "serve": "npm run build && node dist/index.js dist/definitions ./output"
   },
   "devDependencies": {
-    "axios-mock-adapter": "^1.11.0"
+    "axios-mock-adapter": "^1.11.0",
+    "swagger-parser": "^5.0.0"
   },
   "dependencies": {
     "axios": "^0.17.1",

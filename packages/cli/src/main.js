@@ -88,7 +88,7 @@ function run(plugins, options) {
     if (plugin.outputType === 'file') {
       const outputLocation = plugin.outputDir || configData.outputDir;
       outputToFile(
-        JSON.stringify(aidaResults.getSwaggerDocs('User')),
+        JSON.stringify(aidaResults.getSwagger('User')),
         `${outputLocation}/${plugin.name}`,
       );
     }
