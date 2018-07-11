@@ -3,10 +3,12 @@ import { populateWithFaker } from '../../utils/faker';
 const seed = 12;
 
 //fakedSchema returns an object with either all or only whitelisted or blacklisted definitions, where each property contains an array of faked data for that schema.
-export default function fakedSchema(definitions) {
+export default function main(definitions) {
   return {
     ...definitions,
-    getFakedSchema: options => getFakedSchema(definitions, options),
+    fakedSchema: {
+      execute: (options = {}) => getFakedSchema(definitions, options),
+    },
   };
 }
 

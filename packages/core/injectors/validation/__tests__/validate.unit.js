@@ -39,12 +39,12 @@ describe('The validate injector', () => {
             },
           },
         },
-      }).getDefinitionsWithValidators(),
+      }).validation.execute(),
     ).toThrow();
   });
 
   test('returns all properties with assigned validator if specified, or null otherwise', () => {
-    const result = validate(aidaDefinitons).getDefinitionsWithValidators();
+    const result = validate(aidaDefinitons).validation.execute();
 
     expect(result.User.core.username).toBeFalsy();
     expect(result.User.core.tags).toBeFalsy();
@@ -53,8 +53,8 @@ describe('The validate injector', () => {
 
   test('returns all used validator functions', () => {
     const validatingObj = validate(aidaDefinitons);
-    validatingObj.getDefinitionsWithValidators();
-    const validatorFunctions = validatingObj.getValidatorsAsString();
+    validatingObj.validation.execute();
+    const validatorFunctions = validatingObj.validation.getValidatorsAsString();
 
     const sanitized = validatorFunctions.replace(
       /\/\* istanbul ignore next.*return/g,

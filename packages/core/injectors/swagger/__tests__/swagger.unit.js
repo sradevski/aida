@@ -75,15 +75,15 @@ const aidaDefinitions = {
   },
 };
 
-let getSwagger;
+let execute;
 beforeAll(() => {
-  getSwagger = swagger(routes(aidaDefinitions)).getSwagger;
+  execute = swagger(routes(aidaDefinitions)).swagger.execute;
 });
 
 describe('Swagger', () => {
   test('Generates a valid 3.0 version markup', async () => {
     //A quick and dirty way to remove undefined fields.
-    const swaggerDocs = JSON.parse(JSON.stringify(getSwagger()));
+    const swaggerDocs = JSON.parse(JSON.stringify(execute()));
     expect(
       await swaggerParser.validate(swaggerDocs, { validate: { spec: false } }),
     ).toBeTruthy();

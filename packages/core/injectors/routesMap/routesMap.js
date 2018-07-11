@@ -1,11 +1,13 @@
 import { getHttpMethods } from '../../utils/configParsers';
 
 //routesMap returns a map of operationId: route while maintaining the placeholders for path variables.
-export default function routesMap(definitions) {
+export default function main(definitions) {
   return {
     ...definitions,
-    getRoutesMap: categories =>
-      getRoutesMap(definitions.getRoutes('', categories)),
+    routesMap: {
+      execute: ({ categories } = {}) =>
+        getRoutesMap(definitions.routes.execute('', { categories })),
+    },
   };
 }
 

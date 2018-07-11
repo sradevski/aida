@@ -1,8 +1,10 @@
-export default function routes(definitions) {
+export default function main(definitions) {
   return {
     ...definitions,
-    getRoutes: (baseUri, categories) =>
-      getFlatRoutes(definitions, baseUri, categories),
+    routes: {
+      execute: ({ baseUri, categories } = {}) =>
+        getFlatRoutes(definitions, baseUri, categories),
+    },
   };
 }
 

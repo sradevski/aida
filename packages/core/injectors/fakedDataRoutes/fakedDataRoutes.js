@@ -4,11 +4,13 @@ import { populateWithFaker } from '../../utils/faker';
 const seed = 12;
 
 //fakedDataRoutes returns each of the defined endpoints with response and request parts populated with fake data.
-export default function fakedDataRoutes(definitions) {
+export default function main(definitions) {
   return {
     ...definitions,
-    getFakedDataRoutes: categories =>
-      getFakedDataRoutes(definitions.getRoutes('', categories)),
+    fakedDataRoutes: {
+      execute: ({ categories } = {}) =>
+        getFakedDataRoutes(definitions.routes.execute('', { categories })),
+    },
   };
 }
 

@@ -6,13 +6,14 @@ import { stringifyFunction, stringifyObject } from '../../utils/stringifier';
 const validatorFunctions = {};
 
 //Assigns a validation function to each property of the request and response definition types. This can later be used along with the validators to validate the data on both client and server side.
-export default function validate(definitions) {
+export default function main(definitions) {
   return {
     ...definitions,
-    getDefinitionsWithValidators: () =>
-      getDefinitionsWithValidators(definitions._raw),
-    getValidatorsAsString: config =>
-      generateValidatorsFile(validatorFunctions, config),
+    validation: {
+      execute: () => getDefinitionsWithValidators(definitions._raw),
+      getValidatorsAsString: config =>
+        generateValidatorsFile(validatorFunctions, config),
+    },
   };
 }
 

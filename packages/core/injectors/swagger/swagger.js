@@ -9,14 +9,19 @@ const defaultRootProperties = {
 };
 
 //generates a swagger.json file that can be used with any swagger-based tool.
-export default function swagger(definitions) {
+export default function main(definitions) {
   return {
     ...definitions,
-    getSwagger: (categories, rootProps = {}) =>
-      generateSwaggerDocs(definitions.getRoutes('', categories), {
-        ...defaultRootProperties,
-        ...rootProps,
-      }),
+    swagger: {
+      execute: ({ categories, rootProps = {} } = {}) =>
+        generateSwaggerDocs(
+          definitions.routes.execute({ baseUri: '', categories }),
+          {
+            ...defaultRootProperties,
+            ...rootProps,
+          },
+        ),
+    },
   };
 }
 
