@@ -7,8 +7,8 @@ const seed = 12;
 export default function fakedDataRoutes(definitions) {
   return {
     ...definitions,
-    getFakedDataRoutes: appCategory =>
-      getFakedDataRoutes(definitions.getRoutes('', appCategory)),
+    getFakedDataRoutes: categories =>
+      getFakedDataRoutes(definitions.getRoutes('', categories)),
   };
 }
 

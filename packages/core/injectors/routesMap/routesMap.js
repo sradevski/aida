@@ -4,8 +4,8 @@ import { getHttpMethods } from '../../utils/configParsers';
 export default function routesMap(definitions) {
   return {
     ...definitions,
-    getRoutesMap: appCategory =>
-      getRoutesMap(definitions.getRoutes('', appCategory)),
+    getRoutesMap: categories =>
+      getRoutesMap(definitions.getRoutes('', categories)),
   };
 }
 

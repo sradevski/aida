@@ -12,8 +12,8 @@ const defaultRootProperties = {
 export default function swagger(definitions) {
   return {
     ...definitions,
-    getSwagger: (appCategory, rootProps = {}) =>
-      generateSwaggerDocs(definitions.getRoutes('', appCategory), {
+    getSwagger: (categories, rootProps = {}) =>
+      generateSwaggerDocs(definitions.getRoutes('', categories), {
         ...defaultRootProperties,
         ...rootProps,
       }),
