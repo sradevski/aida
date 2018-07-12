@@ -11,6 +11,10 @@ const pluginChoices = [
     title: 'Swagger',
     value: 'swagger',
   },
+  {
+    title: 'Faked Data Routes',
+    value: 'fakedDataRoutes',
+  },
 ];
 
 const basic = [
