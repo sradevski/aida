@@ -21,7 +21,7 @@ const httpMethods = [
   'trace',
 ];
 
-//Crawls a definition and it replaces each primitive (not an array or object) with the value returned from the action passed. It returns the resulting object.
+//Crawls a definition and it replaces each primitive (not an array or object) with the value returned from the action passed. Optionally an array handling function can be passed to handle arrays. It returns the resulting object.
 export function crawlDefinition(
   rootDefinition,
   selector,

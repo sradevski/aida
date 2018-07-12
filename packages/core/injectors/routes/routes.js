@@ -2,20 +2,19 @@ export default function main(definitions) {
   return {
     ...definitions,
     routes: {
-      execute: ({ baseUri, categories } = {}) =>
-        getFlatRoutes(definitions, baseUri, categories),
+      execute: ({ baseUri, category } = {}) =>
+        getFlatRoutes(definitions, baseUri, category),
     },
   };
 }
 
 //getFlatRoutes returns all the defined routes in a flat structure. This is used as the basis for several other injectors.
-function getFlatRoutes(definitions, baseUri, categories) {
+function getFlatRoutes(definitions, baseUri = '', category) {
   return Object.values(definitions._raw).reduce((flatRoutes, definition) => {
     if (!definition.endpoints) {
       return flatRoutes;
     }
-
-    const endpointData = getEndpoints(definition.endpoints, categories);
+    const endpointData = getEndpoints(definition.endpoints, category);
 
     const definitionRoutes = Object.keys(endpointData).reduce(
       (definitionPaths, path) => {
@@ -30,14 +29,15 @@ function getFlatRoutes(definitions, baseUri, categories) {
   }, {});
 }
 
-function getEndpoints(endpoints, categories) {
-  if (!categories) {
+function getEndpoints(endpoints, category) {
+  //there are no categories, so return all routes
+  if (Object.keys(endpoints)[0].includes('/')) {
     return endpoints;
   }
 
-  return categories.reduce((matchingEndpoints, category) => {
-    if (endpoints[category]) {
-      matchingEndpoints.push(...endpoints[category]);
-    }
-  }, []);
+  if (!endpoints[category]) {
+    return {};
+  }
+
+  return endpoints[category];
 }

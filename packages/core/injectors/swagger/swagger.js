@@ -13,9 +13,9 @@ export default function main(definitions) {
   return {
     ...definitions,
     swagger: {
-      execute: ({ categories, rootProps = {} } = {}) =>
+      execute: ({ category, rootProps = {} } = {}) =>
         generateSwaggerDocs(
-          definitions.routes.execute({ baseUri: '', categories }),
+          definitions.routes.execute({ baseUri: '', category }),
           {
             ...defaultRootProperties,
             ...rootProps,

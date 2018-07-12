@@ -5,8 +5,8 @@ export default function main(definitions) {
   return {
     ...definitions,
     routesMap: {
-      execute: ({ categories } = {}) =>
-        getRoutesMap(definitions.routes.execute('', { categories })),
+      execute: ({ category } = {}) =>
+        getRoutesMap(definitions.routes.execute({ baseUri: '', category })),
     },
   };
 }
@@ -15,7 +15,11 @@ function getRoutesMap(routes) {
   return Object.keys(routes).reduce((routesMap, routeKey) => {
     const routeMap = getHttpMethods(routes[routeKey]).reduce(
       (routeMap, methodName) => {
-        const id = routes[routeKey][methodName].operationId || routeKey;
+        const id = routes[routeKey][methodName].operationId;
+        if (!id) {
+          throw new Error('All routes have to have an operationId field');
+        }
+
         routeMap[id] = routeKey;
         return routeMap;
       },

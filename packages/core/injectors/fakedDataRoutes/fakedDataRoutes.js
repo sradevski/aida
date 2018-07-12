@@ -8,8 +8,8 @@ export default function main(definitions) {
   return {
     ...definitions,
     fakedDataRoutes: {
-      execute: ({ categories } = {}) =>
-        getFakedDataRoutes(definitions.routes.execute('', { categories })),
+      execute: ({ category } = {}) =>
+        getFakedDataRoutes(definitions.routes.execute('', { category })),
     },
   };
 }
