@@ -54,7 +54,7 @@ An example object passed to the injectors:
 
 ### Usage
 
-For a start, all definitions are flat. However, each definition can have subfolders - categories that use a similar model with some differences (Account for businesses and Account for users). The same can also be achieved just by creating a flat definition for each, and then adding the ones you don't want in a blacklist. However, the module concept is a bit cleaner in my opinion.
+For a start, all definitions are flat. However, each definition can have subfolders - categories that use a similar model with some differences (Account for businesses and Account for users). The same can also be achieved just by creating a flat definition for each, and then adding the ones you don't want in a blacklist. However, the category concept is a bit cleaner in my opinion.
 
 
 

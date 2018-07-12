@@ -30,8 +30,9 @@ function getFlatRoutes(definitions, baseUri = '', category) {
 }
 
 function getEndpoints(endpoints, category) {
+  const firstEndpoint = Object.keys(endpoints)[0];
   //there are no categories, so return all routes
-  if (Object.keys(endpoints)[0].includes('/')) {
+  if (firstEndpoint && firstEndpoint.includes('/')) {
     return endpoints;
   }
 
