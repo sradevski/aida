@@ -86,13 +86,22 @@ function run(plugins, options) {
   const aidaResults = aida.run(config);
   configData.plugins.forEach(plugin => {
     if (plugin.outputType === 'file') {
-      const outputLocation = plugin.outputDir || configData.outputDir;
+      const outputPath = getOutputPath(
+        configData.outputDir,
+        plugin.outputFile,
+        plugin.name,
+      );
+
       outputToFile(
         JSON.stringify(aidaResults[plugin.name].execute({ category: 'User' })),
-        `${outputLocation}/${plugin.name}`,
+        outputPath,
       );
     }
   });
+}
+
+function getOutputPath(defaultOutputDir, pluginOutputFile, pluginName) {
+  return pluginOutputFile || `${defaultOutputDir}${pluginName}`;
 }
 
 function init() {

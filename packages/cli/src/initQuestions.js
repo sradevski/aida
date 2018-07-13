@@ -66,10 +66,13 @@ function getPluginQuestions(name, value) {
     },
     {
       type: 'input',
-      name: `${value}.outputDir`,
-      message: `Specify the output directory for ${name} (leave empty for default)`,
+      name: `${value}.outputFile`,
+      message: `Specify the output file for ${name} (leave empty for default directory with plugin name as filename)`,
       when: answers => {
-        answers.plugins.includes(value) && answers[value].outputType === 'file';
+        return (
+          answers.plugins.includes(value) &&
+          answers[value].outputType === 'file'
+        );
       },
     },
   ];
