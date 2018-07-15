@@ -100,11 +100,14 @@ function getTemplatePathSegmentIndex(pathSegment) {
 
 function respondToRequest(requestConfig, definedRoute) {
   const { response } = definedRoute[requestConfig.method];
+  const possibleResponses = Object.keys(response).filter(x => x !== 'default');
 
-  if (response['200']) {
-    return [200, response['200']];
-  } else if (response['204']) {
-    return [204];
+  if (possibleResponses.length > 0) {
+    if (response['200']) {
+      return [200, response['200']];
+    }
+
+    return [parseInt(possibleResponses[0], 10), response[possibleResponses[0]]];
   }
 
   return [500, {}];

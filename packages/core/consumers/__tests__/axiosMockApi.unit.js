@@ -60,6 +60,12 @@ describe('The api mocking function GET statement', () => {
       expect(error.response.data).toEqual({});
     }
   });
+
+  test('returns the first defined response if 200 response does not exist', async () => {
+    expect.assertions(1);
+    const response = await axios.delete(`${rootUri}/users/details`);
+    expect(response.status).toEqual(204);
+  });
 });
 
 describe('The api mocking function POST statement', () => {
