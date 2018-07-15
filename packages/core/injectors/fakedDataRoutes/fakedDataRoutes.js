@@ -19,24 +19,15 @@ function getFakedDataRoutes(routes) {
     const routeDetails = getHttpMethods(routes[routeKey]).reduce(
       (routeDetails, methodName) => {
         const methodFields = routes[routeKey][methodName];
-        if (methodFields.response['200']) {
-          const fakedData = populateWithFaker(
-            methodFields.response['200'].body,
-            { seed },
-          );
+        const responses = populateAllResponseStatuses(methodFields);
 
-          routeDetails[methodName] = {
-            ...methodFields,
-            response: {
-              ...methodFields.response,
-              '200': fakedData,
-            },
-          };
-        } else {
-          routeDetails[methodName] = {
-            ...methodFields,
-          };
-        }
+        routeDetails[methodName] = {
+          ...methodFields,
+          response: {
+            ...methodFields.response,
+            ...responses,
+          },
+        };
 
         return routeDetails;
       },
@@ -45,4 +36,39 @@ function getFakedDataRoutes(routes) {
     fakedDataRoutes[routeKey] = routeDetails;
     return fakedDataRoutes;
   }, {});
+}
+
+function populateAllResponseStatuses(methodFields) {
+  const responses = methodFields.response;
+
+  return Object.keys(responses).reduce((populatedResponse, responseStatus) => {
+    const body = responses[responseStatus].body;
+    const headers = responses[responseStatus].headers;
+
+    populatedResponse[responseStatus] = {
+      ...responses[responseStatus],
+      body: populateBody(body),
+      headers: populateHeaders(headers),
+    };
+
+    return populatedResponse;
+  }, {});
+}
+
+function populateBody(body) {
+  return populateWithFaker(body, { seed });
+}
+
+function populateHeaders(headers) {
+  if (headers) {
+    return Object.keys(headers).reduce((populatedHeaders, headerName) => {
+      populatedHeaders[headerName] = populateWithFaker(headers[headerName], {
+        seed,
+      });
+
+      return populatedHeaders;
+    }, {});
+  }
+
+  return undefined;
 }

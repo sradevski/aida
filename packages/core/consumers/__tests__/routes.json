@@ -13,17 +13,20 @@
 				}
 			},
 			"response": {
-				"200": [{
-						"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
-						"email": "Katlynn_Upton@gmail.com",
-						"phoneNumber": "914.750.8191 x2376"
-					},
-					{
-						"id": "c93ddef2-fc7c-499c-8a6b-50a4e0bd757a",
-						"email": "Deshaun_Lehner@yahoo.com",
-						"phoneNumber": "631-972-9359"
-					}
-				]
+				"200": {
+					"body": [
+						{
+							"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+							"email": "Katlynn_Upton@gmail.com",
+							"phoneNumber": "914.750.8191 x2376"
+						},
+						{
+							"id": "c93ddef2-fc7c-499c-8a6b-50a4e0bd757a",
+							"email": "Deshaun_Lehner@yahoo.com",
+							"phoneNumber": "631-972-9359"
+						}
+					]
+				}
 			}
 		},
 		"post": {
@@ -44,9 +47,11 @@
 			},
 			"response": {
 				"200": {
-					"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
-					"email": "Katlynn_Upton@gmail.com",
-					"phoneNumber": "914.750.8191 x2376"
+					"body": {
+						"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+						"email": "Katlynn_Upton@gmail.com",
+						"phoneNumber": "914.750.8191 x2376"
+					}
 				}
 			}
 		}
@@ -58,10 +63,12 @@
 			"request": {},
 			"response": {
 				"200": {
-					"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
-					"email": "Katlynn_Upton@gmail.com",
-					"phoneNumber": "914.750.8191 x2376",
-					"details": null
+					"body": {
+						"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+						"email": "Katlynn_Upton@gmail.com",
+						"phoneNumber": "914.750.8191 x2376",
+						"details": null
+					}
 				},
 				"default": {
 					"description": "Unexpected Error",
@@ -113,9 +120,11 @@
 			},
 			"response": {
 				"200": {
-					"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
-					"email": "Katlynn_Upton@gmail.com",
-					"phoneNumber": "914.750.8191 x2376"
+					"body": {
+						"id": "27bd418b-05e0-4e40-9fb2-54a9ff7de038",
+						"email": "Katlynn_Upton@gmail.com",
+						"phoneNumber": "914.750.8191 x2376"
+					}
 				},
 				"default": {
 					"description": "Unexpected Error",
