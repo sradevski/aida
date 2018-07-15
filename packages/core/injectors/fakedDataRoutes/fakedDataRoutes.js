@@ -56,7 +56,11 @@ function populateAllResponseStatuses(methodFields) {
 }
 
 function populateBody(body) {
-  return populateWithFaker(body, { seed });
+  if (body) {
+    return populateWithFaker(body, { seed });
+  }
+
+  return undefined;
 }
 
 function populateHeaders(headers) {
