@@ -1,6 +1,6 @@
 import fakedSchema from '../fakedSchema';
 
-const aidaDefinitions = {
+const aidaModels = {
   _raw: {
     User: {
       schema: {
@@ -39,18 +39,18 @@ const aidaDefinitions = {
 
 let execute;
 beforeAll(() => {
-  execute = fakedSchema(aidaDefinitions).fakedSchema.execute;
+  execute = fakedSchema(aidaModels).fakedSchema.execute;
 });
 
 describe('Faked schema', () => {
-  test('returns only definitions that have defined schema', () => {
+  test('returns only models that have defined schema', () => {
     const keys = Object.keys(execute());
     expect(keys).toEqual(expect.arrayContaining(['User', 'Account']));
 
     expect(keys).not.toContain('Profile');
   });
 
-  test('returns only whitelisted definitions, even if blacklist is provided', () => {
+  test('returns only whitelisted models, even if blacklist is provided', () => {
     const keys = Object.keys(
       execute({ whitelist: ['User'], blacklist: ['User'] }),
     );
@@ -59,13 +59,13 @@ describe('Faked schema', () => {
     expect(keys).not.toContain('Account');
   });
 
-  test('returns only definitions not in blacklist', () => {
+  test('returns only models not in blacklist', () => {
     const keys = Object.keys(execute({ blacklist: ['Account'] }));
     expect(keys).toContain('User');
     expect(keys).not.toContain('Account');
   });
 
-  test('returns an array with one element of fake data for each definition', () => {
+  test('returns an array with one element of fake data for each model', () => {
     const schema = execute();
     expect(schema.User).toHaveLength(1);
     expect(schema.User[0]).toEqual({
@@ -74,8 +74,8 @@ describe('Faked schema', () => {
     });
   });
 
-  test('returns an array with specified number of items of fake data for each definition', () => {
-    const schema = execute({ itemsPerDefinition: 5 });
+  test('returns an array with specified number of items of fake data for each model', () => {
+    const schema = execute({ itemsPerModel: 5 });
     expect(schema.User).toHaveLength(5);
     expect(schema.User[3]).toEqual({
       id: '4739088c-6600-499c-81b4-ea97a8975e89',

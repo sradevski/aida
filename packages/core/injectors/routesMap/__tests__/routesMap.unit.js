@@ -1,7 +1,7 @@
 import routesMap from '../index';
 import routes from '../../routes';
 
-const aidaDefinitions = {
+const aidaModels = {
   _raw: {
     User: {
       endpoints: {
@@ -62,13 +62,13 @@ const aidaDefinitions = {
 };
 
 describe('The routes map injector', () => {
-  test('returns an empty object for definitions that do not have endpoints file.', () => {
+  test('returns an empty object for models that do not have endpoints file.', () => {
     const flatRoutes = routesMap(routes({ _raw: {} })).routesMap.execute();
     expect(Object.keys(flatRoutes)).toHaveLength(0);
   });
 
-  test('returns a map of operationId:route for all endpoints in the definition', () => {
-    const flatRoutes = routesMap(routes(aidaDefinitions)).routesMap.execute();
+  test('returns a map of operationId:route for all endpoints in the model', () => {
+    const flatRoutes = routesMap(routes(aidaModels)).routesMap.execute();
     expect(flatRoutes).toEqual({
       updateUser: '/users',
       getUser: '/users/{id}',

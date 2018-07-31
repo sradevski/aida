@@ -2,29 +2,29 @@ import { populateWithFaker } from '../../utils/faker';
 
 const seed = 12;
 
-//fakedSchema returns an object with either all or only whitelisted or blacklisted definitions, where each property contains an array of faked data for that schema.
-export default function main(definitions) {
+//fakedSchema returns an object with either all or only whitelisted or blacklisted models, where each property contains an array of faked data for that schema.
+export default function main(models) {
   return {
-    ...definitions,
+    ...models,
     fakedSchema: {
-      execute: (options = {}) => getFakedSchema(definitions, options),
+      execute: (options = {}) => getFakedSchema(models, options),
     },
   };
 }
 
-function getFakedSchema(definitions, options = {}) {
-  const { blacklist, whitelist, itemsPerDefinition } = options;
-  const allDefinitions = definitions._raw;
+function getFakedSchema(models, options = {}) {
+  const { blacklist, whitelist, itemsPerModel } = options;
+  const allModels = models._raw;
 
-  return Object.keys(allDefinitions).reduce((schemaObjects, defName) => {
-    if (!allDefinitions[defName].schema) {
+  return Object.keys(allModels).reduce((schemaObjects, defName) => {
+    if (!allModels[defName].schema) {
       return schemaObjects;
     }
 
     if (shouldIncludeDef(defName, whitelist, blacklist)) {
       schemaObjects[defName] = getFakeDataForSchema(
-        allDefinitions[defName].schema,
-        itemsPerDefinition,
+        allModels[defName].schema,
+        itemsPerModel,
       );
     }
 
@@ -32,9 +32,9 @@ function getFakedSchema(definitions, options = {}) {
   }, {});
 }
 
-function getFakeDataForSchema(schemaDef, itemsPerDefinition = 1) {
+function getFakeDataForSchema(schemaDef, itemsPerModel = 1) {
   const fakerCrawlerOptions = {
-    fakerIterations: itemsPerDefinition,
+    fakerIterations: itemsPerModel,
   };
 
   const fakedData = populateWithFaker([schemaDef, fakerCrawlerOptions], {

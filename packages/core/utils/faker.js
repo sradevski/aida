@@ -1,18 +1,18 @@
 import faker from 'faker';
-import { crawlDefinition } from './configParsers';
+import { crawlModel } from './configParsers';
 
 const defaultOptions = {
   seed: 1,
   locale: 'en',
 };
 
-export function populateWithFaker(definition, options) {
+export function populateWithFaker(model, options) {
   const fullOptions = { ...defaultOptions, ...options };
   const { locale, seed } = fullOptions;
   faker.locale = locale;
   faker.seed(seed);
 
-  return crawlDefinition(definition, 'faker', getFakerValue, getPopulatedArray);
+  return crawlModel(model, 'faker', getFakerValue, getPopulatedArray);
 }
 
 const defaultArrayFakerProps = {
@@ -26,15 +26,15 @@ const defaultFakerProps = {
   options: undefined,
 };
 
-function getPopulatedArray(definition) {
-  const [property, passedArrayProps] = definition;
+function getPopulatedArray(model) {
+  const [property, passedArrayProps] = model;
   const { areEntriesUnique, uniqueOn, fakerIterations } = {
     ...defaultArrayFakerProps,
     ...(passedArrayProps ? passedArrayProps : {}),
   };
   const result = [];
   for (let i = 1; i <= fakerIterations; i++) {
-    const newFakerVal = crawlDefinition(
+    const newFakerVal = crawlModel(
       property,
       'faker',
       getFakerValue,

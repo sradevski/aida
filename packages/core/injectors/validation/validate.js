@@ -1,52 +1,48 @@
 import crypto from 'crypto';
-import { crawlDefinition } from '../../utils/configParsers';
+import { crawlModel } from '../../utils/configParsers';
 import predefinedValidators from './predefinedValidators';
 import { stringifyFunction, stringifyObject } from '../../utils/stringifier';
 
 const validatorFunctions = {};
 
-//Assigns a validation function to each property of the request and response definition types. This can later be used along with the validators to validate the data on both client and server side.
-export default function main(definitions) {
+//Assigns a validation function to each property of the request and response model types. This can later be used along with the validators to validate the data on both client and server side.
+export default function main(models) {
   return {
-    ...definitions,
+    ...models,
     validation: {
-      execute: () => getDefinitionsWithValidators(definitions._raw),
+      execute: () => getModelsWithValidators(models._raw),
       getValidatorsAsString: config =>
         generateValidatorsFile(validatorFunctions, config),
     },
   };
 }
 
-function getDefinitionsWithValidators(definitions) {
-  const definitionsWithValidators = Object.keys(definitions).reduce(
-    (definitionsWithValidators, definitionKey) => {
-      definitionsWithValidators[definitionKey] = getValidatorsForDefinition(
-        definitions[definitionKey],
-      );
+function getModelsWithValidators(models) {
+  const modelsWithValidators = Object.keys(models).reduce(
+    (modelsWithValidators, modelKey) => {
+      modelsWithValidators[modelKey] = getValidatorsForModel(models[modelKey]);
 
-      return definitionsWithValidators;
+      return modelsWithValidators;
     },
     {},
   );
 
-  return definitionsWithValidators;
+  return modelsWithValidators;
 }
 
 const blacklistedTypes = ['endpoints'];
 
-function getValidatorsForDefinition(definition) {
-  return Object.keys(definition)
-    .filter(definitionType => !blacklistedTypes.includes(definitionType))
-    .reduce((definitionTypes, definitionType) => {
-      definitionTypes[definitionType] = getValidatorsForType(
-        definition[definitionType],
-      );
-      return definitionTypes;
+function getValidatorsForModel(model) {
+  return Object.keys(model)
+    .filter(modelType => !blacklistedTypes.includes(modelType))
+    .reduce((modelTypes, modelType) => {
+      modelTypes[modelType] = getValidatorsForType(model[modelType]);
+      return modelTypes;
     }, {});
 }
 
-function getValidatorsForType(definition) {
-  return crawlDefinition(definition, 'validators', getValidator);
+function getValidatorsForType(model) {
+  return crawlModel(model, 'validators', getValidator);
 }
 
 function getValidator(validatorObj) {

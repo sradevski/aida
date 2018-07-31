@@ -1,4 +1,4 @@
-import { getDefinitionType, getHttpMethods } from '../../utils/configParsers';
+import { getModelType, getHttpMethods } from '../../utils/configParsers';
 
 const defaultRootProperties = {
   openapi: '3.0.0',
@@ -9,18 +9,15 @@ const defaultRootProperties = {
 };
 
 //generates a swagger.json file that can be used with any swagger-based tool.
-export default function main(definitions) {
+export default function main(models) {
   return {
-    ...definitions,
+    ...models,
     swagger: {
       execute: ({ category, rootProps = {} } = {}) =>
-        generateSwaggerDocs(
-          definitions.routes.execute({ baseUri: '', category }),
-          {
-            ...defaultRootProperties,
-            ...rootProps,
-          },
-        ),
+        generateSwaggerDocs(models.routes.execute({ baseUri: '', category }), {
+          ...defaultRootProperties,
+          ...rootProps,
+        }),
     },
   };
 }
@@ -92,7 +89,7 @@ function getRequestPathParameters(requestPath) {
         name: pathKey,
         in: 'path',
         required: true,
-        schema: getSwaggerForDefinition(requestPath[pathKey]),
+        schema: getSwaggerForModel(requestPath[pathKey]),
       };
     });
   }
@@ -106,7 +103,7 @@ function getResponseRequestBody(body, description) {
       ? {
           content: {
             'application/json': {
-              schema: getSwaggerForDefinition(body),
+              schema: getSwaggerForModel(body),
             },
           },
         }
@@ -121,23 +118,23 @@ function getResponseRequestBody(body, description) {
   return undefined;
 }
 
-function getSwaggerForDefinition(definition) {
-  const defType = getDefinitionType(definition);
+function getSwaggerForModel(model) {
+  const defType = getModelType(model);
   if (defType === 'array') {
     return {
       type: 'array',
       items: {
-        ...getSwaggerForDefinition(definition[0]),
+        ...getSwaggerForModel(model[0]),
       },
     };
   }
 
   if (defType === 'object') {
-    const requiredChildren = getRequiredChildrenNames(definition);
+    const requiredChildren = getRequiredChildrenNames(model);
     return {
       required: requiredChildren.length > 0 ? requiredChildren : undefined,
-      properties: Object.keys(definition).reduce((properties, field) => {
-        properties[field] = getSwaggerForDefinition(definition[field]);
+      properties: Object.keys(model).reduce((properties, field) => {
+        properties[field] = getSwaggerForModel(model[field]);
         return properties;
       }, {}),
     };
@@ -146,31 +143,31 @@ function getSwaggerForDefinition(definition) {
   return { type: defType };
 }
 
-function getRequiredChildrenNames(definition) {
-  return Object.keys(definition).filter(child => {
-    const defType = getDefinitionType(definition[child]);
+function getRequiredChildrenNames(model) {
+  return Object.keys(model).filter(child => {
+    const defType = getModelType(model[child]);
     if (defType === 'array' || defType === 'object') {
-      return hasRequiredDescendant(definition[child]);
+      return hasRequiredDescendant(model[child]);
     }
 
-    return Boolean(definition[child].required);
+    return Boolean(model[child].required);
   });
 }
 
-//If a definition has a required descendant, it automatically makes it required.
-function hasRequiredDescendant(definition) {
-  const defType = getDefinitionType(definition);
+//If a model has a required descendant, it automatically makes it required.
+function hasRequiredDescendant(model) {
+  const defType = getModelType(model);
   if (defType === 'array') {
-    return hasRequiredDescendant(definition[0]);
+    return hasRequiredDescendant(model[0]);
   }
 
   if (defType !== 'object') {
-    return Boolean(definition.required);
+    return Boolean(model.required);
   }
 
-  return Object.keys(definition).reduce((hasRequired, field) => {
-    const property = definition[field];
-    const propType = getDefinitionType(property);
+  return Object.keys(model).reduce((hasRequired, field) => {
+    const property = model[field];
+    const propType = getModelType(property);
     if (propType === 'array') {
       hasRequired = hasRequired || hasRequiredDescendant(property[0]);
     } else if (propType === 'object') {

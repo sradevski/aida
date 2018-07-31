@@ -15,7 +15,7 @@ const userObj = {
   },
 };
 
-const aidaDefinitions = {
+const aidaModels = {
   _raw: {
     User: {
       endpoints: {
@@ -77,7 +77,7 @@ const aidaDefinitions = {
 
 let execute;
 beforeAll(() => {
-  execute = swagger(routes(aidaDefinitions)).swagger.execute;
+  execute = swagger(routes(aidaModels)).swagger.execute;
 });
 
 describe('Swagger', () => {

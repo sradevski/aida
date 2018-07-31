@@ -1,9 +1,9 @@
-export function getDefinitionType(definition) {
-  if (definition.vtype) {
-    return definition.vtype;
+export function getModelType(model) {
+  if (model.vtype) {
+    return model.vtype;
   }
 
-  if (Array.isArray(definition)) {
+  if (Array.isArray(model)) {
     return 'array';
   }
 
@@ -21,30 +21,24 @@ const httpMethods = [
   'trace',
 ];
 
-//Crawls a definition and it replaces each primitive (not an array or object) with the value returned from the action passed. Optionally an array handling function can be passed to handle arrays. It returns the resulting object.
-export function crawlDefinition(
-  rootDefinition,
-  selector,
-  action,
-  arrayHandler,
-) {
-  function crawler(definition) {
-    const defType = getDefinitionType(definition);
+//Crawls a model and it replaces each primitive (not an array or object) with the value returned from the action passed. Optionally an array handling function can be passed to handle arrays. It returns the resulting object.
+export function crawlModel(rootModel, selector, action, arrayHandler) {
+  function crawler(model) {
+    const defType = getModelType(model);
     if (defType === 'array') {
       return (
-        (arrayHandler &&
-          arrayHandler(definition, selector, action, arrayHandler)) ||
-        crawler(definition[0])
+        (arrayHandler && arrayHandler(model, selector, action, arrayHandler)) ||
+        crawler(model[0])
       );
     }
 
     if (defType !== 'object') {
-      return action(definition[selector]);
+      return action(model[selector]);
     }
 
-    return Object.keys(definition).reduce((populatedObject, field) => {
-      const property = definition[field];
-      const propType = getDefinitionType(property);
+    return Object.keys(model).reduce((populatedObject, field) => {
+      const property = model[field];
+      const propType = getModelType(property);
 
       if (propType === 'array') {
         populatedObject[field] =
@@ -61,7 +55,7 @@ export function crawlDefinition(
     }, {});
   }
 
-  return crawler(rootDefinition);
+  return crawler(rootModel);
 }
 
 export function getHttpMethods(route) {

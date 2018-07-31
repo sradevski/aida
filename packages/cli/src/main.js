@@ -21,7 +21,7 @@ export default function main() {
     .version('0.0.1', '-v, --version')
     .option(
       '-S --schema-dir <path>',
-      'Set the directory for your schema definitions. It overrides the config file settings.',
+      'Set the directory for your models. It overrides the config file settings.',
     )
     .option(
       '-O --output-dir <path>',
@@ -31,7 +31,7 @@ export default function main() {
   program
     .command('run [plugins...]')
     .description(
-      'Runs the plugin pipeline you specify. If nothing is specified, the pipeline definition from your config file is used.',
+      'Runs the plugin pipeline you specify. If nothing is specified, the pipeline from your config file is used.',
     )
     .action((plugins, options) => {
       run(plugins, options.parent);
@@ -64,6 +64,7 @@ export default function main() {
 }
 
 function run(plugins, options) {
+  console.log(chalk.yellow(`Getting aida config...`));
   const configData = getConfig(options);
   const pluginsToRun =
     plugins.length > 0 ? plugins : configData.plugins.map(x => x.name);
@@ -76,7 +77,7 @@ function run(plugins, options) {
 
   const config = {
     injectors: pluginsToRun.map(pluginName => aida[pluginName]), //[aida.routes, aida.routesMap, aida.swagger],
-    definitions: {
+    models: {
       location: configData.schemaDir,
       blacklistFiles: ['helpers.js'],
       blacklistDirectories: ['intermediate'],
@@ -98,6 +99,8 @@ function run(plugins, options) {
       );
     }
   });
+
+  console.log(chalk.yellow(`Done!`));
 }
 
 function getOutputPath(defaultOutputDir, pluginOutputFile, pluginName) {

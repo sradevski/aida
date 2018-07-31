@@ -12,7 +12,7 @@
   "scripts": {
     "start": "nodemon ./index.js --exec babel-node --inspect",
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage --out-dir dist/",
-    "serve": "npm run build && node dist/index.js dist/definitions ./output"
+    "serve": "npm run build && node dist/index.js dist/models ./output"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.11.0",

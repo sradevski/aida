@@ -1,6 +1,6 @@
 import axios from 'axios';
 import axiosMocker from '../axiosMocker';
-import definitionRoutes from './routes.json';
+import modelRoutes from './routes.json';
 
 let rootUri = 'http://localhost:4000/api';
 const expectedResponse = {
@@ -10,7 +10,7 @@ const expectedResponse = {
 };
 
 beforeAll(() => {
-  axiosMocker(definitionRoutes, rootUri);
+  axiosMocker(modelRoutes, rootUri);
 });
 
 describe('The api mocking function GET statement', () => {

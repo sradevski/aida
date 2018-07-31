@@ -1,6 +1,6 @@
 import routes from '../routes';
 
-const aidaDefinitions = {
+const aidaModels = {
   _raw: {
     User: {
       endpoints: {
@@ -97,20 +97,20 @@ const aidaDefinitions = {
 };
 
 describe('The routes injector', () => {
-  test('returns an empty object for definitions that do not have endpoints file.', () => {
+  test('returns an empty object for models that do not have endpoints file.', () => {
     const flatRoutes = routes({ _raw: {} }).routes.execute();
     expect(Object.keys(flatRoutes)).toHaveLength(0);
   });
 
-  test('returns all routes in a definition without categories', () => {
-    const flatRoutes = routes(aidaDefinitions).routes.execute();
+  test('returns all routes in a model without categories', () => {
+    const flatRoutes = routes(aidaModels).routes.execute();
     expect(flatRoutes).toEqual({
-      ...aidaDefinitions._raw.User.endpoints,
+      ...aidaModels._raw.User.endpoints,
     });
   });
 
   test('returns the routes with base url prepended to them', () => {
-    const flatRoutes = routes(aidaDefinitions).routes.execute({
+    const flatRoutes = routes(aidaModels).routes.execute({
       baseUri: 'www.test.com',
     });
     expect(Object.keys(flatRoutes)).toEqual([
@@ -120,13 +120,13 @@ describe('The routes injector', () => {
   });
 
   test('returns endpoints only for the specified categories', () => {
-    const flatRoutes = routes(aidaDefinitions).routes.execute({
+    const flatRoutes = routes(aidaModels).routes.execute({
       category: 'Free',
     });
 
     expect(flatRoutes).toEqual({
-      ...aidaDefinitions._raw.User.endpoints,
-      ...aidaDefinitions._raw.Player.endpoints.Free,
+      ...aidaModels._raw.User.endpoints,
+      ...aidaModels._raw.Player.endpoints.Free,
     });
   });
 });

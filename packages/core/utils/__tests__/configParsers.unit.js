@@ -1,28 +1,28 @@
-import { crawlDefinition, getDefinitionType } from '../configParsers';
+import { crawlModel, getModelType } from '../configParsers';
 
-describe('Get definition type', () => {
-  test('returns "array" when the definition is an array', () => {
-    const type = getDefinitionType([{ vtype: 'string' }]);
+describe('Get model type', () => {
+  test('returns "array" when the model is an array', () => {
+    const type = getModelType([{ vtype: 'string' }]);
     expect(type).toBe('array');
   });
 
-  test('returns "object" when the definition is an object', () => {
-    const type = getDefinitionType({
+  test('returns "object" when the model is an object', () => {
+    const type = getModelType({
       someObj: { vtype: 'string' },
       someObj2: { vtype: 'int' },
     });
     expect(type).toBe('object');
   });
 
-  test('returns the specified vtype when the definition is a primitive', () => {
-    const type = getDefinitionType({ vtype: 'string' });
+  test('returns the specified vtype when the model is a primitive', () => {
+    const type = getModelType({ vtype: 'string' });
     expect(type).toBe('string');
   });
 });
 
-describe('Crawl definition', () => {
-  test('returns an empty object when the definition is empty', () => {
-    expect(crawlDefinition({})).toEqual({});
+describe('Crawl model', () => {
+  test('returns an empty object when the model is empty', () => {
+    expect(crawlModel({})).toEqual({});
   });
 
   test('returns an object of primitives with the passed action applied to each of them', () => {
@@ -42,7 +42,7 @@ describe('Crawl definition', () => {
       val2: 7,
     };
 
-    expect(crawlDefinition(def, 'someData', val => val + 1)).toEqual(expected);
+    expect(crawlModel(def, 'someData', val => val + 1)).toEqual(expected);
   });
 
   test('returns an array of primitives with the passed action applied to each of them', () => {
@@ -55,7 +55,7 @@ describe('Crawl definition', () => {
 
     const expected = 6;
 
-    expect(crawlDefinition(def, 'someData', val => val + 1)).toEqual(expected);
+    expect(crawlModel(def, 'someData', val => val + 1)).toEqual(expected);
   });
 
   test('returns an object defined in the array with the passed action applied to it when no array handler is passed', () => {
@@ -77,7 +77,7 @@ describe('Crawl definition', () => {
       val2: 7,
     };
 
-    expect(crawlDefinition(def, 'someData', val => val + 1)).toEqual(expected);
+    expect(crawlModel(def, 'someData', val => val + 1)).toEqual(expected);
   });
 
   test('returns an array of values where each array element is handled by the array handler', () => {
@@ -97,7 +97,7 @@ describe('Crawl definition', () => {
     const expected = [5, 6];
 
     expect(
-      crawlDefinition(
+      crawlModel(
         def,
         'someData',
         val => val + 1,
