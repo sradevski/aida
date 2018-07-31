@@ -7,20 +7,6 @@ https://docs.google.com/spreadsheets/d/1JBAAty461-kV2t9Qgmldb4Xt6Tsi76vDahcSWwd6
 
 A full stack tool that generates Swagger documentation, Flow types, MongoDB schemas, frontend/backend validators, and fake API all from just JSON definition documents.
 
-### Supported types
-integer	integer	int32	signed 32 bits
-long	integer	int64	signed 64 bits
-float	number	float
-double	number	double
-string	string		
-byte	string	byte	base64 encoded characters
-binary	string	binary	any sequence of octets
-boolean	boolean		
-date	string	date	As defined by full-date - RFC3339
-dateTime	string	date-time	As defined by date-time - RFC3339
-password	string	password	A hint to UIs to obscure input.
-
-
 ### Architecture
 
 By default, there are several model definitions:
@@ -55,8 +41,6 @@ An example object passed to the injectors:
 ### Usage
 
 For a start, all definitions are flat. However, each definition can have subfolders - categories that use a similar model with some differences (Account for businesses and Account for users). The same can also be achieved just by creating a flat definition for each, and then adding the ones you don't want in a blacklist. However, the category concept is a bit cleaner in my opinion.
-
-
 
 ### Core
 
@@ -116,9 +100,6 @@ This injector should generate an object of the following structure:
 
 ```
 
-TODO: Currently the structure is different, and the request is not populated. This means the consumer needs to be updated as well.
-
-
 ### Consumers
 
 ### network call mock (currently axiosMocker)
@@ -128,10 +109,6 @@ Currently it depends on axios and axios mocker, although it can be easily remove
 If the request matches one of the fakedDataRoutes object responses, it should return that response. If it doesn't match any, it should be passed through (and maybe log it in console).
 
 If a request doesn't have a "200" response for the request, the first response status in the responses will be returned.
-
-TODO: Remove axios and use either the sinon mock server or polly.
-
-
 
 ### Contributing
 
