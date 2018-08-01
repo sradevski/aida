@@ -56,7 +56,6 @@ function getSwaggerForMethod(method) {
     description: method.description,
     operationId: method.operationId,
     ...getRequestParams(method.request),
-
     responses: Object.keys(method.response).reduce(
       (responses, responseCode) => {
         responses[responseCode] = getResponseRequestBody(
@@ -74,7 +73,9 @@ function getRequestParams(request) {
   if (request) {
     return {
       parameters: getRequestPathParameters(request.path),
-      requestBody: getResponseRequestBody(request.body, request.description),
+      requestBody: request.body
+        ? getResponseRequestBody(request.body, request.description)
+        : undefined,
     };
   }
   return {};
@@ -98,24 +99,20 @@ function getRequestPathParameters(requestPath) {
 }
 
 function getResponseRequestBody(body, description) {
-  if (body) {
-    const responseContent = body
-      ? {
-          content: {
-            'application/json': {
-              schema: getSwaggerForModel(body),
-            },
+  const responseContent = body
+    ? {
+        content: {
+          'application/json': {
+            schema: getSwaggerForModel(body),
           },
-        }
-      : {};
+        },
+      }
+    : {};
 
-    return {
-      description: description,
-      ...responseContent,
-    };
-  }
-
-  return undefined;
+  return {
+    description: description,
+    ...responseContent,
+  };
 }
 
 function getSwaggerForModel(model) {
