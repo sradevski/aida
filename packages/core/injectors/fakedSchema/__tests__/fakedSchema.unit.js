@@ -1,4 +1,4 @@
-import fakedSchema from '../fakedSchema';
+import fakedSchema from '../';
 
 const aidaModels = {
   _raw: {

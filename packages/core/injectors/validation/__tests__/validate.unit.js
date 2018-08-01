@@ -1,4 +1,4 @@
-import validate from '../index';
+import validate from '../';
 
 const aidaDefinitons = {
   _raw: {

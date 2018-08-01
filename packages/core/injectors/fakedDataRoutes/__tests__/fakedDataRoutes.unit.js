@@ -1,4 +1,4 @@
-import fakedDataRoutes from '../fakedDataRoutes';
+import fakedDataRoutes from '../';
 import routes from '../../routes';
 
 const aidaModels = {

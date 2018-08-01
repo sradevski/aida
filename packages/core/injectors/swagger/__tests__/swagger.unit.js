@@ -1,5 +1,5 @@
 import swaggerParser from 'swagger-parser';
-import swagger from '../index';
+import swagger from '../';
 import routes from '../../routes';
 
 const userObj = {

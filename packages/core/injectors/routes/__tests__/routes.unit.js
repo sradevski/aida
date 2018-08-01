@@ -1,4 +1,4 @@
-import routes from '../routes';
+import routes from '../';
 
 const aidaModels = {
   _raw: {

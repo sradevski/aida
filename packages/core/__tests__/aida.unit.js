@@ -1,4 +1,4 @@
-import run from '../aida';
+import { run } from '../index';
 
 // The roles of the core are:
 // - Accept settings as a parameter
