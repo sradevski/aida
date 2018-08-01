@@ -21,6 +21,7 @@ describe('The api mocking function GET statement', () => {
         business: 12345,
       },
     });
+
     expect(Object.keys(response.data[0])).toEqual(
       Object.keys(expectedResponse),
     );
@@ -59,6 +60,12 @@ describe('The api mocking function GET statement', () => {
       expect(error.response.status).toEqual(500);
       expect(error.response.data).toEqual({});
     }
+  });
+
+  test('includes the specified header in the response', async () => {
+    expect.assertions(1);
+    const response = await axios.delete(`${rootUri}/users/details`);
+    expect(response.headers.location).toEqual('www.testing.none');
   });
 
   test('returns the first defined response if 200 response does not exist', async () => {

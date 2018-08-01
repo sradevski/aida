@@ -104,12 +104,16 @@ function respondToRequest(requestConfig, definedRoute) {
 
   if (possibleResponses.length > 0) {
     if (response['200']) {
-      return [200, response['200'].body, response['200'].headers];
+      return [
+        200,
+        response['200']['application/json'],
+        response['200'].headers,
+      ];
     }
 
     return [
       parseInt(possibleResponses[0], 10),
-      response[possibleResponses[0]].body,
+      response[possibleResponses[0]]['application/json'],
       response[possibleResponses[0]].headers,
     ];
   }

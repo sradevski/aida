@@ -81,7 +81,8 @@ This injector should generate an object of the following structure:
       request: fakedData
       response: {
         '200' : {
-          "application/json": fakedData
+          "application/json": fakedData,
+          "headers": fakedData,
         },
         '404': {
           "application/json": fakedData

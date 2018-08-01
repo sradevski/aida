@@ -19,14 +19,13 @@ function getFakedDataRoutes(routes) {
     const routeDetails = getHttpMethods(routes[routeKey]).reduce(
       (routeDetails, methodName) => {
         const methodFields = routes[routeKey][methodName];
-        const responses = populateAllResponseStatuses(methodFields);
+        const response = populateAllResponseStatuses(methodFields.response);
+        const request = populateRequest(methodFields.request);
 
         routeDetails[methodName] = {
-          ...methodFields,
-          response: {
-            ...methodFields.response,
-            ...responses,
-          },
+          operationId: methodFields.operationId,
+          request,
+          response,
         };
 
         return routeDetails;
@@ -38,16 +37,26 @@ function getFakedDataRoutes(routes) {
   }, {});
 }
 
-function populateAllResponseStatuses(methodFields) {
-  const responses = methodFields.response;
+function populateRequest(request) {
+  return Object.keys(request)
+    .filter(prop => ['path', 'query', 'body'].includes(prop))
+    .reduce((populatedRequest, dataLocation) => {
+      populatedRequest[dataLocation] = populateWithFaker(
+        request[dataLocation],
+        { seed },
+      );
 
-  return Object.keys(responses).reduce((populatedResponse, responseStatus) => {
-    const body = responses[responseStatus].body;
-    const headers = responses[responseStatus].headers;
+      return populatedRequest;
+    }, {});
+}
+
+function populateAllResponseStatuses(response) {
+  return Object.keys(response).reduce((populatedResponse, responseStatus) => {
+    const body = response[responseStatus].body;
+    const headers = response[responseStatus].headers;
 
     populatedResponse[responseStatus] = {
-      ...responses[responseStatus],
-      body: populateBody(body),
+      'application/json': populateBody(body),
       headers: populateHeaders(headers),
     };
 
