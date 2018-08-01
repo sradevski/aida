@@ -129,7 +129,6 @@ function init() {
     });
 }
 
-//TODO: This needs cleaning up.
 function generate(modelName) {
   try {
     const configData = getConfig();

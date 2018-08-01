@@ -8,7 +8,7 @@ export default function axiosMockApi(routes, baseUri) {
   mock.onAny().reply(requestConfig => {
     const definedRoute = getDefinedRoute(requestConfig, routes, baseUri);
     if (!definedRoute) {
-      //TODO: Request path and method don't exist. Return an error specified in the config as well.
+      //Note: Ideally this is passed through, but the axios mock adapter doesnt allow that from within a reply. This will be resolved when we move to sinon mock or polly.
       return [500, {}];
     }
 

@@ -1,4 +1,4 @@
-//TODO: Create error codes mapping.
+//Create error codes mapping so only IDs are kept and it can be localized easily.
 //0: Generic message (the {field} is invalid).
 
 const basicValidators = {
@@ -22,18 +22,14 @@ const compositeValidators = {
   // birthday:
   // age:
   // gender:
-  // SNID:
   // url:
   // text:
   // address:
   // country:
   // city:
   // authorization:
-  // campaignName:
   // latitude:
   // longitude:
-  // userRank:
-  // rewardType:
 };
 
 export default {
