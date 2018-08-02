@@ -1,9 +1,9 @@
-import fakedSchema from '../';
+import fakedModel from '../';
 
 const aidaModels = {
   _raw: {
     User: {
-      schema: {
+      core: {
         id: {
           vtype: 'string',
           faker: 'random.uuid',
@@ -15,7 +15,7 @@ const aidaModels = {
       },
     },
     Account: {
-      schema: {
+      core: {
         id: {
           vtype: 'string',
           faker: 'random.uuid',
@@ -27,7 +27,7 @@ const aidaModels = {
       },
     },
     Profile: {
-      core: {
+      schema: {
         id: {
           vtype: 'string',
           faker: 'random.uuid',
@@ -39,11 +39,11 @@ const aidaModels = {
 
 let execute;
 beforeAll(() => {
-  execute = fakedSchema(aidaModels).fakedSchema.execute;
+  execute = fakedModel(aidaModels).fakedModel.execute;
 });
 
-describe('Faked schema', () => {
-  test('returns only models that have defined schema', () => {
+describe('Faked model', () => {
+  test('returns only models that have defined core model type', () => {
     const keys = Object.keys(execute());
     expect(keys).toEqual(expect.arrayContaining(['User', 'Account']));
 
@@ -52,7 +52,10 @@ describe('Faked schema', () => {
 
   test('returns only whitelisted models, even if blacklist is provided', () => {
     const keys = Object.keys(
-      execute({ whitelist: ['User'], blacklist: ['User'] }),
+      execute({
+        whitelist: ['User'],
+        blacklist: ['User'],
+      }),
     );
 
     expect(keys).toContain('User');
@@ -66,20 +69,27 @@ describe('Faked schema', () => {
   });
 
   test('returns an array with one element of fake data for each model', () => {
-    const schema = execute();
-    expect(schema.User).toHaveLength(1);
-    expect(schema.User[0]).toEqual({
+    const model = execute();
+    expect(model.User).toHaveLength(1);
+    expect(model.User[0]).toEqual({
       id: '27bd418b-05e0-4e40-9fb2-54a9ff7de038',
       username: 'Caleb.Lubowitz68',
     });
   });
 
   test('returns an array with specified number of items of fake data for each model', () => {
-    const schema = execute({ itemsPerModel: 5 });
-    expect(schema.User).toHaveLength(5);
-    expect(schema.User[3]).toEqual({
+    const model = execute({ itemsPerModel: 5 });
+    expect(model.User).toHaveLength(5);
+    expect(model.User[3]).toEqual({
       id: '4739088c-6600-499c-81b4-ea97a8975e89',
       username: 'Lulu44',
     });
+  });
+
+  test('returns data only for models that contain the specified model type', () => {
+    const model = execute({ modelType: 'schema' });
+    expect(model).not.toHaveProperty('User');
+    expect(model).not.toHaveProperty('Account');
+    expect(model.Profile).toHaveLength(1);
   });
 });

@@ -15,6 +15,10 @@ const pluginChoices = [
     title: 'Faked Data Routes',
     value: 'fakedDataRoutes',
   },
+  {
+    title: 'Faked Model',
+    value: 'fakedModel',
+  },
 ];
 
 const basic = [
