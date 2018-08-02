@@ -1,7 +1,7 @@
 {
   "name": "aida",
   "version": "0.0.1",
-  "description": "Full-stack schema definition, validation, and fake api generation",
+  "description": "Data modeling done right",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",

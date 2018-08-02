@@ -1,7 +1,7 @@
 {
   "name": "@aida/cli",
   "version": "0.0.1",
-  "description": "Aida command line",
+  "description": "Aida command line client",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",
