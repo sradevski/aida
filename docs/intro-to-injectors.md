@@ -12,7 +12,7 @@ In the **User.core.js** file you created earlier copy the model definition from 
 aida run
 ```
 
-This will generate a **fakedSchema** file, which will contain something like this:
+This will generate a **fakedModel** file, which will contain something like this:
 
 ```
 TODO: Add the content here

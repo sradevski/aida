@@ -24,8 +24,8 @@ const pluginChoices = [
 const basic = [
   {
     type: 'input',
-    name: 'schemaDir',
-    message: 'Specify the default schemas directory',
+    name: 'modelsDir',
+    message: 'Specify the default models directory',
   },
   {
     type: 'input',
@@ -34,8 +34,8 @@ const basic = [
   },
   {
     type: 'checkbox',
-    name: 'plugins',
-    message: 'Select all plugins you wish to run',
+    name: 'injectors',
+    message: 'Select all injectors you wish to run',
     choices: pluginChoices,
   },
 ];
@@ -61,20 +61,20 @@ function getPluginQuestions(name, value) {
           value: 'none',
         },
         {
-          title: 'File',
-          value: 'file',
+          title: 'JSON file',
+          value: 'jsonFile',
         },
       ],
       message: `Specify the type of output for ${name}.`,
-      when: answers => answers.plugins.includes(value),
+      when: answers => answers.injectors.includes(value),
     },
     {
       type: 'input',
-      name: `${value}.outputFile`,
+      name: `${value}.outputFilepath`,
       message: `Specify the output file for ${name} (leave empty for default directory with plugin name as filename)`,
       when: answers => {
         return (
-          answers.plugins.includes(value) &&
+          answers.injectors.includes(value) &&
           answers[value].outputType === 'file'
         );
       },

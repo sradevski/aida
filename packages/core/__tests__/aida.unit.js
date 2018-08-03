@@ -1,11 +1,10 @@
 import { run } from '../index';
+import path from 'path';
 
-// The roles of the core are:
-// - Accept settings as a parameter
-// - Pass the `models` object through the pipeline of injectors and handle the ordering based on the dependency specifications
-// - At the end of the pipeline, pass the resulting `models` object to the caller (CLI, JavaScript call, etc.)
-
-// {accepts: models: {}, injectors: []}
+const modelsPath = path.resolve(
+  process.cwd(),
+  './packages/core/__tests__/models',
+);
 
 describe('The aida core run function', () => {
   test('Throws an exception when either models config or location in the models config is not specified', () => {
@@ -15,7 +14,7 @@ describe('The aida core run function', () => {
 
   test('The definitions object is available in the _raw property', () => {
     const result = run({
-      models: { location: './packages/core/__tests__/models/Account' },
+      models: { location: `${modelsPath}/Account` },
     });
 
     expect(result._raw).toEqual({
@@ -47,7 +46,7 @@ describe('The aida core run function', () => {
 
     const result = run({
       injectors: [mockInjector1, mockInjector2],
-      models: { location: './packages/core/__tests__/models/Account' },
+      models: { location: `${modelsPath}/Account` },
     });
 
     expect(result.mockInjector1).toBeTruthy();
@@ -62,7 +61,7 @@ describe('The aida core run function', () => {
 
     const result = run({
       injectors: [mockInjector],
-      models: { location: './packages/core/__tests__/models/Account' },
+      models: { location: `${modelsPath}/Account` },
     });
 
     expect(result.mockInjector()).toEqual({
@@ -75,7 +74,7 @@ describe('The aida core run function', () => {
     const result = run({
       injectors: [],
       models: {
-        location: './packages/core/__tests__/models',
+        location: modelsPath,
         blacklistFiles: ['Account.core.js'],
         blacklistDirectories: ['Ignore'],
       },

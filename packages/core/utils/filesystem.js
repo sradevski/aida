@@ -1,10 +1,7 @@
 import fs from 'fs';
-import path from 'path';
 
 export function traverseFileSystem(pathToTraverse) {
   const fileslist = [];
-  const resolvedPath = path.resolve(process.cwd(), pathToTraverse);
-
   function recursiveTraversal(currentPath) {
     const locations = fs.readdirSync(currentPath);
     locations.forEach(locationName => {
@@ -18,6 +15,6 @@ export function traverseFileSystem(pathToTraverse) {
     });
   }
 
-  recursiveTraversal(resolvedPath);
+  recursiveTraversal(pathToTraverse);
   return fileslist;
 }

@@ -1,15 +1,16 @@
 import chalk from 'chalk';
 import program from 'commander';
 import inquirer from 'inquirer';
+import path from 'path';
 import * as aida from '@aida/core';
 
 import {
   createConfigFile,
-  createSchemaFiles,
+  createModelFiles,
   readConfig,
   outputToFile,
   getConfigFilePath,
-  watchSchema,
+  watchModels,
 } from './filesystem';
 import initQuestions from './initQuestions';
 import generateQuestions from './generateQuestions';
@@ -20,7 +21,7 @@ export default function main() {
   program
     .version('0.0.1', '-v, --version')
     .option(
-      '-S --schema-dir <path>',
+      '-S --models-dir <path>',
       'Set the directory for your models. It overrides the config file settings.',
     )
     .option(
@@ -29,12 +30,12 @@ export default function main() {
     );
 
   program
-    .command('run [plugins...]')
+    .command('run [injectors...]')
     .description(
-      'Runs the plugin pipeline you specify. If nothing is specified, the pipeline from your config file is used.',
+      'Runs the injector pipeline you specify. If nothing is specified, the pipeline from your config file is used.',
     )
-    .action((plugins, options) => {
-      run(plugins, options.parent);
+    .action((injectors, options) => {
+      run(injectors, options.parent);
     });
 
   program
@@ -46,7 +47,7 @@ export default function main() {
 
   program
     .command('generate [modelName]')
-    .description('Generate a schema template.')
+    .description('Generate a model template.')
     .action(modelName => {
       generate(modelName);
     });
@@ -54,7 +55,7 @@ export default function main() {
   program
     .command('watch')
     .description(
-      'Watch for changes to the schema and run the pipeline on schema change.',
+      'Watch for changes to the models and run the pipeline on models change.',
     )
     .action(() => {
       watch();
@@ -63,48 +64,86 @@ export default function main() {
   program.parse(process.argv);
 }
 
-function run(plugins, options) {
+function run(injectors, options) {
   console.log(chalk.yellow(`Getting aida config...`));
-  const configData = getConfig(options);
-  const pluginsToRun =
-    plugins.length > 0 ? plugins : configData.plugins.map(x => x.name);
-
-  console.log(
-    chalk.yellow(
-      `Running plugins: ${chalk.yellow.bold(pluginsToRun.join(', '))}`,
-    ),
+  const cliConfig = getConfig(options);
+  const { existingInjectorNames, missingInjectorNames } = getInjectorNames(
+    injectors,
+    cliConfig,
   );
 
-  const config = {
-    injectors: pluginsToRun.map(pluginName => aida[pluginName]), //[aida.routes, aida.routesMap, aida.swagger],
+  const aidaCoreConfig = {
+    injectors: existingInjectorNames.map(injectorName => aida[injectorName]),
     models: {
-      location: configData.schemaDir,
+      location: path.resolve(process.cwd(), cliConfig.modelsDir),
       blacklistFiles: ['helpers.js'],
       blacklistDirectories: ['intermediate'],
     },
   };
 
-  const aidaResults = aida.run(config);
-  configData.plugins.forEach(plugin => {
-    if (plugin.outputType === 'file') {
-      const outputPath = getOutputPath(
-        configData.outputDir,
-        plugin.outputFile,
-        plugin.name,
-      );
+  console.log(
+    chalk.yellow(
+      `The models located at ${chalk.yellow.bold(
+        aidaCoreConfig.models.location,
+      )} will be used.`,
+    ),
+  );
 
-      outputToFile(
-        JSON.stringify(aidaResults[plugin.name].execute({ category: 'User' })),
-        outputPath,
-      );
-    }
-  });
+  console.log(
+    chalk.yellow(
+      `Running injectors: ${chalk.yellow.bold(
+        existingInjectorNames.join(', '),
+      )}`,
+    ),
+  );
+
+  if (missingInjectorNames.length > 0) {
+    console.log(
+      chalk.yellow(
+        `The following injectors could not be found and will be skipped: ${chalk.yellow.bold(
+          missingInjectorNames.join(', '),
+        )}`,
+      ),
+    );
+  }
+
+  const aidaResults = aida.run(aidaCoreConfig);
+  cliConfig.injectors
+    .filter(injector => existingInjectorNames.includes(injector.name))
+    .forEach(injector => {
+      if (injector.outputType === 'jsonFile') {
+        const outputPath = getOutputPath(
+          cliConfig.outputDir,
+          injector.outputFilepath,
+          injector.name,
+        );
+
+        outputToFile(
+          JSON.stringify(aidaResults[injector.name].execute(injector.options)),
+          outputPath,
+        );
+      }
+    });
 
   console.log(chalk.yellow(`Done!`));
 }
 
-function getOutputPath(defaultOutputDir, pluginOutputFile, pluginName) {
-  return pluginOutputFile || `${defaultOutputDir}${pluginName}`;
+function getInjectorNames(injectors, configData) {
+  const mergedInjectors =
+    injectors.length > 0 ? injectors : configData.injectors.map(x => x.name);
+
+  const existingInjectorNames = mergedInjectors.filter(
+    injectorName => aida[injectorName],
+  );
+  const missingInjectorNames = mergedInjectors.filter(
+    injectorName => !aida[injectorName],
+  );
+
+  return { existingInjectorNames, missingInjectorNames };
+}
+
+function getOutputPath(defaultOutputDir, injectorOutputFilepath, injectorName) {
+  return injectorOutputFilepath || `${defaultOutputDir}${injectorName}`;
 }
 
 function init() {
@@ -135,15 +174,15 @@ function generate(modelName) {
     const modelTypes = ['core', 'endpoints', 'request', 'response', 'schema'];
 
     if (modelName) {
-      createSchemaFiles({
-        schemaDir: configData.schemaDir,
+      createModelFiles({
+        modelsDir: configData.modelsDir,
         modelName,
         modelTypes,
       });
       console.log(chalk.green('Finished creating a new model.'));
     } else {
       inquirer.prompt(generateQuestions).then(answers => {
-        createSchemaFiles({ schemaDir: configData.schemaDir, ...answers });
+        createModelFiles({ modelsDir: configData.modelsDir, ...answers });
         console.log(chalk.green('Finished creating a new model.'));
       });
     }
@@ -155,26 +194,26 @@ function generate(modelName) {
 
 function watch() {
   const configData = getConfig();
-  watchSchema(configData.schemaDir, () => {
+  watchModels(configData.modelsDir, () => {
     run();
   });
 }
 
 function reformatInitAnswers(answers) {
-  const modifiedPlugins = [];
+  const modifiedinjectors = [];
   const modifiedAnswers = { ...answers };
 
-  answers.plugins.map(pluginName => {
-    modifiedPlugins.push({
-      name: pluginName,
-      ...(answers[pluginName] ? answers[pluginName] : {}),
+  answers.injectors.map(injectorName => {
+    modifiedinjectors.push({
+      name: injectorName,
+      ...(answers[injectorName] ? answers[injectorName] : {}),
     });
-    modifiedAnswers[pluginName] = undefined;
+    modifiedAnswers[injectorName] = undefined;
   });
 
   return {
     ...modifiedAnswers,
-    plugins: modifiedPlugins,
+    injectors: modifiedinjectors,
   };
 }
 
@@ -193,7 +232,7 @@ function getConfig(cmdOptions) {
   if (cmdOptions) {
     return {
       ...configData,
-      schemaDir: cmdOptions.schemaDir || configData.schemaDir,
+      modelsDir: cmdOptions.modelsDir || configData.modelsDir,
       outputDir: cmdOptions.outputDir || configData.outputDir,
     };
   }

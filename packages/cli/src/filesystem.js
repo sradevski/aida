@@ -6,8 +6,8 @@ function getCurrentDirectoryBase() {
   return path.normalize(process.cwd());
 }
 
-export function createSchemaFiles(options) {
-  const dir = `${options.schemaDir}/${options.modelName}`;
+export function createModelFiles(options) {
+  const dir = `${options.modelsDir}/${options.modelName}`;
   fs.mkdirSync(dir);
 
   options.modelTypes.forEach(modelType => {
@@ -72,7 +72,7 @@ export function getConfigFilePath(configFilename, shouldSearchRecursively) {
   }
 }
 
-export function watchSchema(directory, callback) {
+export function watchModels(directory, callback) {
   const dotFileIgnore = /(^|[/\\])\../;
   chokidar
     .watch(directory, {

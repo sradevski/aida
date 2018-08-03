@@ -14,6 +14,7 @@ A model will have very similar properties, whether is used in the frontend, it d
 - A Hive schema in your Hadoop data warehouse
 
 Each of these might have an accompanying validation, all implemented separately. Moreover, you might have a fake server for the frontend that will also have another endpoints and schema definition, and the backend might use Postman to fire HTTP requests. Some of the properties in a model might lack a description and the analytics team will have no idea what the some team meant by "shippingTypes" (likely an enum with some values). These are problems that are present in any system, especially as they grow and communication between teams gets very complex.
+TODO: WRite the bullets and previos paragraph together, think how to make it look better.
 
 All of the functionalities and definitions mentioned above have a lot in common. We can see that, for example, the same user ID should have the same type, validation logic, and documentation, regardless of the part of the system where it is used. Having everything related to a property colocated with it makes that property self-contained, allowing for things like applying the same validation on both frontend and backend trivial. 
 

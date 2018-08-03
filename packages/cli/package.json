@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "cli": "babel-node ./index.js",
-    "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage --out-dir dist/"
+    "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
   },
   "bin": {
     "aida": "./dist/index.js"

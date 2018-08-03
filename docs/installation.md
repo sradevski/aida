@@ -25,9 +25,9 @@ We can go ahead and create a config file using the interactive interface by runn
 
 ```
 {
-  "schemaDir": "./Models",
+  "modelsDir": "./Models",
   "outputDir": "./",
-  "plugins": [
+  "injectors": [
     {
       "name": "routes",
       "outputType": "none"
