@@ -1,10 +1,7 @@
 {
   "docs": {
     "Getting Started": ["introduction", "installation", "creating-first-model", "enriching-the-model", "intro-to-injectors"],
-    "First Category": ["doc2"],
-    "Extending Aida": ["doc3"]
-  },
-  "docs-other": {
-    "First Category": ["doc4", "doc5"]
+    "API Reference": ["defined-types"],
+    "Extending Aida": ["existing-injectors"]
   }
 }

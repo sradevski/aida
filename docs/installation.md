@@ -21,7 +21,7 @@ cd sampleDir
 mkdir Models
 ```
 
-We can go ahead and create a config file using the interactive interface by running `aida init`, but to keep things simple just create a **.aidarc** file in the **sampleDir** directory, and just copy and paste the following config:
+We can create a config file using the interactive interface by running `aida init`, but to keep things simple just create a **.aidarc** file in the **sampleDir** directory, and just copy and paste the following config:
 
 ```
 {
@@ -33,18 +33,8 @@ We can go ahead and create a config file using the interactive interface by runn
       "outputType": "none"
     },
     {
-      "name": "routesMap",
-      "outputType": "file",
-      "outputFile": ""
-    },
-    {
-      "name": "swagger",
-      "outputType": "file",
-      "outputFile": ""
-    },
-    {
-      "name": "fakedDataRoutes",
-      "outputType": "file",
+      "name": "fakedModel",
+      "outputType": "jsonFile",
       "outputFile": ""
     }
   ]

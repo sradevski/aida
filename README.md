@@ -1,6 +1,6 @@
 # Aida
 
-Data modeling done right.
+Unified data modeling/Universal data modeling/Data modeling done right.
 
 ## Introduction
 
