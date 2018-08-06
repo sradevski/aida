@@ -1,7 +1,8 @@
 {
   "docs": {
-    "Getting Started": ["introduction", "installation", "creating-first-model", "enriching-the-model", "intro-to-injectors"],
-    "API Reference": ["defined-types"],
-    "Extending Aida": ["existing-injectors"]
+    "Getting Started": ["introduction", "installation", "creating-first-model", "enriching-the-model", "intro-to-injectors", "intro-to-consumers"],
+    "Advanced Usage": ["intro-to-endpoints", "chaining-injectors", "full-example"],
+    "Extending Aida": ["existing-injectors", "creating-injector"],
+    "API Reference": ["defined-types"]
   }
 }

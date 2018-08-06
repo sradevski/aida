@@ -22,7 +22,7 @@ const users = [
 
 const siteConfig = {
   title: 'Aida' /* title for your website */,
-  tagline: 'Data modeling done right',
+  tagline: 'Unified Data Modeling',
   url: 'https://aida.github.io' /* your website url */,
   baseUrl: '/' /* base url for your project */,
   // For github.io type URLs, you would set the url and baseUrl like:
