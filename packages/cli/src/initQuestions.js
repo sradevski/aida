@@ -61,8 +61,8 @@ function getPluginQuestions(name, value) {
           value: 'none',
         },
         {
-          title: 'JSON file',
-          value: 'jsonFile',
+          title: 'File',
+          value: 'file',
         },
       ],
       message: `Specify the type of output for ${name}.`,

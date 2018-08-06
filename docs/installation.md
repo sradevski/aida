@@ -34,7 +34,7 @@ We can create a config file using the interactive interface by running `aida ini
     },
     {
       "name": "fakedModel",
-      "outputType": "jsonFile",
+      "outputType": "file",
       "outputFile": ""
     }
   ]

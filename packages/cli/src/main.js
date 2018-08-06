@@ -108,24 +108,36 @@ function run(injectors, options) {
   }
 
   const aidaResults = aida.run(aidaCoreConfig);
+
   cliConfig.injectors
     .filter(injector => existingInjectorNames.includes(injector.name))
     .forEach(injector => {
-      if (injector.outputType === 'jsonFile') {
-        const outputPath = getOutputPath(
-          cliConfig.outputDir,
-          injector.outputFilepath,
-          injector.name,
-        );
-
-        outputToFile(
-          JSON.stringify(aidaResults[injector.name].execute(injector.options)),
-          outputPath,
-        );
-      }
+      outputInjectorResult(
+        injector,
+        aidaResults[injector.name].execute,
+        cliConfig.outputDir,
+      );
     });
 
   console.log(chalk.yellow(`Done!`));
+}
+
+function outputInjectorResult(injector, injectorExecute, defaultOutputDir) {
+  if (injector.outputType === 'file') {
+    const outputPath = getOutputPath(
+      defaultOutputDir,
+      injector.outputFilepath,
+      injector.name,
+    );
+
+    const res = injectorExecute(injector.options);
+
+    if (typeof res === 'string' || res instanceof String) {
+      return outputToFile(res, outputPath);
+    } else {
+      return outputToFile(JSON.stringify(res), outputPath);
+    }
+  }
 }
 
 function getInjectorNames(injectors, configData) {
