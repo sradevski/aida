@@ -1,42 +1,32 @@
-import axios from 'axios';
-import mockAdapter from 'axios-mock-adapter';
 import URL from 'url-parse';
 
-export default function axiosMockApi(routes, baseUri) {
-  const mock = new mockAdapter(axios);
-
-  mock.onAny().reply(requestConfig => {
-    const definedRoute = getDefinedRoute(requestConfig, routes, baseUri);
-    if (!definedRoute) {
-      //Note: Ideally this is passed through, but the axios mock adapter doesnt allow that from within a reply. This will be resolved when we move to sinon mock or polly.
-      return [500, {}];
-    }
-
-    return respondToRequest(requestConfig, definedRoute);
-  });
-}
-
-function getDefinedRoute(requestConfig, routes, baseUri) {
+export default function getDefinedRoute(requestConfig, routes, baseUri) {
   const method = requestConfig.method.toLowerCase();
   const requestUrl = new URL(requestConfig.url, undefined, true);
 
   const matchedRoutes = Object.keys(routes).filter(routeKey => {
     const routeUrl = new URL(baseUri + routeKey);
 
-    return (
-      routes[routeKey][method] &&
-      requestUrl.host === routeUrl.host &&
-      doPathsMatch(requestUrl.pathname, routeUrl.pathname) &&
-      doParamsMatch(requestUrl.query, routes[routeKey][method].request.query) &&
-      (!['put', 'post'].includes(method) ||
-        doBodiesMatch(
-          requestConfig.data,
-          routes[routeKey][method].request.body,
-        ))
+    if (!routes[routeKey][method]) {
+      return false;
+    }
+
+    const hostsMatch = requestUrl.host === routeUrl.host;
+    const pathsMatch = doPathsMatch(requestUrl.pathname, routeUrl.pathname);
+    const paramsMatch = doParamsMatch(
+      requestUrl.query,
+      routes[routeKey][method].request.query,
     );
+    const bodiesMatch =
+      !['put', 'post'].includes(method) ||
+      doBodiesMatch(requestConfig.data, routes[routeKey][method].request.body);
+
+    return hostsMatch && pathsMatch && paramsMatch && bodiesMatch;
   });
 
-  return matchedRoutes.length && routes[getBestMatchedRouteUrl(matchedRoutes)];
+  return (
+    matchedRoutes.length > 0 && routes[getBestMatchedRouteUrl(matchedRoutes)]
+  );
 }
 
 function getBestMatchedRouteUrl(matchedRoutes) {
@@ -96,27 +86,4 @@ function doPathsMatch(requestPathname, templatePathname) {
 function getTemplatePathSegmentIndex(pathSegment) {
   //The encoded characters are { and } respectively.
   return pathSegment.search(/(%7B|{)[a-zA-Z0-9]*(%7D|})/);
-}
-
-function respondToRequest(requestConfig, definedRoute) {
-  const { response } = definedRoute[requestConfig.method];
-  const possibleResponses = Object.keys(response).filter(x => x !== 'default');
-
-  if (possibleResponses.length > 0) {
-    if (response['200']) {
-      return [
-        200,
-        response['200']['application/json'],
-        response['200'].headers,
-      ];
-    }
-
-    return [
-      parseInt(possibleResponses[0], 10),
-      response[possibleResponses[0]]['application/json'],
-      response[possibleResponses[0]].headers,
-    ];
-  }
-
-  return [500, {}];
 }

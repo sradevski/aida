@@ -1,0 +1,31 @@
+{
+  "name": "@aida/consumer-faked-http",
+  "version": "0.0.1",
+  "description": "Mocks XHR and Fetch API and responds with faked data",
+  "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
+  },
+  "keywords": [
+    "http",
+    "xhr",
+    "fetch",
+    "aida",
+    "faker"
+  ],
+  "author": "Stevche Radevski <sradevski@live.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@pollyjs/adapter": "^1.1.0",
+    "@pollyjs/adapter-fetch": "^1.0.1",
+    "@pollyjs/adapter-xhr": "^1.0.1",
+    "@pollyjs/core": "^1.1.0",
+    "url-parse": "^1.4.3"
+  },
+  "devDependencies": {
+    "node-fetch": "^2.2.0"
+  }
+}

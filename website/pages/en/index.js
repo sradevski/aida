@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const React = require('react');
+const React = require('../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react');
 
 const CompLibrary = require('../../core/CompLibrary.js');
 const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
