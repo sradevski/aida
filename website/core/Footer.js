@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const React = require('../../../../../Library/Caches/typescript/2.9/node_modules/@types/react');
+const React = require('react');
 
 class Footer extends React.Component {
   docUrl(doc, language) {
@@ -35,11 +35,21 @@ class Footer extends React.Component {
           </a>
           <div>
             <h5>Docs</h5>
-            <a href={this.docUrl('introduction.html', this.props.language)}>
+            <a
+              href={this.docUrl(
+                'getting-started/introduction.html',
+                this.props.language,
+              )}
+            >
               Getting Started
             </a>
-            <a href={this.docUrl('defined-types.html', this.props.language)}>
-              API Reference
+            <a
+              href={this.docUrl(
+                'reference/defined-types.html',
+                this.props.language,
+              )}
+            >
+              Reference
             </a>
           </div>
           <div>

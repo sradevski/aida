@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const React = require('../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react');
+const React = require('react');
 
 const CompLibrary = require('../../core/CompLibrary.js');
 const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
@@ -80,7 +80,9 @@ class HomeSplash extends React.Component {
         <div className="inner">
           <ProjectTitle />
           <PromoSection>
-            <Button href={docUrl('introduction.html', language)}>
+            <Button
+              href={docUrl('getting-started/introduction.html', language)}
+            >
               Get Started
             </Button>
             <Button href={'https://www.github.com/sradevski/aida'}>

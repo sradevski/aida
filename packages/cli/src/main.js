@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 import program from 'commander';
-import inquirer from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/inquirer';
+import inquirer from 'inquirer';
 import path from 'path';
-import * as aida from '../../core/dist';
+import * as aida from '@aida/core';
 
 import {
   createConfigFile,

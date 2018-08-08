@@ -1,0 +1,34 @@
+---
+id: chaining-injectors
+title: Chaining Injectors
+sidebar_label: Chaining Injectors
+---
+
+Injectors can be useful on their own, but we can make them even more powerful and cleanly separated if we can chain them. This can enable each injector to have a single responsibility, and we can build up a more complex result by chaining injectors and building on top of each other.
+
+As of now, there is no automatic way to specify dependencies between injectors. Automatic dependency resolution is on the roadmap, but for now all you need to do is specify them in order, from the least dependent to the most dependent injector.
+
+For example, you can have something like
+
+```json
+{
+  "schemaDir": "./Models",
+  "outputDir": "./",
+  "plugins": [
+    {
+      "name": "routes",
+      "outputType": "none"
+    },
+    {
+      "name": "fakedDataRoutes",
+      "outputType": "file"
+    },
+    {
+      "name": "swagger",
+      "outputType": "file"
+    }
+  ]
+}
+```
+
+In this case, both **fakedDataRoutes** and **swagger** injectors depend on the **routes** injector, so that is the order they are specified in. All we have remaining is to combine everything we have learned so far into a real-world use case for Aida, so let's do that now.

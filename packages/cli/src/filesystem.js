@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import chokidar from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/chokidar';
+import chokidar from 'chokidar';
 
 function getCurrentDirectoryBase() {
   return path.normalize(process.cwd());

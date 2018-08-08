@@ -1,6 +1,13 @@
 import fakedDataRoutes from '../';
 import routes from '../../routes';
 
+const UserCore = {
+  id: {
+    vtype: 'string',
+    faker: 'random.uuid',
+  },
+};
+
 const aidaModels = {
   _raw: {
     User: {
@@ -99,6 +106,11 @@ describe('The fakedDataRoutes injector', () => {
   });
 
   test('The response is empty if the response does not contain any data', () => {
+    const res = injectedModels.fakedDataRoutes.execute();
+    expect(res['/users/{id}'].delete.response[204]).toEqual({});
+  });
+
+  test('Trying out something', () => {
     const res = injectedModels.fakedDataRoutes.execute();
     expect(res['/users/{id}'].delete.response[204]).toEqual({});
   });
