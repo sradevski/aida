@@ -13,15 +13,5 @@
     "start": "nodemon ./index.js --exec babel-node --inspect",
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/",
     "serve": "npm run build && node dist/index.js dist/models ./output"
-  },
-  "devDependencies": {
-    "axios-mock-adapter": "^1.11.0",
-    "swagger-parser": "^5.0.0"
-  },
-  "dependencies": {
-    "@aida/utils": "^0.0.1",
-    "axios": "^0.17.1",
-    "code-stringify": "^1.2.3",
-    "url-parse": "^1.4.3"
   }
 }

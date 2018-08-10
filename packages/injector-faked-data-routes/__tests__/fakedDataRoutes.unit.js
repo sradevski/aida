@@ -1,5 +1,5 @@
 import fakedDataRoutes from '../';
-import routes from '../../routes';
+import routes from '@aida/routes';
 
 const UserCore = {
   id: {

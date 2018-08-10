@@ -1,0 +1,17 @@
+{
+  "name": "@aida/faked-model",
+  "version": "0.0.1",
+  "description": "Aida faked model injector",
+  "repository": "https://bitbucket.org/flencer/validstack",
+  "author": "Stevche Radevski <sradevski@live.com>",
+  "license": "MIT",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
+  },
+  "dependencies": {
+    "@aida/utils": "^0.0.1"
+  }
+}

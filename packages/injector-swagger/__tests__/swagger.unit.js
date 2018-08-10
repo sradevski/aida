@@ -1,6 +1,6 @@
 import swaggerParser from 'swagger-parser';
 import swagger from '../';
-import routes from '../../routes';
+import routes from '@aida/routes';
 
 const userObj = {
   id: {

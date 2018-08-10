@@ -1,8 +1,12 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import fakedHttp from '../fakedHttp';
 import '../globalFetch';
 import modelRoutes from './routes.json';
 
-const rootUri = 'localhost:4000/api';
+const rootUri = 'http://localhost:4000/api';
 const expectedResponse = {
   id: '27bd418b-05e0-4e40-9fb2-54a9ff7de038',
   email: 'Katlynn_Upton@gmail.com',

@@ -8,7 +8,7 @@
   "scripts": {
     "test": "jest --ci",
     "test:update": "jest -u",
-    "test:watch": "jest --watch --coverage -u",
+    "test:watch": "jest --watch -u",
     "test:coverage": "jest --coverage --collectCoverageFrom=**/*{.js,.jsx} ",
     "flow": "flow",
     "audit": "npm audit",
@@ -17,6 +17,7 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "testURL": "http://localhost:4000",
     "rootDir": "packages",
     "testMatch": [
       "**/?(*.)(unit|test).?(m)js?(x)"

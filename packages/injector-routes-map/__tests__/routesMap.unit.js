@@ -1,5 +1,5 @@
 import routesMap from '../';
-import routes from '../../routes';
+import routes from '@aida/routes';
 
 const aidaModels = {
   _raw: {

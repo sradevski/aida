@@ -56,12 +56,7 @@ describe('The validate injector', () => {
     validatingObj.validation.execute();
     const validatorFunctions = validatingObj.validation.getValidatorsAsString();
 
-    const sanitized = validatorFunctions.replace(
-      /\/\* istanbul ignore next.*return/g,
-      'return',
-    );
-
-    expect(sanitized).toBe(`const result = {
+    expect(validatorFunctions).toBe(`const result = {
   integer: val => val,
   range: (val, props) => val,
   \"88fe1edfc09662fb57bb2274c1edc88f\": val => val
