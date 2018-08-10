@@ -4,7 +4,7 @@ title: Putting It All Together
 sidebar_label: Putting It All Together
 ---
 
-Let's see how we can put everything we have learned so far together and create something you would very likely use in a real-world application. The goal is to define our **User** API, have it populated with fake data, and get fake data for our frontend without even having the backend implemented. Moreover, we want an **Open API (Swagger)** documentation for our API, so we can communicate with the backend team about our expectations (even in full-stack teams, or when you are working by yourself, it is still useful to have the API cleanly documented).
+Let's see how we can put everything we have learned so far together and create something you would very likely use in a real-world application. The goal is to define our **User** API, have it populated with fake data, and receive fake data when we call our API from the frontend without even having the backend implemented. Moreover, we want an **Open API (Swagger)** documentation for our API, so we can communicate with the backend team about our expectations (even in full-stack teams, or when you are working by yourself, it is still useful to have the API cleanly documented).
 
 If you would have followed all tutorials so far, you should have a directory structure like the following (if not, go ahead and create it):
 - sampleDir
@@ -106,7 +106,7 @@ const User = {
 exports.default = User;
 ```
 
-Once you have all the models ready, run `aida run`. After running Aida, you will notice that two new files were created: **swagger**, and **fakedDataRoutes**. Simple as that, you have generated swagger documentation, and all defined endpoints are populated with fake data that you can use while developing your frontend application. 
+Once you have all the models ready, run `aida run`. After running Aida, you will notice that two new files were created: **swagger**, and **fakedDataRoutes**. Just like that, you have generated swagger documentation, and all defined endpoints are populated with fake data that you can use while developing your frontend application. There are more things that can be done  
 
 In order to check the swagger documentation, you can copy the contents of the **swagger** file, go to [Swagger Editor](https://editor.swagger.io/), and paste it there. That will give you a nicely formatted documentation that you can share with your colleagues.
 
@@ -123,6 +123,6 @@ export function appConfig() {
 }
 ```
 
-You can do your network requests to the defined endpoints as usual, and you will have a mocked API. 
+You can now do your network requests to the defined endpoints as usual, and you will have a mocked API. 
 
-As you can see, it can be really powerful to have your models defined using Aida. These are just some of the countless use-cases you can achieve when your models are defined in a standardized manner. 
+As you can see, it can be really powerful to have your models defined using Aida. These are just some of the countless use-cases you can achieve when your models are defined in a standardized manner. If it is still blurry to you about how to use Aida, go to [this repo example]() TODO: Add example repo location.. where you can find a much larger example. As a next step, you can check the [existing injectors](reference/existing-injectors.md), [existing consumers](reference/existing-consumers.md) and see how you can combine them and what workflow would fit your use-case. 

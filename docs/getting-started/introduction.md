@@ -4,17 +4,23 @@ title: Introduction
 sidebar_label: Introduction
 ---
 
-Data models define applications. In a large system, different teams would work with almost the same model, but have very different definitions and understanding of the data. Data models should be central to a system, and this is what Aida is trying to achieve - **defining models in a single place, and reusing it throughout the entire system.** 
+Data models define applications. In a large system, different teams will very likely work with almost the same model, but will have very different definitions and understanding of the data. Data models should be central to a system, and this is what Aida is trying to achieve - **defining models in a single place, and reusing them throughout the entire system.** 
 
-A model will have very similar properties, whether is used in the frontend, it defines a database schema, or is used by an analytics team. If you were to implement a system now, you would very likely have everything separately defined, without anything being shared. An example of the forms a very similar model might take is:
+A model will have very similar properties, whether it is used in the frontend, it defines a database schema, or it is used by an analytics team. If you were to implement a system now, you would very likely have everything separately defined, without anything being shared. An example of the forms a very similar model might take is:
 
-- A Flow type definition in your React frontend.
-- A TypeScript type definition in your NodeJS backend
-- A Mongoose schema for your MongoDB
-- A Hive schema in your Hadoop data warehouse
+- Flow type definition in your React frontend
+- TypeScript type definition in your NodeJS backend
+- Thrift schema that is used to communicate between services
+- Mongoose schema for your MongoDB
+- Hive schema in your Hadoop data warehouse
 
-Each of these might have an accompanying validation, all implemented separately. Moreover, you might have a fake server for the frontend that will also have another endpoints and schema definition, and the backend might use Postman to fire HTTP requests. Some of the properties in a model might lack a description and the analytics team will have no idea what the some team meant by "shippingTypes" (likely an enum with some values). These are problems that are present in any system, especially as they grow and communication between teams gets very complex.
-TODO: WRite the bullets and previos paragraph together, think how to make it look better.
+On top of the schema/type definitions, you will also very likely have other metadata directly related to your model scattered all over the place, such as:
+
+- Validation logic in your frontend, backend, and maybe before it goes in your data warehouse
+- Fake server for frontend development that will work with exactly the same data model
+- Fake requests caller to test your backend (such as Postman)
+- Documentation of all your endpoints and models your system provides
+- Description of what each property in the model represents used by the analytics team
 
 All of the functionalities and definitions mentioned above have a lot in common. We can see that, for example, the same user ID should have the same type, validation logic, and documentation, regardless of the part of the system where it is used. Having everything related to a property colocated with it makes that property self-contained, allowing for things like applying the same validation on both frontend and backend trivial. 
 

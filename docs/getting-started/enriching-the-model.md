@@ -29,6 +29,6 @@ const User = {
 exports.default = User;
 ```
 
-We have specified a `faker` property for each **primitive**. The values that the `faker` property can take are either one of the pre-defined values in [Faker.js](https://github.com/marak/Faker.js/), an array of constant values, or an object with either of the previous two, as well as faker options (check the options hereTODO: add link to API here).
+We have specified a `faker` property for each **primitive**. The values that the `faker` property can take are either one of the pre-defined values in [Faker.js](https://github.com/marak/Faker.js/), an array of constant values, or an object with either of the previous two, and a faker options object. For more details about how to create fake data, check the [faked data reference](reference/faked-data.md).
 
-Now that we have specified what kind of fake data we want for each property, let's go and try generating it using [injectors](intro-to-injectors.md).
+Now that we have specified what kind of fake data we want for each property, let's try to generate a faked data schema using [injectors](intro-to-injectors.md).

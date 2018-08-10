@@ -23,7 +23,7 @@ const User = {
 exports.default = User;
 ```
 
-Each model property has to contain a type, named `vtype` (we didn't simply use `type` in order to avoid collisions with model properties named `type`). You can find all defined types [here.](defined-types.md). The `vtype` property denotes that the property is a **primitive**. Let's now go on and add a nested object, an `address`.
+Each model property has to contain a type, named `vtype` (we didn't simply use `type` in order to avoid collisions with model properties named `type`). You can find all defined types [here](reference/defined-types.md). The `vtype` property denotes that the property is a **primitive**. Let's now add a nested object, an `address`.
 
 
 ```javascript
@@ -45,7 +45,7 @@ const User = {
 exports.default = User;
 ```
 
-Simple as that! We can use the `address` model definition throughout the entire stack, having a consistent definition of an address. We can of course cherry-pick only the properties we want, and it is very easy to do so, as it is just a JavaScript object. Aida can recognize whether it is a **composite** or a **primitive** by the presense of a `vtype` property. Let's try specifying a property as an array of some type now:
+Simple as that! We can use the `address` model definition throughout the entire stack, having a consistent definition of an address. We can of course cherry-pick only the properties we want, and it is very easy to do so, as it is just a JavaScript object. Aida can recognize whether it is a **composite** or a **primitive** by the presense of the `vtype` property on a **primitive**. Let's try specifying a property as an array of some type:
 
 ```javascript
 const User = {
@@ -56,6 +56,6 @@ const User = {
 export default User;
 ```
 
-Doing that defined phoneNumbers as a list of strings.
+Doing that defined phoneNumbers as a list of strings. You can nest your data models as deeply as it is necessary.
 
-We have seen how we can define a model with both **primitive** and **composite** properties, but we can't do much with these models (except maybe generate type definitions and schemas for different languages and technologies). Let's spice things up a bit and enrich our models next.
+We have seen how we can define a model with both **primitive** and **composite** properties, but we can't do much with these models (except generate type definitions and schemas for different languages and technologies). Let's spice things up a bit and enrich our models next.

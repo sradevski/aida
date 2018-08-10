@@ -7,7 +7,7 @@ sidebar_label: Installation
 
 Let's go and install the command line interface for Aida.
 
-> Note: You will need NodeJS 8+ and NPM, so go install those if you haven't already.
+> Note: You will need NodeJS 8+ and NPM, so go and install those if you haven't already.
 
 ```
 npm install -g @aida/cli

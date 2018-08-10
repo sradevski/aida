@@ -8,7 +8,7 @@ As you might have guessed, the **endpoints** model defines the API endpoints by 
 
 Without further ado, let's see how a simple **endpoints** model would look like. 
 
-Let's `cd` to **sampleDir/Models/User**, and make sure you still have the **User.core.js** file from the **[Enriching The Model](getting-started/enriching-the-model.md)** article. Then, create a new file, called **User.endpoints.js**, and add endpoints definitions to it.
+`cd` to **sampleDir/Models/User**, and make sure you still have the **User.core.js** file from the **[Enriching The Model](getting-started/enriching-the-model.md)** article. Then, create a new file, called **User.endpoints.js**, and add the following endpoint definitions to it.
 
 ```javascript
 const UserCore = require('./User.core.js').default;
@@ -54,5 +54,5 @@ exports.default = User;
 
 In the above model, we have defined a `/users` endpoint that has a **PUT** method and a `/users/{id}` endpoint that defines a **GET** method, each with specified request and response definition. As you can see, we have used the **core** model for our **User** to specify the request and response data (although you will probably shrink or extend it as necessary). For all supported properties for the **endpoints** model type, visit the [endpoints model](reference/endpoints-model.md) page.
 
-Before we go on and use our **endpoints** model, let's diverge a bit and talk about how injectors can be chained in the next article.
+Before we use our **endpoints** model, let's diverge a bit and talk about how injectors can be chained in the next article.
 

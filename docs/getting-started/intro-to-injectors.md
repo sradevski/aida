@@ -4,9 +4,9 @@ title: Introduction to Injectors
 sidebar_label: Introduction to Injectors
 ---
 
-So far we have defined our **User** model, but we haven't done anything useful with it. Models are used by what we call **injectors**. **Injectors** take models as input and output a function that will generate something useful that was derived from the model definition. Each injector will define the properties it requires in order to generate something meaningful. This means that the properties a **primitive** would have will entirely depend on the **injectors** you wish to use and what properties they expect. For all existing injectors, refer to [this page](existing-injectors.md).
+So far we have defined our **User** model, but we haven't done anything useful with it. Models are used by what we call **injectors**. **Injectors** take models as input and output a function that will generate something useful that was derived from the model definition. Each injector will define the properties it requires in order to generate something meaningful. This means that the properties a **primitive** would have will entirely depend on the **injectors** you wish to use and what properties they expect. For all existing injectors, refer to [this page](reference/existing-injectors.md).
 
-In the **User.core.js** file you created earlier copy the model definition from the [previous page](enriching-the-model.md). In the terminal `cd` to **sampleDir** root location and run the Aida pipeline.
+In the **User.core.js** file you created earlier, copy the model definition from the [previous page](getting-started/enriching-the-model.md). In the terminal `cd` to **sampleDir** root location and run the Aida pipeline.
 
 ```
 aida run
