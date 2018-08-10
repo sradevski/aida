@@ -45,7 +45,7 @@ class Footer extends React.Component {
             </a>
             <a
               href={this.docUrl(
-                'reference/defined-types.html',
+                'reference/data-model.html',
                 this.props.language,
               )}
             >
