@@ -33,7 +33,7 @@ We can create a config file using the interactive interface by running `aida ini
       "outputType": "none"
     },
     {
-      "name": "fakedModel",
+      "name": "faked-model",
       "outputType": "file",
       "outputFile": ""
     }

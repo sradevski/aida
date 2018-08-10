@@ -5,7 +5,7 @@ const pluginChoices = [
   },
   {
     title: 'Routes Map',
-    value: 'routesMap',
+    value: 'routes-map',
   },
   {
     title: 'Swagger',
@@ -13,11 +13,11 @@ const pluginChoices = [
   },
   {
     title: 'Faked Data Routes',
-    value: 'fakedDataRoutes',
+    value: 'faked-data-routes',
   },
   {
     title: 'Faked Model',
-    value: 'fakedModel',
+    value: 'faked-model',
   },
 ];
 

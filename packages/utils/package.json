@@ -1,0 +1,19 @@
+{
+  "name": "@aida/utils",
+  "version": "0.0.1",
+  "description": "Aida utils library, used internally",
+  "repository": "https://bitbucket.org/flencer/validstack",
+  "author": "Stevche Radevski <sradevski@live.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
+  },
+  "dependencies": {
+    "code-stringify": "^1.2.3",
+    "faker": "^4.1.0"
+  }
+}

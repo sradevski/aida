@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import program from 'commander';
 import inquirer from 'inquirer';
 import path from 'path';
+import fs from 'fs';
 import * as aida from '@aida/core';
 
 import {
@@ -30,12 +31,10 @@ export default function main() {
     );
 
   program
-    .command('run [injectors...]')
-    .description(
-      'Runs the injector pipeline you specify. If nothing is specified, the pipeline from your config file is used.',
-    )
-    .action((injectors, options) => {
-      run(injectors, options.parent);
+    .command('run ')
+    .description('Runs the injector pipeline from your config file.')
+    .action(options => {
+      run(options.parent);
     });
 
   program
@@ -64,16 +63,28 @@ export default function main() {
   program.parse(process.argv);
 }
 
-function run(injectors, options) {
+function run(options) {
   console.log(chalk.yellow(`Getting aida config...`));
   const cliConfig = getConfig(options);
-  const { existingInjectorNames, missingInjectorNames } = getInjectorNames(
-    injectors,
-    cliConfig,
+  const injectorNames = cliConfig.injectors.map(x => x.name);
+
+  const { existingInjectors, missingInjectorNames } = getInjectors(
+    injectorNames,
   );
 
+  if (missingInjectorNames.length > 0) {
+    console.error(
+      chalk.yellow(
+        `The injectors ${chalk.red.bold(
+          missingInjectorNames.join(', '),
+        )}, specified in the config are not installed in your local node_modules folder (where .aidarc is located). Did you forget to do 'npm install'?`,
+      ),
+    );
+    process.exit(0);
+  }
+
   const aidaCoreConfig = {
-    injectors: existingInjectorNames.map(injectorName => aida[injectorName]),
+    injectors: Object.values(existingInjectors),
     models: {
       location: path.resolve(process.cwd(), cliConfig.modelsDir),
       blacklistFiles: ['helpers.js'],
@@ -92,32 +103,20 @@ function run(injectors, options) {
   console.log(
     chalk.yellow(
       `Running injectors: ${chalk.yellow.bold(
-        existingInjectorNames.join(', '),
+        Object.keys(existingInjectors).join(', '),
       )}`,
     ),
   );
 
-  if (missingInjectorNames.length > 0) {
-    console.log(
-      chalk.yellow(
-        `The following injectors could not be found and will be skipped: ${chalk.yellow.bold(
-          missingInjectorNames.join(', '),
-        )}`,
-      ),
-    );
-  }
-
   const aidaResults = aida.run(aidaCoreConfig);
 
-  cliConfig.injectors
-    .filter(injector => existingInjectorNames.includes(injector.name))
-    .forEach(injector => {
-      outputInjectorResult(
-        injector,
-        aidaResults[injector.name].execute,
-        cliConfig.outputDir,
-      );
-    });
+  cliConfig.injectors.forEach(injector => {
+    outputInjectorResult(
+      injector,
+      aidaResults[toCamelCase(injector.name)].execute,
+      cliConfig.outputDir,
+    );
+  });
 
   console.log(chalk.yellow(`Done!`));
 }
@@ -140,18 +139,33 @@ function outputInjectorResult(injector, injectorExecute, defaultOutputDir) {
   }
 }
 
-function getInjectorNames(injectors, configData) {
-  const mergedInjectors =
-    injectors.length > 0 ? injectors : configData.injectors.map(x => x.name);
+function getInjectors(injectorNames) {
+  return injectorNames.reduce(
+    (injectors, injectorName) => {
+      const location = path.resolve(
+        process.cwd(),
+        `node_modules/@aida/${injectorName}`,
+      );
+      console.log(location);
+      if (fs.existsSync(location)) {
+        injectors.existingInjectors[injectorName] = require(location).default;
+      } else {
+        injectors.missingInjectorNames.push(injectorName);
+      }
 
-  const existingInjectorNames = mergedInjectors.filter(
-    injectorName => aida[injectorName],
+      return injectors;
+    },
+    {
+      existingInjectors: {},
+      missingInjectorNames: [],
+    },
   );
-  const missingInjectorNames = mergedInjectors.filter(
-    injectorName => !aida[injectorName],
-  );
+}
 
-  return { existingInjectorNames, missingInjectorNames };
+function toCamelCase(varName) {
+  return varName.replace(/-([a-z])/g, g => {
+    return g[1].toUpperCase();
+  });
 }
 
 function getOutputPath(defaultOutputDir, injectorOutputFilepath, injectorName) {

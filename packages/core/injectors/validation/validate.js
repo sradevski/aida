@@ -1,7 +1,10 @@
 import crypto from 'crypto';
-import { crawlModel } from '../../utils/configParsers';
+import { crawlModel } from '@aida/utils/dist/configParsers';
+import {
+  stringifyFunction,
+  stringifyObject,
+} from '@aida/utils/dist/stringifier';
 import predefinedValidators from './predefinedValidators';
-import { stringifyFunction, stringifyObject } from '../../utils/stringifier';
 
 const validatorFunctions = {};
 

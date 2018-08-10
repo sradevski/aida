@@ -1,4 +1,4 @@
-import { getModelType, getHttpMethods } from '../../utils/configParsers';
+import { getModelType, getHttpMethods } from '@aida/utils/dist/configParsers';
 
 const defaultRootProperties = {
   openapi: '3.0.0',

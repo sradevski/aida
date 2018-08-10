@@ -12,7 +12,7 @@ In the **User.core.js** file you created earlier, copy the model definition from
 aida run
 ```
 
-This will generate a **fakedModel** file, which will contain something like this (formatted for better legibility):
+This will generate a **faked-model** file, which will contain something like this (formatted for better legibility):
 
 ```json
 {  
@@ -26,4 +26,4 @@ This will generate a **fakedModel** file, which will contain something like this
 }
 ```
 
-Like that you have predictable fake data that you can use however you wish. You can use it manually, pipe it to other injectors built on top of the **fakedModel** injector, or create a **consumer** that will use the generated data in some way (such as inserting the fake data into a development database). Let's check out what **consumers** look like next.
+Like that you have predictable fake data that you can use however you wish. You can use it manually, pipe it to other injectors built on top of the **faked-model** injector, or create a **consumer** that will use the generated data in some way (such as inserting the fake data into a development database). Let's check out what **consumers** look like next.

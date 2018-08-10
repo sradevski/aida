@@ -4,7 +4,7 @@ title: Enriching Your Model
 sidebar_label: Enriching Your Model
 ---
 
-We now want to add more capabilities to our **User** model. Let's add some way to generate fake data that will have the same schema as our model. This can be done with the **fakedModel** injector, but we will keep the discussion about what injectors are for later. For now, let's just enrich our model so it knows what sort of data would fit each property, using the `faker` property.
+We now want to add more capabilities to our **User** model. Let's add some way to generate fake data that will have the same schema as our model. This can be done with the **faked-model** injector, but we will keep the discussion about what injectors are for later. For now, let's just enrich our model so it knows what sort of data would fit each property, using the `faker` property.
 
 ``` javascript 
 const User = {

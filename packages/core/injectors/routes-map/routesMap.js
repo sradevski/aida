@@ -1,4 +1,4 @@
-import { getHttpMethods } from '../../utils/configParsers';
+import { getHttpMethods } from '@aida/utils/dist/configParsers';
 
 //routesMap returns a map of operationId: route while maintaining the placeholders for path variables.
 export default function main(models) {

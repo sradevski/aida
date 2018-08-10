@@ -26,7 +26,7 @@ Content of the **.aidarc** file:
       "outputType": "none"
     },
     {
-      "name": "fakedDataRoutes",
+      "name": "faked-data-routes",
       "outputType": "file"
     },
     {
@@ -106,7 +106,7 @@ const User = {
 exports.default = User;
 ```
 
-Once you have all the models ready, run `aida run`. After running Aida, you will notice that two new files were created: **swagger**, and **fakedDataRoutes**. Just like that, you have generated swagger documentation, and all defined endpoints are populated with fake data that you can use while developing your frontend application. There are more things that can be done  
+Once you have all the models ready, run `aida run`. After running Aida, you will notice that two new files were created: **swagger**, and **faked-data-routes**. Just like that, you have generated swagger documentation, and all defined endpoints are populated with fake data that you can use while developing your frontend application. There are more things that can be done  
 
 In order to check the swagger documentation, you can copy the contents of the **swagger** file, go to [Swagger Editor](https://editor.swagger.io/), and paste it there. That will give you a nicely formatted documentation that you can share with your colleagues.
 
@@ -114,7 +114,7 @@ Using the faked data routes is a bit more involved. Let's say you have a **React
 
 ```
 import fakedHttpConsumer from '@aida/consumer-faked-http';
-import routes from './fakedDataRoutes'; //This is the generated file from aida
+import routes from './faked-data-routes'; //This is the generated file from aida
 
 export function appConfig() {
   if(process.env.NODE_ENV === "development"){

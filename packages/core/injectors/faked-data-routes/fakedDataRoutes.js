@@ -1,5 +1,5 @@
-import { getHttpMethods } from '../../utils/configParsers';
-import { populateWithFaker } from '../../utils/faker';
+import { getHttpMethods } from '@aida/utils/dist/configParsers';
+import { populateWithFaker } from '@aida/utils/dist/faker';
 
 const seed = 12;
 

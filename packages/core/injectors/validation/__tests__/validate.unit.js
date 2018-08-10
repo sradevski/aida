@@ -62,8 +62,8 @@ describe('The validate injector', () => {
     );
 
     expect(sanitized).toBe(`const result = {
-  integer: val => {return val;},
-  range: (val, props) => {return val;},
+  integer: val => val,
+  range: (val, props) => val,
   \"88fe1edfc09662fb57bb2274c1edc88f\": val => val
 }`);
   });

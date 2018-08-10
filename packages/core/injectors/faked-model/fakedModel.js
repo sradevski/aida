@@ -1,4 +1,4 @@
-import { populateWithFaker } from '../../utils/faker';
+import { populateWithFaker } from '@aida/utils/dist/faker';
 
 const seed = 12;
 const defaultOptions = {

@@ -1,4 +1,4 @@
-import { traverseFileSystem } from './utils/filesystem';
+import { traverseFileSystem } from './filesystem';
 import defaultsDeep from 'lodash/fp/defaultsDeep';
 
 const pipe = (...fns) => fn => fns.reduce((prev, func) => func(prev), fn);
