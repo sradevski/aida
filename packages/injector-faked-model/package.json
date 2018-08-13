@@ -1,6 +1,6 @@
 {
   "name": "@aida/faked-model",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Aida faked model injector",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
