@@ -146,7 +146,7 @@ function getInjectors(injectorNames) {
         process.cwd(),
         `node_modules/@aida/${injectorName}`,
       );
-      console.log(location);
+
       if (fs.existsSync(location)) {
         injectors.existingInjectors[injectorName] = require(location).default;
       } else {

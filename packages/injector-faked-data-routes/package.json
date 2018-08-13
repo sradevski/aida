@@ -5,6 +5,7 @@
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",
+  "main": "dist/index.js",
   "files": [
     "dist/"
   ],
