@@ -1,6 +1,6 @@
 {
   "name": "@aida/swagger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Aida injector to generate a swagger-compliant specifications json",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -12,10 +12,10 @@
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
   },
   "devDependencies": {
-    "@aida/routes": "^0.0.1",
+    "@aida/routes": "^0.0.2",
     "swagger-parser": "^5.0.0"
   },
   "dependencies": {
-    "@aida/utils": "^0.0.1"
+    "@aida/utils": "^0.0.2"
   }
 }
