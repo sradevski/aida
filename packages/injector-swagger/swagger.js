@@ -55,7 +55,7 @@ function getSwaggerForMethod(method) {
   return {
     description: method.description,
     operationId: method.operationId,
-    ...getRequestParams(method.request),
+    ...getRequest(method.request),
     responses: Object.keys(method.response).reduce(
       (responses, responseCode) => {
         responses[responseCode] = getResponseRequestBody(
@@ -69,30 +69,46 @@ function getSwaggerForMethod(method) {
   };
 }
 
-function getRequestParams(request) {
+function getRequest(request) {
   if (request) {
     return {
-      parameters: getRequestPathParameters(request.path),
+      parameters: getRequestParameters(request.path, request.query),
       requestBody: request.body
         ? getResponseRequestBody(request.body, request.description)
         : undefined,
     };
   }
+
   return {};
 }
 
-function getRequestPathParameters(requestPath) {
+function getRequestParameters(requestPath, requestQuery) {
   let swaggerRequest = [];
-
   if (requestPath) {
-    swaggerRequest = Object.keys(requestPath).map(pathKey => {
-      return {
-        name: pathKey,
-        in: 'path',
-        required: true,
-        schema: getSwaggerForModel(requestPath[pathKey]),
-      };
-    });
+    swaggerRequest = swaggerRequest.concat(
+      Object.keys(requestPath).map(pathKey => {
+        return {
+          name: pathKey,
+          in: 'path',
+          required: true, //Path parameters must be required.
+          description: requestPath[pathKey].description,
+          schema: getSwaggerForModel(requestPath[pathKey]),
+        };
+      }),
+    );
+  }
+
+  if (requestQuery) {
+    swaggerRequest = swaggerRequest.concat(
+      Object.keys(requestQuery).map(queryKey => {
+        return {
+          name: queryKey,
+          in: 'query',
+          description: requestQuery[queryKey].description,
+          schema: getSwaggerForModel(requestQuery[queryKey]),
+        };
+      }),
+    );
   }
 
   return swaggerRequest.length > 0 ? swaggerRequest : undefined;
