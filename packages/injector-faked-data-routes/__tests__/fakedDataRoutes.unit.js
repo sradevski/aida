@@ -1,12 +1,5 @@
-import fakedDataRoutes from '../';
+import fakedDataRoutes from '../index.js';
 import routes from '@aida/routes';
-
-const UserCore = {
-  id: {
-    vtype: 'string',
-    faker: 'random.uuid',
-  },
-};
 
 const aidaModels = {
   _raw: {

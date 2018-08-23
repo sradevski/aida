@@ -1,4 +1,4 @@
-import fakedModel from '../';
+import fakedModel from '../index.js';
 
 const aidaModels = {
   _raw: {

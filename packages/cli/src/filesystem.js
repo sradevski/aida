@@ -28,8 +28,12 @@ export function createConfigFile(configFilename, configData) {
   );
 }
 
-export function readConfig(path) {
-  return JSON.parse(fs.readFileSync(path));
+export function readConfig(configPath) {
+  return JSON.parse(fs.readFileSync(configPath));
+}
+
+export function pathExists(location) {
+  fs.existsSync(location);
 }
 
 function fileExists(filePath) {
@@ -42,6 +46,21 @@ function fileExists(filePath) {
 
 export function outputToFile(content, path) {
   return fs.writeFileSync(path, content);
+}
+
+export function resolveFromCurrentDir(additionalPath) {
+  return path.resolve(process.cwd(), additionalPath);
+}
+
+export function getOutputPath(
+  defaultOutputDir,
+  injectorOutputFilepath,
+  injectorName,
+) {
+  return (
+    path.normalize(injectorOutputFilepath) ||
+    path.resolve(defaultOutputDir, injectorName)
+  );
 }
 
 export function getConfigFilePath(configFilename, shouldSearchRecursively) {

@@ -9,7 +9,7 @@
     "test": "jest --ci",
     "test:update": "jest -u",
     "test:watch": "jest --watch -u",
-    "test:coverage": "jest --coverage --collectCoverageFrom=**/*{.js,.jsx} ",
+    "test:coverage": "jest --coverage",
     "flow": "flow",
     "audit": "npm audit",
     "lint": "eslint packages --fix ",
@@ -18,7 +18,6 @@
   "jest": {
     "testEnvironment": "node",
     "testURL": "http://localhost:4000",
-    "rootDir": "packages",
     "testMatch": [
       "**/?(*.)(unit|test).?(m)js?(x)"
     ],
@@ -28,12 +27,15 @@
       "mjs",
       "node"
     ],
-    "coveragePathIgnorePatterns": [
-      "/dist/",
-      "/output/",
-      "/coverage/",
-      "package-lock.json",
-      "package.json"
+    "collectCoverageFrom": [
+      "**/packages/**/*.js",
+      "!**/coverage/**",
+      "!**/dist/**",
+      "!**/output/**",
+      "!**/cli/**",
+      "!**/__mocks__/**",
+      "!**/__tests__/**",
+      "!e2e/**"
     ]
   },
   "lint-staged": {
@@ -48,15 +50,15 @@
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-preset-flow": "^6.23.0",
-    "eslint": "^5.3.0",
+    "eslint": "^5.4.0",
     "eslint-plugin-flowtype": "^2.50.0",
-    "eslint-plugin-jest": "^21.20.2",
+    "eslint-plugin-jest": "^21.21.0",
     "eslint-plugin-prettier": "^2.6.2",
     "flow-bin": "^0.78.0",
     "husky": "^0.14.3",
-    "jest": "^23.4.2",
+    "jest": "^23.5.0",
     "lerna": "^2.11.0",
-    "lint-staged": "^7.2.0",
+    "lint-staged": "^7.2.2",
     "nodemon": "^1.18.3",
     "prettier": "^1.14.2"
   },

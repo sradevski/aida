@@ -1,4 +1,4 @@
-import routesMap from '../';
+import routesMap from '../index.js';
 import routes from '@aida/routes';
 
 const aidaModels = {

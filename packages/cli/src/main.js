@@ -1,20 +1,22 @@
 import chalk from 'chalk';
 import program from 'commander';
 import inquirer from 'inquirer';
-import path from 'path';
-import fs from 'fs';
 import * as aida from '@aida/core';
 
 import {
   createConfigFile,
   createModelFiles,
-  readConfig,
   outputToFile,
+  pathExists,
+  resolveFromCurrentDir,
+  getOutputPath,
   getConfigFilePath,
+  readConfig,
   watchModels,
 } from './filesystem';
 import initQuestions from './initQuestions';
 import generateQuestions from './generateQuestions';
+import camelCase from 'lodash/string/camelCase';
 
 const CONFIG_FILENAME = '.aidarc';
 
@@ -66,11 +68,19 @@ export default function main() {
 function run(options) {
   console.log(chalk.yellow(`Getting aida config...`));
   const cliConfig = getConfig(options);
-  const injectorNames = cliConfig.injectors.map(x => x.name);
-
+  const modelsPath = resolveFromCurrentDir(cliConfig.modelsDir);
   const { existingInjectors, missingInjectorNames } = getInjectors(
-    injectorNames,
+    cliConfig.injectors.map(x => x.name),
   );
+
+  const aidaCoreConfig = {
+    injectors: Object.values(existingInjectors),
+    models: {
+      location: modelsPath,
+      blacklistFiles: ['helpers.js'],
+      blacklistDirectories: ['intermediate'],
+    },
+  };
 
   if (missingInjectorNames.length > 0) {
     console.error(
@@ -82,15 +92,6 @@ function run(options) {
     );
     process.exit(0);
   }
-
-  const aidaCoreConfig = {
-    injectors: Object.values(existingInjectors),
-    models: {
-      location: path.resolve(process.cwd(), cliConfig.modelsDir),
-      blacklistFiles: ['helpers.js'],
-      blacklistDirectories: ['intermediate'],
-    },
-  };
 
   console.log(
     chalk.yellow(
@@ -113,7 +114,7 @@ function run(options) {
   cliConfig.injectors.forEach(injector => {
     outputInjectorResult(
       injector,
-      aidaResults[toCamelCase(injector.name)].execute,
+      aidaResults[camelCase(injector.name)].execute,
       cliConfig.outputDir,
     );
   });
@@ -142,12 +143,11 @@ function outputInjectorResult(injector, injectorExecute, defaultOutputDir) {
 function getInjectors(injectorNames) {
   return injectorNames.reduce(
     (injectors, injectorName) => {
-      const location = path.resolve(
-        process.cwd(),
+      const location = resolveFromCurrentDir(
         `node_modules/@aida/${injectorName}`,
       );
 
-      if (fs.existsSync(location)) {
+      if (pathExists(location)) {
         injectors.existingInjectors[injectorName] = require(location).default;
       } else {
         injectors.missingInjectorNames.push(injectorName);
@@ -160,16 +160,6 @@ function getInjectors(injectorNames) {
       missingInjectorNames: [],
     },
   );
-}
-
-function toCamelCase(varName) {
-  return varName.replace(/-([a-z])/g, g => {
-    return g[1].toUpperCase();
-  });
-}
-
-function getOutputPath(defaultOutputDir, injectorOutputFilepath, injectorName) {
-  return injectorOutputFilepath || `${defaultOutputDir}${injectorName}`;
 }
 
 function init() {

@@ -1,4 +1,13 @@
-import { crawlModel, getModelType } from '../configParsers';
+import { crawlModel, getModelType, getHttpMethods } from '../configParsers';
+
+describe('get http methods should return all standardized HTTP methods', () => {
+  test('returns all http methods defined in the route', () => {
+    expect(getHttpMethods({ post: {}, get: {}, smthelse: {} })).toEqual([
+      'post',
+      'get',
+    ]);
+  });
+});
 
 describe('Get model type', () => {
   test('returns "array" when the model is an array', () => {
