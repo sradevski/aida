@@ -1,4 +1,5 @@
 import { getModelType, getHttpMethods } from '@aida/utils/dist/configParsers';
+import aidaToSwaggerType from './typeConversion';
 
 const defaultRootProperties = {
   openapi: '3.0.0',
@@ -153,7 +154,10 @@ function getSchema(model) {
     };
   }
 
-  return { required: model.required, schema: { type: defType } };
+  return {
+    required: model.required,
+    schema: { type: aidaToSwaggerType(defType) },
+  };
 }
 
 function getRequiredChildrenNames(model) {
