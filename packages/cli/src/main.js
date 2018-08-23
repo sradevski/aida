@@ -16,7 +16,7 @@ import {
 } from './filesystem';
 import initQuestions from './initQuestions';
 import generateQuestions from './generateQuestions';
-import camelCase from 'lodash/string/camelCase';
+import camelCase from 'lodash/camelCase';
 
 const CONFIG_FILENAME = '.aidarc';
 

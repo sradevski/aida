@@ -33,7 +33,7 @@ export function readConfig(configPath) {
 }
 
 export function pathExists(location) {
-  fs.existsSync(location);
+  return fs.existsSync(location);
 }
 
 function fileExists(filePath) {
@@ -57,10 +57,11 @@ export function getOutputPath(
   injectorOutputFilepath,
   injectorName,
 ) {
-  return (
-    path.normalize(injectorOutputFilepath) ||
-    path.resolve(defaultOutputDir, injectorName)
-  );
+  if (injectorOutputFilepath) {
+    return path.normalize(injectorOutputFilepath);
+  }
+
+  return path.resolve(defaultOutputDir, injectorName);
 }
 
 export function getConfigFilePath(configFilename, shouldSearchRecursively) {

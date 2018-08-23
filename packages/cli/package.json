@@ -1,6 +1,6 @@
 {
   "name": "@aida/cli",
-  "version": "0.0.13",
+  "version": "0.0.12",
   "description": "Aida command line client",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -15,9 +15,6 @@
   },
   "bin": {
     "aida": "./dist/index.js"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0"
   },
   "dependencies": {
     "@aida/core": "^0.0.2",
