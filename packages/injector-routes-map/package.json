@@ -1,6 +1,6 @@
 {
   "name": "@aida/routes-map",
-  "version": "0.0.3",
+  "version": "0.0.12",
   "description": "Aida injector to create a map of all operation ids and their accompanying routes",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -13,9 +13,9 @@
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
   },
   "devDependencies": {
-    "@aida/routes": "^0.0.3"
+    "@aida/routes": "^0.0.12"
   },
   "dependencies": {
-    "@aida/utils": "^0.0.2"
+    "@aida/utils": "^0.0.12"
   }
 }
