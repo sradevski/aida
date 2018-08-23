@@ -58,7 +58,7 @@ function getSwaggerForMethod(method) {
     ...getRequest(method.request),
     responses: Object.keys(method.response).reduce(
       (responses, responseCode) => {
-        responses[responseCode] = getResponseRequestBody(
+        responses[responseCode] = getBody(
           method.response[responseCode].body,
           method.response[responseCode].description,
         );
@@ -74,7 +74,7 @@ function getRequest(request) {
     return {
       parameters: getRequestParameters(request.path, request.query),
       requestBody: request.body
-        ? getResponseRequestBody(request.body, request.description)
+        ? getBody(request.body, request.description)
         : undefined,
     };
   }
@@ -92,7 +92,7 @@ function getRequestParameters(requestPath, requestQuery) {
           in: 'path',
           required: true, //Path parameters must be required.
           description: requestPath[pathKey].description,
-          schema: getSwaggerForModel(requestPath[pathKey]),
+          ...getSchema(requestPath[pathKey]),
         };
       }),
     );
@@ -105,7 +105,9 @@ function getRequestParameters(requestPath, requestQuery) {
           name: queryKey,
           in: 'query',
           description: requestQuery[queryKey].description,
-          schema: getSwaggerForModel(requestQuery[queryKey]),
+          required:
+            requestQuery[queryKey].vtype && requestQuery[queryKey].required, //Its a primitive and required
+          ...getSchema(requestQuery[queryKey]),
         };
       }),
     );
@@ -114,13 +116,11 @@ function getRequestParameters(requestPath, requestQuery) {
   return swaggerRequest.length > 0 ? swaggerRequest : undefined;
 }
 
-function getResponseRequestBody(body, description) {
+function getBody(body, description) {
   const responseContent = body
     ? {
         content: {
-          'application/json': {
-            schema: getSwaggerForModel(body),
-          },
+          'application/json': getSchema(body),
         },
       }
     : {};
@@ -131,29 +131,29 @@ function getResponseRequestBody(body, description) {
   };
 }
 
-function getSwaggerForModel(model) {
+function getSchema(model) {
   const defType = getModelType(model);
   if (defType === 'array') {
     return {
       type: 'array',
-      items: {
-        ...getSwaggerForModel(model[0]),
-      },
+      items: getSchema(model[0]).schema,
     };
   }
 
   if (defType === 'object') {
     const requiredChildren = getRequiredChildrenNames(model);
     return {
-      required: requiredChildren.length > 0 ? requiredChildren : undefined,
-      properties: Object.keys(model).reduce((properties, field) => {
-        properties[field] = getSwaggerForModel(model[field]);
-        return properties;
-      }, {}),
+      schema: {
+        required: requiredChildren.length > 0 ? requiredChildren : undefined,
+        properties: Object.keys(model).reduce((properties, field) => {
+          properties[field] = getSchema(model[field]).schema;
+          return properties;
+        }, {}),
+      },
     };
   }
 
-  return { type: defType };
+  return { required: model.required, schema: { type: defType } };
 }
 
 function getRequiredChildrenNames(model) {
