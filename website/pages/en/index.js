@@ -109,16 +109,25 @@ const Features = props => (
   <Block layout="fourColumn">
     {[
       {
-        content: 'This is the content of my feature',
+        content:
+          'Instead of having multiple definitions of the same data model, Aida allows you to have everything defined in one place, bringing standardization and understanding to your system.',
         image: imgUrl('aida.svg'),
         imageAlign: 'top',
-        title: 'Feature One',
+        title: 'Single source of truth for your data',
       },
       {
-        content: 'The content of my second feature',
+        content:
+          'Every time you make a change to your model, automatically propagate that change in its appropriate form to every part of your system.',
         image: imgUrl('aida.svg'),
         imageAlign: 'top',
-        title: 'Feature Two',
+        title: 'Automated data model propagation',
+      },
+      {
+        content:
+          'Have a common, yet flexible language to communicate the evolution of your data. Clean separation of concerns, along with automated data mocking, leads to true independent development between teams.',
+        image: imgUrl('aida.svg'),
+        imageAlign: 'top',
+        title: 'A communication tool',
       },
     ]}
   </Block>
@@ -129,8 +138,12 @@ const FeatureCallout = props => (
     className="productShowcaseSection paddingBottom"
     style={{ textAlign: 'center' }}
   >
-    <h2>Feature Callout</h2>
-    <MarkdownBlock>These are features of this project</MarkdownBlock>
+    <h2>There is much more to come.</h2>
+    <p>
+      Aida is still in its infancy, with unclear use cases and lacking features.
+      We need your feedback and participation to drive the evolution of Aida and
+      bring data models as a centerpiece to every organization.
+    </p>
   </div>
 );
 
@@ -142,19 +155,6 @@ const LearnHow = props => (
         image: imgUrl('aida.svg'),
         imageAlign: 'right',
         title: 'Learn How',
-      },
-    ]}
-  </Block>
-);
-
-const TryOut = props => (
-  <Block id="try">
-    {[
-      {
-        content: 'Talk about trying this out',
-        image: imgUrl('aida.svg'),
-        imageAlign: 'left',
-        title: 'Try it Out',
       },
     ]}
   </Block>
@@ -214,7 +214,6 @@ class Index extends React.Component {
           <Features />
           <FeatureCallout />
           <LearnHow />
-          <TryOut />
           <Description />
           <Showcase language={language} />
         </div>
