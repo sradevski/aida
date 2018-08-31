@@ -1,5 +1,5 @@
 import { getModelType, getHttpMethods } from '@aida/utils/dist/configParsers';
-import aidaToSwaggerType from './typeConversion';
+import aidaToOpenApiType from './typeConversion';
 
 const defaultRootProperties = {
   openapi: '3.0.0',
@@ -9,13 +9,13 @@ const defaultRootProperties = {
   },
 };
 
-//generates a swagger.json file that can be used with any swagger-based tool.
+//generates a openapi.json file that can be used with any openapi-based tool.
 export default function main(models) {
   return {
     ...models,
-    swagger: {
+    openApi: {
       execute: ({ category, rootProps = {} } = {}) =>
-        generateSwaggerDocs(models.routes.execute({ baseUri: '', category }), {
+        generateOpenApiDocs(models.routes.execute({ baseUri: '', category }), {
           ...defaultRootProperties,
           ...rootProps,
         }),
@@ -23,36 +23,36 @@ export default function main(models) {
   };
 }
 
-function generateSwaggerDocs(routes, rootProperties) {
-  const swaggerFormattedPaths = getSwaggerForRoutes(routes);
+function generateOpenApiDocs(routes, rootProperties) {
+  const openApiFormattedPaths = getOpenApiForRoutes(routes);
 
-  const swaggerDocs = {
+  const openApiDocs = {
     ...rootProperties,
-    paths: swaggerFormattedPaths,
+    paths: openApiFormattedPaths,
   };
 
-  return swaggerDocs;
+  return openApiDocs;
 }
 
-function getSwaggerForRoutes(routes) {
-  return Object.keys(routes).reduce((swaggerRoutes, routeName) => {
-    swaggerRoutes[routeName] = {
+function getOpenApiForRoutes(routes) {
+  return Object.keys(routes).reduce((openApiRoutes, routeName) => {
+    openApiRoutes[routeName] = {
       description: routes[routeName].description,
-      ...getSwaggerForRouteMethods(routes[routeName]),
+      ...getOpenApiForRouteMethods(routes[routeName]),
     };
 
-    return swaggerRoutes;
+    return openApiRoutes;
   }, {});
 }
 
-function getSwaggerForRouteMethods(route) {
+function getOpenApiForRouteMethods(route) {
   return getHttpMethods(route).reduce((methods, methodName) => {
-    methods[methodName] = getSwaggerForMethod(route[methodName]);
+    methods[methodName] = getOpenApiForMethod(route[methodName]);
     return methods;
   }, {});
 }
 
-function getSwaggerForMethod(method) {
+function getOpenApiForMethod(method) {
   return {
     description: method.description,
     operationId: method.operationId,
@@ -84,9 +84,9 @@ function getRequest(request) {
 }
 
 function getRequestParameters(requestPath, requestQuery) {
-  let swaggerRequest = [];
+  let openApiRequest = [];
   if (requestPath) {
-    swaggerRequest = swaggerRequest.concat(
+    openApiRequest = openApiRequest.concat(
       Object.keys(requestPath).map(pathKey => {
         return {
           name: pathKey,
@@ -100,7 +100,7 @@ function getRequestParameters(requestPath, requestQuery) {
   }
 
   if (requestQuery) {
-    swaggerRequest = swaggerRequest.concat(
+    openApiRequest = openApiRequest.concat(
       Object.keys(requestQuery).map(queryKey => {
         return {
           name: queryKey,
@@ -114,7 +114,7 @@ function getRequestParameters(requestPath, requestQuery) {
     );
   }
 
-  return swaggerRequest.length > 0 ? swaggerRequest : undefined;
+  return openApiRequest.length > 0 ? openApiRequest : undefined;
 }
 
 function getBody(body, description) {
@@ -156,7 +156,7 @@ function getSchema(model) {
 
   return {
     required: model.required,
-    schema: { type: aidaToSwaggerType(defType) },
+    schema: { type: aidaToOpenApiType(defType) },
   };
 }
 

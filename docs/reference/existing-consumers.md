@@ -8,5 +8,20 @@ Anyone who has created an injector that is generic enough can create a pull requ
 
 ### Consumers maintained by the core team
 
+
+<table>
+  <tr>
+    <th>Injector Name</th>
+    <th>Package Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Faked HTTP</td>
+    <td>@aida/consumer-faked-http</td>
+    <td>Uses the object generated from "Faked Data Routes" injector to mock HTTP calls to the defined endpoints.</td>
+  </tr>
+</table>
+
 ### 3rd party consumers
 
+None Yet.

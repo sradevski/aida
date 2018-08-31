@@ -1,4 +1,4 @@
-export default function aidaToSwaggerType(type) {
+export default function aidaToOpenApiType(type) {
   switch (type) {
     case 'date':
     case 'datetime':

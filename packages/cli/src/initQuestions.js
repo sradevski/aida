@@ -8,8 +8,8 @@ const pluginChoices = [
     value: 'routes-map',
   },
   {
-    title: 'Swagger',
-    value: 'swagger',
+    title: 'Open API',
+    value: 'open-api',
   },
   {
     title: 'Faked Data Routes',

@@ -3,7 +3,7 @@
     "Getting Started": ["getting-started/introduction", "getting-started/installation", "getting-started/creating-first-model", "getting-started/enriching-the-model", "getting-started/intro-to-injectors", "getting-started/intro-to-consumers"],
     "Advanced Usage": ["advanced-usage/intro-to-endpoints", "advanced-usage/chaining-injectors", "advanced-usage/full-example"],
     "Extending Aida": ["extending-aida/creating-injector"],
-    "Reference": ["reference/data-model", "reference/defined-types", "reference/existing-injectors","reference/existing-consumers", "reference/endpoints-model", "reference/faked-data"]
+    "Reference": ["reference/defined-types", "reference/data-model", "reference/endpoints-model", "reference/existing-injectors","reference/existing-consumers", "reference/aida-config", "reference/faked-data"]
     
   }
 }

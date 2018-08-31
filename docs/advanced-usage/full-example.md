@@ -30,7 +30,7 @@ Content of the **.aidarc** file:
       "outputType": "file"
     },
     {
-      "name": "swagger",
+      "name": "open-api",
       "outputType": "file"
     }
   ]
@@ -106,9 +106,9 @@ const User = {
 exports.default = User;
 ```
 
-Once you have all the models ready, run `aida run`. After running Aida, you will notice that two new files were created: **swagger**, and **faked-data-routes**. Just like that, you have generated swagger documentation, and all defined endpoints are populated with fake data that you can use while developing your frontend application. There are more things that can be done  
+Once you have all the models ready, run `aida run`. After running Aida, you will notice that two new files were created: **open-api**, and **faked-data-routes**. Just like that, you have generated open-api documentation, and all defined endpoints are populated with fake data that you can use while developing your frontend application. There are more things that can be done  
 
-In order to check the swagger documentation, you can copy the contents of the **swagger** file, go to [Swagger Editor](https://editor.swagger.io/), and paste it there. That will give you a nicely formatted documentation that you can share with your colleagues.
+In order to check the open-api documentation, you can copy the contents of the **open-api** file, go to [Swagger Editor](https://editor.swagger.io/), and paste it there. That will give you a nicely formatted documentation that you can share with your colleagues.
 
 Using the faked data routes is a bit more involved. Let's say you have a **React** application, but you don't have your **User** endpoints backend implemented yet. Nevertheless, you want to make all the network calls as usual and get some data back, so the development of the frontend is completely independent from the backend. We can achieve that by installing a **faked HTTP consumer** using `npm i @aida/consumer-faked-http` and with just a few lines of code:
 

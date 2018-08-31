@@ -1,5 +1,5 @@
 {
-  "name": "@aida/routes",
+  "name": "@aida/injector-routes",
   "version": "0.0.12",
   "description": "Aida injector to create a flat object of all defined routes",
   "repository": "https://bitbucket.org/flencer/validstack",

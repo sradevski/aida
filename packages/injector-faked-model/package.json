@@ -1,5 +1,5 @@
 {
-  "name": "@aida/faked-model",
+  "name": "@aida/injector-faked-model",
   "version": "0.0.12",
   "description": "Aida faked model injector",
   "repository": "https://bitbucket.org/flencer/validstack",

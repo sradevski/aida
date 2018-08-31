@@ -38,4 +38,4 @@ export default {
   age: () => true,
 };
 
-//All of the ones defined above can be set as type. Create a composite type -> swagger type map in swagger. For custom validators, you can use a 'validate' property and just leave them on the object as defined.
+//All of the ones defined above can be set as type. Create a composite type -> openapi type map in openapi. For custom validators, you can use a 'validate' property and just leave them on the object as defined.

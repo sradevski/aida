@@ -1,5 +1,5 @@
 import swaggerParser from 'swagger-parser';
-import swagger from '../index.js';
+import openApi from '../index.js';
 import routes from '@aida/routes';
 
 const userObj = {
@@ -79,10 +79,10 @@ const aidaModels = {
 
 let execute;
 beforeAll(() => {
-  execute = swagger(routes(aidaModels)).swagger.execute;
+  execute = openApi(routes(aidaModels)).openApi.execute;
 });
 
-describe('Swagger', () => {
+describe('Open API', () => {
   test('Generates a valid 3.0 version markup', async () => {
     //A quick and dirty way to remove undefined fields.
     const swaggerDocs = JSON.parse(JSON.stringify(execute()));

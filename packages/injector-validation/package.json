@@ -1,5 +1,5 @@
 {
-  "name": "@aida/validation",
+  "name": "@aida/injector-validation",
   "version": "0.0.12",
   "description": "Aida injector to validation functions for each model",
   "repository": "https://bitbucket.org/flencer/validstack",
