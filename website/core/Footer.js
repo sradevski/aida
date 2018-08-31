@@ -19,7 +19,6 @@ class Footer extends React.Component {
   }
 
   render() {
-    const currentYear = new Date().getFullYear();
     return (
       <footer className="nav-footer" id="footer">
         <section className="sitemap">
@@ -54,7 +53,7 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>Community</h5>
-            <a href={this.pageUrl('users.html', this.props.language)}>
+            {/* <a href={this.pageUrl('users.html', this.props.language)}>
               User Showcase
             </a>
             <a
@@ -63,15 +62,15 @@ class Footer extends React.Component {
               rel="noreferrer noopener"
             >
               Stack Overflow
-            </a>
-            <a href="https://discordapp.com/">Project Chat</a>
-            <a
+            </a> */}
+            <a href="https://spectrum.chat/aida">Project Chat</a>
+            {/* <a
               href="https://twitter.com/"
               target="_blank"
               rel="noreferrer noopener"
             >
               Twitter
-            </a>
+            </a> */}
           </div>
           <div>
             <h5>More</h5>

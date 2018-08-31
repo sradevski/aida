@@ -8,7 +8,6 @@
 const React = require('react');
 
 const CompLibrary = require('../../core/CompLibrary.js');
-const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
 const Container = CompLibrary.Container;
 const GridBlock = CompLibrary.GridBlock;
 
@@ -124,7 +123,7 @@ const Features = props => (
       },
       {
         content:
-          'Have a common, yet flexible language to communicate the evolution of your data. Clean separation of concerns, along with automated data mocking, leads to true independent development between teams.',
+          'Have a common, yet flexible language to communicate the evolution of your data and endpoints. Clean separation of concerns, along with automated data mocking, leads to true independent development between teams.',
         image: imgUrl('aida.svg'),
         imageAlign: 'top',
         title: 'A communication tool',
@@ -151,23 +150,11 @@ const LearnHow = props => (
   <Block background="light">
     {[
       {
-        content: 'Talk about learning how to use this',
+        content:
+          'Aida provides a data and endpoint modeling structure. You can document your data models from different parts of the system in one place, while sharing commonalities between them. Aida allows you to unify how your data models and endpoints are defined, with all the necessary metadata being co-located. <br/><br/> Once everything is defined and ready to be used, the possibilities are endless. You can mock your API on your client-side for trully independent frontend development, generate dummy data for your development database, generate API documentation for your backend, and generate validation and schemas, all done automatically. For more information, head to our **[getting started](docs/getting-started/introduction.html)** guide',
         image: imgUrl('aida.svg'),
         imageAlign: 'right',
-        title: 'Learn How',
-      },
-    ]}
-  </Block>
-);
-
-const Description = props => (
-  <Block background="dark">
-    {[
-      {
-        content: 'This is another description of how this project is useful',
-        image: imgUrl('aida.svg'),
-        imageAlign: 'right',
-        title: 'Description',
+        title: 'Aida in a Nutshell',
       },
     ]}
   </Block>
@@ -214,8 +201,7 @@ class Index extends React.Component {
           <Features />
           <FeatureCallout />
           <LearnHow />
-          <Description />
-          <Showcase language={language} />
+          {/* <Showcase language={language} /> */}
         </div>
       </div>
     );
