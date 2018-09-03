@@ -3,6 +3,10 @@ const Booking = {
     vtype: 'string',
     faker: 'random.uuid',
   },
+  name: {
+    vtype: 'string',
+    faker: 'company.companyName',
+  },
   date: {
     vtype: 'datetime',
     faker: 'date.future',
@@ -10,10 +14,6 @@ const Booking = {
   description: {
     vtype: 'string',
     faker: 'lorem.sentences',
-  },
-  phoneNumber: {
-    vtype: 'string',
-    faker: 'phone.phoneNumberFormat',
   },
   numOfPeople: {
     vtype: 'byte',

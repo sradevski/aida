@@ -3,11 +3,12 @@ import XHRAdapter from '@pollyjs/adapter-xhr';
 import FetchAdapter from '@pollyjs/adapter-fetch';
 
 import getDefinedRoute from './routeMatching';
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 Polly.register(XHRAdapter);
 Polly.register(FetchAdapter);
 
-export default function httpMockApi(routes, baseUri) {
+export default function httpMockApi(routes, baseUri, options = {}) {
   const polly = new Polly('Faked HTTP', {
     adapters: ['xhr', 'fetch'],
     recordIfMissing: false,
@@ -15,21 +16,24 @@ export default function httpMockApi(routes, baseUri) {
   });
 
   const { server } = polly;
+  const normalizedBasedUri = baseUri.endsWith('/')
+    ? baseUri.slice(0, -1)
+    : baseUri;
 
   //Polly doesn't support intercept on .any(), so we have to run it on each method separately.
   const handler = (req, res, interceptor) =>
-    handleIntercept(req, res, interceptor, routes, baseUri);
+    handleIntercept(req, res, interceptor, routes, normalizedBasedUri, options);
 
-  server.get('*').intercept(handler);
-  server.put('*').intercept(handler);
-  server.post('*').intercept(handler);
-  server.patch('*').intercept(handler);
-  server.delete('*').intercept(handler);
-  server.head('*').intercept(handler);
-  server.options('*').intercept(handler);
+  server.get(`${normalizedBasedUri}/*`).intercept(handler);
+  server.put(`${normalizedBasedUri}/*`).intercept(handler);
+  server.post(`${normalizedBasedUri}/*`).intercept(handler);
+  server.patch(`${normalizedBasedUri}/*`).intercept(handler);
+  server.delete(`${normalizedBasedUri}/*`).intercept(handler);
+  server.head(`${normalizedBasedUri}/*`).intercept(handler);
+  server.options(`${normalizedBasedUri}/*`).intercept(handler);
 }
 
-function handleIntercept(req, res, interceptor, routes, baseUri) {
+function handleIntercept(req, res, interceptor, routes, baseUri, options) {
   const transformedReq = {
     method: req.method.toLowerCase(),
     url: req.identifiers.url,
@@ -41,14 +45,11 @@ function handleIntercept(req, res, interceptor, routes, baseUri) {
     return interceptor.passthrough();
   }
 
-  const response = respondToRequest(transformedReq, definedRoute);
-  res
-    .status(response.status)
-    .json(response.body)
-    .setHeaders(response.headers);
+  const responseData = getResponse(transformedReq, definedRoute);
+  return respondToRequest(res, responseData, options);
 }
 
-function respondToRequest(requestConfig, definedRoute) {
+function getResponse(requestConfig, definedRoute) {
   const { response } = definedRoute[requestConfig.method];
   const possibleResponses = Object.keys(response).filter(x => x !== 'default');
 
@@ -73,4 +74,13 @@ function respondToRequest(requestConfig, definedRoute) {
     body: {},
     headers: {},
   };
+}
+
+async function respondToRequest(res, responseData, options) {
+  await wait(options.timing || 0);
+
+  res
+    .status(responseData.status)
+    .json(responseData.body)
+    .setHeaders(responseData.headers);
 }

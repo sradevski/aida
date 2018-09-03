@@ -12,6 +12,7 @@ const Booking = {
           body: [
             {
               id: BookingCore.id,
+              name: BookingCore.name,
               date: BookingCore.date,
             },
             { numOfEntries: 10 },
