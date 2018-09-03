@@ -1,0 +1,25 @@
+{
+  "name": "react-mocked-http",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-scripts": "1.1.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "aida": "aida run"
+  },
+  "devDependencies": {
+    "@aida/cli": "0.0.16",
+    "@aida/consumer-faked-http": "0.0.10",
+    "@aida/injector-faked-data-routes": "0.0.14",
+    "@aida/injector-open-api": "0.0.14",
+    "@aida/injector-routes": "0.0.14",
+    "@aida/injector-routes-map": "0.0.14"
+  }
+}

@@ -49,12 +49,6 @@ const SplashContainer = props => (
   </div>
 );
 
-const Logo = props => (
-  <div className="projectLogo">
-    <img src={props.img_src} />
-  </div>
-);
-
 const ProjectTitle = props => (
   <h2 className="projectTitle">
     {siteConfig.title}
@@ -75,7 +69,6 @@ class HomeSplash extends React.Component {
     let language = this.props.language || '';
     return (
       <SplashContainer>
-        <Logo img_src={imgUrl('aida.svg')} />
         <div className="inner">
           <ProjectTitle />
           <PromoSection>
@@ -105,26 +98,26 @@ const Block = props => (
 );
 
 const Features = props => (
-  <Block layout="fourColumn">
+  <Block layout="threeColumn">
     {[
       {
         content:
-          'Instead of having multiple definitions of the same data model, Aida allows you to have everything defined in one place, bringing standardization and understanding to your system.',
-        image: imgUrl('aida.svg'),
+          'Instead of having multiple definitions of the same data model, Aida allows you to have everything defined in one place, bringing standardization and understanding between different parts of your system.',
+        image: imgUrl('brain.png'),
         imageAlign: 'top',
         title: 'Single source of truth for your data',
       },
       {
         content:
           'Every time you make a change to your model, automatically propagate that change in its appropriate form to every part of your system.',
-        image: imgUrl('aida.svg'),
+        image: imgUrl('propagate.png'),
         imageAlign: 'top',
         title: 'Automated data model propagation',
       },
       {
         content:
           'Have a common, yet flexible language to communicate the evolution of your data and endpoints. Clean separation of concerns, along with automated data mocking, leads to true independent development between teams.',
-        image: imgUrl('aida.svg'),
+        image: imgUrl('communicate.png'),
         imageAlign: 'top',
         title: 'A communication tool',
       },

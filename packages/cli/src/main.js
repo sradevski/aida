@@ -144,7 +144,7 @@ function getInjectors(injectorNames) {
   return injectorNames.reduce(
     (injectors, injectorName) => {
       const location = resolveFromCurrentDir(
-        `node_modules/@aida/${injectorName}`,
+        `node_modules/@aida/injector-${injectorName}`,
       );
 
       if (pathExists(location)) {
