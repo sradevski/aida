@@ -89,11 +89,11 @@ function getRequestParameters(requestPath, requestQuery) {
     openApiRequest = openApiRequest.concat(
       Object.keys(requestPath).map(pathKey => {
         return {
+          ...getSchema(requestPath[pathKey]),
           name: pathKey,
           in: 'path',
-          required: true, //Path parameters must be required.
           description: requestPath[pathKey].description,
-          ...getSchema(requestPath[pathKey]),
+          required: true, //Path parameters must be required.
         };
       }),
     );
@@ -136,8 +136,10 @@ function getSchema(model) {
   const defType = getModelType(model);
   if (defType === 'array') {
     return {
-      type: 'array',
-      items: getSchema(model[0]).schema,
+      schema: {
+        type: 'array',
+        items: getSchema(model[0]).schema,
+      },
     };
   }
 
