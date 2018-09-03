@@ -1,6 +1,6 @@
 {
   "name": "@aida/injector-open-api",
-  "version": "0.0.14",
+  "version": "0.0.17",
   "description": "Aida injector to generate a openapi/swagger-compliant specifications json",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -13,10 +13,10 @@
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
   },
   "devDependencies": {
-    "@aida/injector-routes": "^0.0.14",
+    "@aida/injector-routes": "^0.0.17",
     "swagger-parser": "^5.0.0"
   },
   "dependencies": {
-    "@aida/utils": "^0.0.12"
+    "@aida/utils": "^0.0.17"
   }
 }

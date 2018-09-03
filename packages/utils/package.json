@@ -1,6 +1,6 @@
 {
   "name": "@aida/utils",
-  "version": "0.0.12",
+  "version": "0.0.17",
   "description": "Aida utils library, used internally",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",

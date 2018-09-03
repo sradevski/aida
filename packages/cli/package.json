@@ -1,6 +1,6 @@
 {
   "name": "@aida/cli",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Aida command line client",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -17,7 +17,7 @@
     "aida": "./dist/index.js"
   },
   "dependencies": {
-    "@aida/core": "^0.0.16",
+    "@aida/core": "^0.0.17",
     "chalk": "^2.4.1",
     "chokidar": "^2.0.3",
     "commander": "^2.15.1",

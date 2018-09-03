@@ -1,6 +1,6 @@
 {
   "name": "@aida/injector-validation",
-  "version": "0.0.14",
+  "version": "0.0.17",
   "description": "Aida injector to validation functions for each model",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -13,6 +13,6 @@
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
   },
   "dependencies": {
-    "@aida/utils": "^0.0.12"
+    "@aida/utils": "^0.0.17"
   }
 }
