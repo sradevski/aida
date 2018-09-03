@@ -1,6 +1,6 @@
 {
   "name": "@aida/injector-open-api",
-  "version": "0.0.17",
+  "version": "0.0.22",
   "description": "Aida injector to generate a openapi/swagger-compliant specifications json",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
