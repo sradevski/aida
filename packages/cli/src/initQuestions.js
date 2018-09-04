@@ -12,8 +12,8 @@ const pluginChoices = [
     value: 'open-api',
   },
   {
-    title: 'Faked Data Routes',
-    value: 'faked-data-routes',
+    title: 'Faked Routes',
+    value: 'faked-routes',
   },
   {
     title: 'Faked Model',

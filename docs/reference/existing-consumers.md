@@ -18,7 +18,7 @@ Anyone who has created an injector that is generic enough can create a pull requ
   <tr>
     <td>Faked HTTP</td>
     <td>@aida/consumer-faked-http</td>
-    <td>Uses the object generated from "Faked Data Routes" injector to mock HTTP calls to the defined endpoints.</td>
+    <td>Uses the object generated from "Faked Routes" injector to mock HTTP calls to the defined endpoints.</td>
   </tr>
 </table>
 

@@ -1,7 +1,7 @@
 {
-  "name": "@aida/injector-faked-data-routes",
+  "name": "@aida/injector-faked-routes",
   "version": "0.0.17",
-  "description": "Aida injector to create faked data routes",
+  "description": "Aida injector to create faked routes",
   "repository": "https://bitbucket.org/flencer/validstack",
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",

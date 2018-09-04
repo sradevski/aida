@@ -17,7 +17,7 @@
   "devDependencies": {
     "@aida/cli": "0.0.17",
     "@aida/consumer-faked-http": "0.0.21",
-    "@aida/injector-faked-data-routes": "0.0.17",
+    "@aida/injector-faked-routes": "0.0.17",
     "@aida/injector-open-api": "0.0.17",
     "@aida/injector-routes": "0.0.17",
     "@aida/injector-routes-map": "0.0.17"

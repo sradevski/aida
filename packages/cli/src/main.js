@@ -68,6 +68,7 @@ export default function main() {
 function run(options) {
   console.log(chalk.yellow(`Getting aida config...`));
   const cliConfig = getConfig(options);
+
   const modelsPath = resolveFromCurrentDir(cliConfig.modelsDir);
   const { existingInjectors, missingInjectorNames } = getInjectors(
     cliConfig.injectors.map(x => x.name),
@@ -82,16 +83,12 @@ function run(options) {
     },
   };
 
-  if (missingInjectorNames.length > 0) {
-    console.error(
-      chalk.yellow(
-        `The injectors ${chalk.red.bold(
-          missingInjectorNames.join(', '),
-        )}, specified in the config are not installed in your local node_modules folder (where .aidarc is located). Did you forget to do 'npm install'?`,
-      ),
-    );
-    process.exit(0);
-  }
+  error(
+    `The injectors ${chalk.red.bold(
+      missingInjectorNames.join(', '),
+    )}, specified in the config are not installed in your local node_modules folder (where .aidarc is located). Did you forget to do 'npm install'?`,
+    missingInjectorNames.length > 0,
+  );
 
   console.log(
     chalk.yellow(
@@ -109,7 +106,13 @@ function run(options) {
     ),
   );
 
-  const aidaResults = aida.run(aidaCoreConfig);
+  let aidaResults;
+
+  try {
+    aidaResults = aida.run(aidaCoreConfig);
+  } catch (err) {
+    error(err.message, true);
+  }
 
   cliConfig.injectors.forEach(injector => {
     outputInjectorResult(
@@ -164,13 +167,11 @@ function getInjectors(injectorNames) {
 
 function init() {
   const configPath = getConfigFilePath(CONFIG_FILENAME, false);
-  if (configPath) {
-    console.log(
-      'A config file already exists. If you wish to reinitialize aida, please delete it first.',
-    );
 
-    process.exit();
-  }
+  error(
+    'A config file already exists. If you wish to reinitialize aida, please delete it first.',
+    configPath,
+  );
 
   inquirer
     .prompt(initQuestions)
@@ -203,8 +204,7 @@ function generate(modelName) {
       });
     }
   } catch (err) {
-    console.error(err);
-    process.exit(1);
+    error(err.message, true);
   }
 }
 
@@ -235,15 +235,22 @@ function reformatInitAnswers(answers) {
 
 function getConfig(cmdOptions) {
   const configPath = getConfigFilePath(CONFIG_FILENAME, true);
-  if (!configPath) {
-    console.log(
-      'Could not find a aida config file. Please run "aida init" first.',
-    );
-
-    process.exit();
-  }
+  error(
+    'Could not find a aida config file. Please run "aida init" first.',
+    !configPath,
+  );
 
   const configData = readConfig(configPath);
+
+  error(
+    `The models directory is not specified in your config. Please specify where your models are stored and try again.`,
+    !configData.modelsDir,
+  );
+
+  error(
+    `There are no injectors specified. Please specify the injectors you wish to run and try again.`,
+    !configData.injectors || configData.injectors.length === 0,
+  );
 
   if (cmdOptions) {
     return {
@@ -254,4 +261,12 @@ function getConfig(cmdOptions) {
   }
 
   return configData;
+}
+
+function error(message, condition) {
+  if (condition) {
+    console.error(chalk.yellow(message));
+
+    process.exit(0);
+  }
 }

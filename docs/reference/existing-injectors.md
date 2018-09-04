@@ -30,8 +30,8 @@ Anyone who has created an injector that is generic enough can create a pull requ
     <td>Generates one or multiple objects with fake data for the specified data models</td>
   </tr>
   <tr>
-    <td>Faked Data Routes</td>
-    <td>@aida/injector-faked-data-routes</td>
+    <td>Faked Routes</td>
+    <td>@aida/injector-faked-routes</td>
     <td>Generates an object with all defined endpoints and populated response with fake data</td>
   </tr>
   <tr>

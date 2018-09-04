@@ -3,19 +3,19 @@ import { populateWithFaker } from '@aida/utils/dist/faker';
 
 const seed = 12;
 
-//fakedDataRoutes returns each of the defined endpoints with response and request parts populated with fake data.
+//fakedRoutes returns each of the defined endpoints with response and request parts populated with fake data.
 export default function main(models) {
   return {
     ...models,
-    fakedDataRoutes: {
+    fakedRoutes: {
       execute: ({ category } = {}) =>
-        getFakedDataRoutes(models.routes.execute('', { category })),
+        getfakedRoutes(models.routes.execute('', { category })),
     },
   };
 }
 
-function getFakedDataRoutes(routes) {
-  return Object.keys(routes).reduce((fakedDataRoutes, routeKey) => {
+function getfakedRoutes(routes) {
+  return Object.keys(routes).reduce((fakedRoutes, routeKey) => {
     const routeDetails = getHttpMethods(routes[routeKey]).reduce(
       (routeDetails, methodName) => {
         const methodFields = routes[routeKey][methodName];
@@ -32,12 +32,16 @@ function getFakedDataRoutes(routes) {
       },
       {},
     );
-    fakedDataRoutes[routeKey] = routeDetails;
-    return fakedDataRoutes;
+    fakedRoutes[routeKey] = routeDetails;
+    return fakedRoutes;
   }, {});
 }
 
 function populateRequest(request) {
+  if (!request) {
+    return {};
+  }
+
   return Object.keys(request)
     .filter(prop => ['path', 'query', 'body'].includes(prop))
     .reduce((populatedRequest, dataLocation) => {

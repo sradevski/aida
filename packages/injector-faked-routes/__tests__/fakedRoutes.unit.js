@@ -1,4 +1,4 @@
-import fakedDataRoutes from '../index.js';
+import fakedRoutes from '../index.js';
 import routes from '@aida/routes';
 
 const aidaModels = {
@@ -54,7 +54,6 @@ const aidaModels = {
           delete: {
             description: 'Deletes a single user based on the id supplied',
             operationId: 'deleteUser',
-            request: {},
             response: {
               '204': {
                 description: 'sucessfully deleted status',
@@ -67,29 +66,29 @@ const aidaModels = {
   },
 };
 
-const injectedModels = fakedDataRoutes(routes(aidaModels));
+const injectedModels = fakedRoutes(routes(aidaModels));
 
-describe('The fakedDataRoutes injector', () => {
+describe('The fakedRoutes injector', () => {
   test('returns an empty object when there are no routes', () => {
-    const res = fakedDataRoutes(routes({ _raw: {} })).fakedDataRoutes.execute();
+    const res = fakedRoutes(routes({ _raw: {} })).fakedRoutes.execute();
     expect(Object.keys(res)).toHaveLength(0);
   });
 
   test('The passed routes and methods are all present', () => {
-    const res = injectedModels.fakedDataRoutes.execute();
+    const res = injectedModels.fakedRoutes.execute();
     expect(res).toHaveProperty('/users.put');
     expect(res).toHaveProperty('/users/{id}.delete');
   });
 
   test('The request path, query, and body are all populated with fake data', () => {
-    const res = injectedModels.fakedDataRoutes.execute();
+    const res = injectedModels.fakedRoutes.execute();
     expect(res['/users'].put.request.body.email).toBe('test@request');
     expect(res['/users'].put.request.path.id).toBe('123');
     expect(res['/users'].put.request.query.id).toBe('456');
   });
 
   test('The response body and header fields are populated', () => {
-    const res = injectedModels.fakedDataRoutes.execute();
+    const res = injectedModels.fakedRoutes.execute();
     expect(res['/users'].put.response[200]['application/json'].email).toBe(
       'test@response',
     );
@@ -99,12 +98,12 @@ describe('The fakedDataRoutes injector', () => {
   });
 
   test('The response is empty if the response does not contain any data', () => {
-    const res = injectedModels.fakedDataRoutes.execute();
+    const res = injectedModels.fakedRoutes.execute();
     expect(res['/users/{id}'].delete.response[204]).toEqual({});
   });
 
-  test('Trying out something', () => {
-    const res = injectedModels.fakedDataRoutes.execute();
-    expect(res['/users/{id}'].delete.response[204]).toEqual({});
+  test('The request parameter is optional and set to an empty object if missing', () => {
+    const res = injectedModels.fakedRoutes.execute();
+    expect(res['/users/{id}'].delete.request).toEqual({});
   });
 });

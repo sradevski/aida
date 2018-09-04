@@ -5,7 +5,6 @@ const Booking = {
     get: {
       description: 'Get all bookings',
       operationId: 'getBookings',
-      request: {},
       response: {
         '200': {
           description: 'Returns all bookings',

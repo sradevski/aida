@@ -85,10 +85,10 @@ beforeAll(() => {
 describe('Open API', () => {
   test('Generates a valid 3.0 version markup', async () => {
     //A quick and dirty way to remove undefined fields.
-    const swaggerDocs = JSON.parse(JSON.stringify(execute()));
+    const openApiDocs = JSON.parse(JSON.stringify(execute()));
 
     expect(
-      await swaggerParser.validate(swaggerDocs, { validate: { spec: false } }),
+      await swaggerParser.validate(openApiDocs, { validate: { spec: false } }),
     ).toBeTruthy();
   });
 });
