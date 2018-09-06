@@ -1,6 +1,6 @@
 {
   "name": "@aida/utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Aida utils library, used internally",
   "repository": "https://github.com/sradevski/aida/tree/master/packages/utils",
   "author": "Stevche Radevski <sradevski@live.com>",

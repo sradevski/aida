@@ -1,6 +1,6 @@
 {
   "name": "@aida/injector-routes",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Aida injector to create a flat object of all defined routes",
   "repository": "https://github.com/sradevski/aida/tree/master/packages/injector-routes",
   "author": "Stevche Radevski <sradevski@live.com>",
