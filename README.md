@@ -17,11 +17,13 @@ Once everything is defined and ready to be used, the possibilities are endless. 
 
 ## Usage
 
+> Aida is currently in a very early beta, so there will be some breaking changes as the tool evolves. That being said, we will provide a proper changelog with upgrade steps as detailed and automated as possible.
+
 You can find all the documentation about Aida at [aida.github.io](https://aida.github.io). Please refer to the [**Getting Started**](https://aida.github.io/docs/getting-started) section for an introduction to how you can start using Aida, or check the [**Reference**](https://aida.github.io/docs/getting-started) section when you need a quick lookup.
 
 ## What Does "Aida" Mean?
 
-The name "Aida" comes from the Japanese kanji **間**, which can mean "in-between" - signifying something that sits between different parts of a system - with the goal of enabling smoother integration between the parts. 
+The name "Aida" comes from the Japanese kanji **間**, which can mean "in-between" - signifying something that sits between different parts of a system, with the goal of enabling smoother integration between the parts. 
 
 ## Contributing
 

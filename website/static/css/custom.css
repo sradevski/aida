@@ -19,6 +19,12 @@
   max-width: 240px;
 }
 
+.imageAlignSide .blockImage {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
 article a {
   color: #EFAA52;
 }
