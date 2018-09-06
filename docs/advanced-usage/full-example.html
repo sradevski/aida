@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Putting It All Together · Aida</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Let&#x27;s see how we can put everything we have learned so far together and create something you would very likely use in a real-world application. The goal is to define our **User** API, have it populated with fake data, and receive fake data when we call our API from the frontend without even having the backend implemented. Moreover, we want an **Open API (Swagger)** documentation for our API, so we can communicate with the backend team about our expectations (even in full-stack teams, or when you are working by yourself, it is still useful to have the API cleanly documented)."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Putting It All Together · Aida"/><meta property="og:type" content="website"/><meta property="og:url" content="https://aida.github.io/index.html"/><meta property="og:description" content="Let&#x27;s see how we can put everything we have learned so far together and create something you would very likely use in a real-world application. The goal is to define our **User** API, have it populated with fake data, and receive fake data when we call our API from the frontend without even having the backend implemented. Moreover, we want an **Open API (Swagger)** documentation for our API, so we can communicate with the backend team about our expectations (even in full-stack teams, or when you are working by yourself, it is still useful to have the API cleanly documented)."/><meta property="og:image" content="https://aida.github.io/img/docusaurus.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://aida.github.io/img/docusaurus.png"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/aida.svg" alt="Aida"/><h2 class="headerTitleWithLogo">Aida</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/getting-started/introduction.html" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/reference/defined-types.html" target="_self">Reference</a></li><li class=""><a href="/en/help.html" target="_self">Contributors</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Advanced Usage</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul><li class="navListItem"><a class="navItem" href="/docs/getting-started/introduction.html">Introduction</a></li><li class="navListItem"><a class="navItem" href="/docs/getting-started/installation.html">Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/getting-started/creating-first-model.html">Creating Your First Model</a></li><li class="navListItem"><a class="navItem" href="/docs/getting-started/enriching-the-model.html">Enriching Your Model</a></li><li class="navListItem"><a class="navItem" href="/docs/getting-started/intro-to-injectors.html">Introduction to Injectors</a></li><li class="navListItem"><a class="navItem" href="/docs/getting-started/intro-to-consumers.html">Introduction to Consumers</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Advanced Usage</h3><ul><li class="navListItem"><a class="navItem" href="/docs/advanced-usage/intro-to-endpoints.html">Introduction to Endpoints</a></li><li class="navListItem"><a class="navItem" href="/docs/advanced-usage/chaining-injectors.html">Chaining Injectors</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/advanced-usage/full-example.html">Putting It All Together</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Extending Aida</h3><ul><li class="navListItem"><a class="navItem" href="/docs/extending-aida/creating-injector.html">Creating A Custom Injector</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Reference</h3><ul><li class="navListItem"><a class="navItem" href="/docs/reference/defined-types.html">Defined Types</a></li><li class="navListItem"><a class="navItem" href="/docs/reference/data-model.html">Data Model</a></li><li class="navListItem"><a class="navItem" href="/docs/reference/endpoints-model.html">Endpoints Model</a></li><li class="navListItem"><a class="navItem" href="/docs/reference/existing-injectors.html">Existing Injectors</a></li><li class="navListItem"><a class="navItem" href="/docs/reference/existing-consumers.html">Existing Consumers</a></li><li class="navListItem"><a class="navItem" href="/docs/reference/aida-config.html">Aida Config</a></li><li class="navListItem"><a class="navItem" href="/docs/reference/faked-data.html">Faked Data</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Putting It All Together</h1></header><article><div><span><p>Let's see how we can put everything we have learned so far together and create something you would very likely use in a real-world application. The goal is to define our <strong>User</strong> API, have it populated with fake data, and receive fake data when we call our API from the frontend without even having the backend implemented. Moreover, we want an <strong>Open API (Swagger)</strong> documentation for our API, so we can communicate with the backend team about our expectations (even in full-stack teams, or when you are working by yourself, it is still useful to have the API cleanly documented).</p>
+<p>If you would have followed all tutorials so far, you should have a directory structure like the following (if not, go ahead and create it):</p>
+<ul>
+<li>sampleDir
+<ul>
+<li>Models
+<ul>
+<li>User
+<ul>
+<li>User.core.js</li>
+<li>User.endpoints.js</li>
+</ul></li>
+</ul></li>
+<li>.aidarc</li>
+</ul></li>
+</ul>
+<p>Content of the <strong>.aidarc</strong> file:</p>
+<pre><code class="hljs css languages- json">{
+  <span class="hljs-attr">"modelsDir"</span>: <span class="hljs-string">"./Models"</span>,
+  <span class="hljs-attr">"outputDir"</span>: <span class="hljs-string">"./"</span>,
+  <span class="hljs-attr">"injectors"</span>: [
+    {
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"routes"</span>,
+      <span class="hljs-attr">"outputType"</span>: <span class="hljs-string">"none"</span>
+    },
+    {
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"faked-routes"</span>,
+      <span class="hljs-attr">"outputType"</span>: <span class="hljs-string">"file"</span>
+    },
+    {
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"open-api"</span>,
+      <span class="hljs-attr">"outputType"</span>: <span class="hljs-string">"file"</span>
+    }
+  ]
+}
+</code></pre>
+<p>Content of the <strong>User.core.js</strong> file:</p>
+<pre><code class="hljs css languages- javascript"><span class="hljs-keyword">const</span> User = {
+  <span class="hljs-attr">id</span>: {
+    <span class="hljs-attr">vtype</span>: <span class="hljs-string">'string'</span>,
+    <span class="hljs-attr">faker</span>: <span class="hljs-string">'random.uuid'</span>,
+  },
+  <span class="hljs-attr">ageRange</span>: {
+    <span class="hljs-attr">vtype</span>: <span class="hljs-string">'string'</span>,
+    <span class="hljs-attr">faker</span>: [<span class="hljs-string">'20-30'</span>, <span class="hljs-string">'30-40'</span>, <span class="hljs-string">'40-50'</span>, <span class="hljs-string">'50+'</span>],
+  },
+  <span class="hljs-attr">country</span>: {
+    <span class="hljs-attr">vtype</span>: <span class="hljs-string">'string'</span>,
+    <span class="hljs-attr">faker</span>: { <span class="hljs-attr">faker</span>: <span class="hljs-string">'address.country'</span>,
+    <span class="hljs-attr">options</span>: {
+        <span class="hljs-attr">seed</span>: <span class="hljs-number">10</span>,
+      },
+    },
+  },
+};
+
+exports.default = User;
+</code></pre>
+<p>Content of the <strong>User.endpoints.js</strong> file:</p>
+<pre><code class="hljs css languages- javascript"><span class="hljs-keyword">const</span> UserCore = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./User.core.js'</span>).default;
+
+<span class="hljs-keyword">const</span> User = {
+  <span class="hljs-string">'/users'</span>: {
+    <span class="hljs-attr">put</span>: {
+      <span class="hljs-attr">description</span>: <span class="hljs-string">'Update a user'</span>,
+      <span class="hljs-attr">operationId</span>: <span class="hljs-string">'updateUser'</span>,
+      <span class="hljs-attr">request</span>: {
+        <span class="hljs-attr">body</span>: UserCore,
+      },
+      <span class="hljs-attr">response</span>: {
+        <span class="hljs-string">'200'</span>: {
+          <span class="hljs-attr">description</span>: <span class="hljs-string">'Returns the updated user'</span>,
+          <span class="hljs-attr">body</span>: UserCore,
+        },
+      },
+    },
+  },
+
+  <span class="hljs-string">'/users/{id}'</span>: {
+    <span class="hljs-attr">get</span>: {
+      <span class="hljs-attr">description</span>: <span class="hljs-string">'Get a single user'</span>,
+      <span class="hljs-attr">operationId</span>: <span class="hljs-string">'getUser'</span>,
+      <span class="hljs-attr">request</span>: {
+        <span class="hljs-attr">path</span>: {
+          <span class="hljs-attr">id</span>: UserCore.id,
+        },
+      },
+      <span class="hljs-attr">response</span>: {
+        <span class="hljs-string">'200'</span>: {
+          <span class="hljs-attr">description</span>: <span class="hljs-string">'Returning the user model'</span>,
+          <span class="hljs-attr">body</span>: UserCore,
+        },
+      },
+    },
+  },
+};
+
+exports.default = User;
+</code></pre>
+<p>Once you have all the models ready, run <code>aida run</code>. After running Aida, you will notice that two new files were created: <strong>open-api</strong>, and <strong>faked-routes</strong>. Just like that, you have generated open-api documentation, and all defined endpoints are populated with fake data that you can use while developing your frontend application. There are more things that can be done</p>
+<p>In order to check the open-api documentation, you can copy the contents of the <strong>open-api</strong> file, go to <a href="https://editor.swagger.io/">Swagger Editor</a>, and paste it there. That will give you a nicely formatted documentation that you can share with your colleagues.</p>
+<p>Using the faked routes is a bit more involved. Let's say you have a <strong>React</strong> application, but you don't have your <strong>User</strong> endpoints backend implemented yet. Nevertheless, you want to make all the network calls as usual and get some data back, so the development of the frontend is completely independent from the backend. We can achieve that by installing a <strong>faked HTTP consumer</strong> using <code>npm i @aida/consumer-faked-http</code> and with just a few lines of code:</p>
+<pre><code class="hljs"><span class="hljs-keyword">import</span> fakedHttpConsumer <span class="hljs-keyword">from</span> <span class="hljs-string">'@aida/consumer-faked-http'</span>;
+<span class="hljs-keyword">import</span> routes <span class="hljs-keyword">from</span> <span class="hljs-string">'./faked-routes'</span>; <span class="hljs-comment">//This is the generated file from aida</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">appConfig</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">if</span>(process.env.NODE_ENV === <span class="hljs-string">"development"</span>){
+    fakedHttpConsumer(routes, <span class="hljs-string">"localhost:4000/api"</span>);
+  }
+}
+</code></pre>
+<p>You can now do your network requests to the defined endpoints as usual, and you will have a mocked API.</p>
+<p>As you can see, it can be really powerful to have your models defined using Aida. These are just some of the countless use-cases you can achieve when your models are defined in a standardized manner. If it is still blurry to you about how to use Aida, go to <a href="">this repo example</a>. As a next step, you can check the <a href="/docs/reference/existing-injectors.html">existing injectors</a>, <a href="/docs/reference/existing-consumers.html">existing consumers</a> and see how you can combine them and what workflow would fit your use-case.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/advanced-usage/chaining-injectors.html">← Chaining Injectors</a><a class="docs-next button" href="/docs/extending-aida/creating-injector.html">Creating A Custom Injector →</a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/aida.svg" alt="Aida" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/en/getting-started/introduction.html">Getting Started</a><a href="/docs/en/reference/defined-types.html">Reference</a></div><div><h5>Community</h5><a href="https://spectrum.chat/aida">Project Chat</a></div><div><h5>More</h5><a href="https://github.com/">GitHub</a><a class="github-button" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2018 Aida</section></footer></div></body></html>
