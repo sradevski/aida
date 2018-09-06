@@ -19,7 +19,7 @@ Once everything is defined and ready to be used, the possibilities are endless. 
 
 > Aida is currently in a very early beta, so there will be some breaking changes as the tool evolves. That being said, we will provide a proper changelog with upgrade steps as detailed and automated as possible.
 
-You can find all the documentation about Aida at [aida.github.io](https://aida.github.io). Please refer to the [**Getting Started**](https://aida.github.io/docs/getting-started) section for an introduction to how you can start using Aida, or check the [**Reference**](https://aida.github.io/docs/getting-started) section when you need a quick lookup.
+You can find all the documentation about Aida at [Aida's website](https://sradevski.com/aida/). Please refer to the [**Getting Started**](https://sradevski.com/aida/docs/getting-started) section for an introduction to how you can start using Aida, or check the [**Reference**](https://sradevski.com/aida/docs/getting-started) section when you need a quick lookup.
 
 ## What Does "Aida" Mean?
 

@@ -14,15 +14,15 @@ const users = [];
 const siteConfig = {
   title: 'Aida' /* title for your website */,
   tagline: 'Unified Data Modeling',
-  url: 'https://aida.github.io' /* your website url */,
-  baseUrl: '/' /* base url for your project */,
+  url: 'https://sradevski.com' /* your website url */,
+  baseUrl: '/aida/' /* base url for your project */,
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
 
   // Used for publishing and more
   projectName: 'aida',
-  organizationName: 'aida',
+  organizationName: 'sradevski',
   // For top-level user or org sites, the organization is still the same.
   // e.g., for the https://JoelMarcey.github.io site, it would be set like...
   //   organizationName: 'JoelMarcey'
@@ -62,7 +62,7 @@ const siteConfig = {
   },*/
 
   // This copyright info is used in /core/Footer.js and blog rss/atom feeds.
-  copyright: `Copyright © ${new Date().getFullYear()} Aida`,
+  copyright: `Copyright © ${new Date().getFullYear()} Stevche Radevski`,
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks
@@ -81,7 +81,7 @@ const siteConfig = {
 
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
-  //   repoUrl: 'https://github.com/facebook/test-site',
+  repoUrl: 'https://github.com/sradevski/aida',
 };
 
 module.exports = siteConfig;

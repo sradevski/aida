@@ -77,7 +77,7 @@ class HomeSplash extends React.Component {
             >
               Get Started
             </Button>
-            <Button href={'https://www.github.com/sradevski/aida'}>
+            <Button href={'https://github.com/sradevski/aida'}>
               Github Repo
             </Button>
           </PromoSection>

@@ -1,8 +1,9 @@
 {
   "name": "aida",
   "version": "0.0.1",
-  "description": "Data modeling done right",
-  "repository": "https://bitbucket.org/flencer/validstack",
+  "private": true,
+  "description": "Unified data modeling",
+  "repository": "https://github.com/sradevski/aida",
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",
   "scripts": {

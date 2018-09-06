@@ -6,8 +6,8 @@
     "aida": "aida run"
   },
   "devDependencies": {
-    "@aida/cli": "0.0.17",
-    "@aida/injector-open-api": "0.0.23",
-    "@aida/injector-routes": "0.0.17"
+    "@aida/cli": "0.0.1",
+    "@aida/injector-open-api": "0.0.1",
+    "@aida/injector-routes": "0.0.1"
   }
 }

@@ -125,4 +125,6 @@ export function appConfig() {
 
 You can now do your network requests to the defined endpoints as usual, and you will have a mocked API. 
 
-As you can see, it can be really powerful to have your models defined using Aida. These are just some of the countless use-cases you can achieve when your models are defined in a standardized manner. If it is still blurry to you about how to use Aida, go to [this repo example](). As a next step, you can check the [existing injectors](reference/existing-injectors.md), [existing consumers](reference/existing-consumers.md) and see how you can combine them and what workflow would fit your use-case. 
+As you can see, it can be really powerful to have your models defined using Aida. These are just some of the countless use-cases you can achieve when your models are defined in a standardized manner. If it is still blurry to you about how to use Aida, you can find some [complete examples here](https://github.com/sradevski/aida/tree/master/examples). After cloning the entire **examples** folder, you can check out the **react-mocked-http** for an example how to use Aida in a React application and mock your backend, or you can go to **open-api-docs** example to see how to generate OpenAPI/Swagger 3.0 documentation.
+
+As a next step, you can check the [existing injectors](reference/existing-injectors.md), [existing consumers](reference/existing-consumers.md) and see how you can combine them and what workflow would fit your use-case. 
