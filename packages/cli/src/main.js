@@ -5,7 +5,6 @@ import * as aida from '@aida/core';
 
 import {
   createConfigFile,
-  createModelFiles,
   outputToFile,
   pathExists,
   resolveFromCurrentDir,
@@ -15,7 +14,6 @@ import {
   watchModels,
 } from './filesystem';
 import initQuestions from './initQuestions';
-import generateQuestions from './generateQuestions';
 import camelCase from 'lodash/camelCase';
 
 const CONFIG_FILENAME = '.aidarc';
@@ -33,7 +31,7 @@ export default function main() {
     );
 
   program
-    .command('run ')
+    .command('run')
     .description('Runs the injector pipeline from your config file.')
     .action(options => {
       run(options.parent);
@@ -44,13 +42,6 @@ export default function main() {
     .description('Initialize an aida config file.')
     .action(() => {
       init();
-    });
-
-  program
-    .command('generate [modelName]')
-    .description('Generate a model template.')
-    .action(modelName => {
-      generate(modelName);
     });
 
   program
@@ -78,8 +69,8 @@ function run(options) {
     injectors: Object.values(existingInjectors),
     models: {
       location: modelsPath,
-      blacklistFiles: ['helpers.js'],
-      blacklistDirectories: ['intermediate'],
+      blacklistFiles: [],
+      blacklistDirectories: [],
     },
   };
 
@@ -122,7 +113,7 @@ function run(options) {
     );
   });
 
-  console.log(chalk.yellow(`Done!`));
+  console.log(chalk.green(`Done!`));
 }
 
 function outputInjectorResult(injector, injectorExecute, defaultOutputDir) {
@@ -130,7 +121,7 @@ function outputInjectorResult(injector, injectorExecute, defaultOutputDir) {
     const outputPath = getOutputPath(
       defaultOutputDir,
       injector.outputFilepath,
-      injector.name,
+      `${injector.name}.json`,
     );
 
     const res = injectorExecute(injector.options);
@@ -180,37 +171,15 @@ function init() {
       console.log(chalk.green('Finished generating the config file.'));
     })
     .catch(err => {
-      console.error(err);
-      process.exit(1);
+      error(err.message, true);
     });
-}
-
-function generate(modelName) {
-  try {
-    const configData = getConfig();
-    const modelTypes = ['core', 'endpoints', 'request', 'response', 'schema'];
-
-    if (modelName) {
-      createModelFiles({
-        modelsDir: configData.modelsDir,
-        modelName,
-        modelTypes,
-      });
-      console.log(chalk.green('Finished creating a new model.'));
-    } else {
-      inquirer.prompt(generateQuestions).then(answers => {
-        createModelFiles({ modelsDir: configData.modelsDir, ...answers });
-        console.log(chalk.green('Finished creating a new model.'));
-      });
-    }
-  } catch (err) {
-    error(err.message, true);
-  }
 }
 
 function watch() {
   const configData = getConfig();
+  console.log(chalk.green('Aida started watching models.'));
   watchModels(configData.modelsDir, () => {
+    console.log(chalk.yellow('Re-running Aida on changed models.'));
     run();
   });
 }
@@ -266,7 +235,6 @@ function getConfig(cmdOptions) {
 function error(message, condition) {
   if (condition) {
     console.error(chalk.yellow(message));
-
     process.exit(0);
   }
 }

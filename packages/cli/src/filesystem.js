@@ -6,20 +6,6 @@ function getCurrentDirectoryBase() {
   return path.normalize(process.cwd());
 }
 
-export function createModelFiles(options) {
-  const dir = `${options.modelsDir}/${options.modelName}`;
-  fs.mkdirSync(dir);
-
-  options.modelTypes.forEach(modelType => {
-    const template = `const ${options.modelName} = {};
-
-export default ${options.modelName};
-`;
-
-    fs.writeFileSync(`${dir}/${options.modelName}.${modelType}.js`, template);
-  });
-}
-
 export function createConfigFile(configFilename, configData) {
   const currentDir = getCurrentDirectoryBase();
   fs.writeFileSync(
@@ -55,13 +41,13 @@ export function resolveFromCurrentDir(additionalPath) {
 export function getOutputPath(
   defaultOutputDir,
   injectorOutputFilepath,
-  injectorName,
+  filename,
 ) {
   if (injectorOutputFilepath) {
     return path.normalize(injectorOutputFilepath);
   }
 
-  return path.resolve(defaultOutputDir, injectorName);
+  return path.resolve(defaultOutputDir, filename);
 }
 
 export function getConfigFilePath(configFilename, shouldSearchRecursively) {
@@ -99,7 +85,7 @@ export function watchModels(directory, callback) {
       ignored: dotFileIgnore,
       ignoreInitial: true,
       awaitWriteFinish: {
-        stabilityThreshold: 5000, //waiting a period without events occuring before emitting an event.
+        stabilityThreshold: 1500, //waiting a period without events occuring before emitting an event.
       },
     })
     .on('all', (event, path) => {
