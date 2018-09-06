@@ -1,10 +1,13 @@
 {
   "name": "@aida/cli",
-  "version": "0.0.24",
+  "version": "0.0.2",
   "description": "Aida command line client",
-  "repository": "https://bitbucket.org/flencer/validstack",
+  "repository": "https://github.com/sradevski/aida/tree/master/packages/cli",
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "files": [
     "dist/"
@@ -17,7 +20,7 @@
     "aida": "./dist/index.js"
   },
   "dependencies": {
-    "@aida/core": "^0.0.17",
+    "@aida/core": "^0.0.2",
     "chalk": "^2.4.1",
     "chokidar": "^2.0.3",
     "commander": "^2.15.1",

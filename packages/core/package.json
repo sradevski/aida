@@ -1,10 +1,13 @@
 {
   "name": "@aida/core",
-  "version": "0.0.17",
+  "version": "0.0.2",
   "description": "Aida core library",
-  "repository": "https://bitbucket.org/flencer/validstack",
+  "repository": "https://github.com/sradevski/aida/tree/master/packages/core",
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "files": [
     "dist/"

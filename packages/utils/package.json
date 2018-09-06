@@ -1,10 +1,13 @@
 {
   "name": "@aida/utils",
-  "version": "0.0.17",
+  "version": "0.0.2",
   "description": "Aida utils library, used internally",
-  "repository": "https://bitbucket.org/flencer/validstack",
+  "repository": "https://github.com/sradevski/aida/tree/master/packages/utils",
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist/"
   ],
