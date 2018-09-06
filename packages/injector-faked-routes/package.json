@@ -1,6 +1,6 @@
 {
   "name": "@aida/injector-faked-routes",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "description": "Aida injector to create faked routes",
   "repository": "https://github.com/sradevski/aida/tree/master/packages/injector-faked-routes",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -16,9 +16,9 @@
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
   },
   "devDependencies": {
-    "@aida/injector-routes": "^0.0.3"
+    "@aida/injector-routes": "^0.0.1"
   },
   "dependencies": {
-    "@aida/utils": "^0.0.3"
+    "@aida/utils": "^0.0.1"
   }
 }
