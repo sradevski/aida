@@ -8,7 +8,7 @@ Once everything is defined and ready to be used, the possibilities are endless. 
 - Generate API documentation for your API
 - Generate schemas and validation for both your frontend and backend
 - Generate types (Flow, TypeScript, etc.)
-- Mock your API on the client-side for trully independent frontend development
+- Mock your API on the client-side for truly independent frontend development
 - Fire mocked requests to your backend for testing
 - ...
 

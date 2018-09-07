@@ -110,7 +110,7 @@ Once you have all the models ready, run `aida run`. After running Aida, you will
 
 In order to check the open-api documentation, you can copy the contents of the **open-api** file, go to [Swagger Editor](https://editor.swagger.io/), and paste it there. That will give you a nicely formatted documentation that you can share with your colleagues.
 
-Using the faked routes is a bit more involved. Let's say you have a **React** application, but you don't have your **User** endpoints backend implemented yet. Nevertheless, you want to make all the network calls as usual and get some data back, so the development of the frontend is completely independent from the backend. We can achieve that by installing a **faked HTTP consumer** using `npm i @aida/consumer-faked-http` and with just a few lines of code:
+Using the faked routes is a bit more involved. Let's say you have a **React** application, but you don't have your **User** endpoints backend implemented yet. Nevertheless, you want to make all the network calls as usual and get some data back, so the development of the frontend is completely independent of the backend. We can achieve that by installing a **faked HTTP consumer** using `npm i @aida/consumer-faked-http` and with just a few lines of code:
 
 ```
 import fakedHttpConsumer from '@aida/consumer-faked-http';

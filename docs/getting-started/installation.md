@@ -13,7 +13,7 @@ Let's go and install the command line interface for Aida.
 npm install -g @aida/cli
 ```
 
-Lets create a sample directory, and a folder that will store all the models.
+Let's create a sample directory for our project, and a directory inside it that will store all the models.
 
 ```bash
 mkdir sampleDir

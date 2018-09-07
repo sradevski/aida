@@ -6,7 +6,7 @@ sidebar_label: Chaining Injectors
 
 Injectors can be useful on their own, but we can make them even more powerful and cleanly separated if we can chain them. This can enable each injector to have a single responsibility, and we can build a more complex result by chaining injectors and building on top of each other.
 
-As of now, there is no automatic way to specify dependencies between injectors. Automatic dependency resolution is on the roadmap, but for now all you need to do is specify them in order, from the least dependent to the most dependent injector.
+As of now, there is no automatic way to specify dependencies between injectors. Automatic dependency resolution is on the roadmap, but for now, all you need to do is specify them in order, from the least dependent to the most dependent injector.
 
 For example, you can have something like
 

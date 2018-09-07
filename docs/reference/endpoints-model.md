@@ -38,7 +38,7 @@ const UserEndpoints = {
       response: {
         '302': {
           description:
-            'Redirect to the specified strategy, which will in turn perform a callback on authorization',
+            'Redirect to the specified strategy, which will, in turn, perform a callback on authorization',
           headers: {
             location: OauthLocationHeader,
           },
@@ -90,7 +90,7 @@ export default UserEndpoints
 As we can see, we are creating a User endpoints model. The model has 2 routes, `/users` and `/users/{id}`. 
 - Routes are a property of the root endpoints object. 
 - Each route has one or more HTTP methods as its properties. 
-- Each HTTP method in turn can have a required and unique `operationId`, an optional `description`, `request` property, and a `response` property.
+- Each HTTP method can have a required and unique `operationId`, an optional `description`, `request` property, and a `response` property.
 - The `request` property can have a `description` property, as well as optional `path`, `query`, `body`, or `headers` properties, each being an Aida data model.
 - The `response` property can have one or more status codes as properties.
 - Each status code can have a `description` property, as well as optional `body`, or `headers` properties, each being an Aida data model.
