@@ -13,12 +13,16 @@ Anyone who has created an injector that is generic enough can create a pull requ
   <tr>
     <th>Injector Name</th>
     <th>Package Name</th>
+    <th>Consumes</th>
     <th>Description</th>
   </tr>
   <tr>
     <td>Faked HTTP</td>
     <td><a target="_blank" rel="noopener noreferrer" href="https://github.com/sradevski/aida/tree/master/packages/consumer-faked-http">
       @aida/consumer-faked-http
+    </a></td>
+    <td><a target="_blank" rel="noopener noreferrer" href="https://github.com/sradevski/aida/tree/master/packages/injector-faked-routes">
+      @aida/injector-faked-routes
     </a></td>
     <td>Uses the object generated from "Faked Routes" injector to mock HTTP calls to the defined endpoints.</td>
   </tr>

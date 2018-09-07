@@ -8,7 +8,7 @@ Let's see how we can put everything we have learned so far together and create s
 
 If you would have followed all tutorials so far, you should have a directory structure like the following (if not, go ahead and create it):
 - sampleDir
-  - Models
+  - models
     - User
       - User.core.js
       - User.endpoints.js
@@ -18,7 +18,7 @@ Content of the **.aidarc** file:
 
 ```json
 {
-  "modelsDir": "./Models",
+  "modelsDir": "./models",
   "outputDir": "./",
   "injectors": [
     {
@@ -40,23 +40,38 @@ Content of the **.aidarc** file:
 Content of the **User.core.js** file: 
 
 ``` javascript 
+const Address = {
+  city: {
+    vtype: 'string',
+    faker: ['Nara', 'Berlin', 'San Francisco', 'Sydney', 'Nairobi']
+  },
+  street: {
+    vtype: 'string',
+    faker: { 
+      faker: 'address.streetAddress',
+      options: {
+        seed: 10,
+      },
+    },
+  }
+}
+
 const User = {
   id: {
     vtype: 'string',
     faker: 'random.uuid',
   },
-  ageRange: {
+  email: {
     vtype: 'string',
-    faker: ['20-30', '30-40', '40-50', '50+'],
+    faker: 'internet.email'
   },
-  country: {
+  address: Address,
+  phoneNumbers: [{
     vtype: 'string',
-    faker: { faker: 'address.country',
-    options: {
-        seed: 10,
-      },
-    },
-  },
+    faker: 'phone.phoneNumber',
+  }, {
+    fakerIterations: 3,
+  }], //The second object in the array is options regarding the array for various injectors 
 };
 
 exports.default = User;
@@ -106,7 +121,13 @@ const User = {
 exports.default = User;
 ```
 
-Once you have all the models ready, run `aida run`. After running Aida, you will notice that two new files were created: **open-api**, and **faked-routes**. Just like that, you have generated open-api documentation, and all defined endpoints are populated with fake data that you can use while developing your frontend application. There are more things that can be done  
+The last thing left to do is install the newly introduced injectors as dependencies:
+
+```
+npm i @aida/injector-routes @aida/injector-faked-routes @aida/injector-open-api
+```
+
+Once you have all the models ready, run `aida run`. After running Aida, you will notice that two new files were created: **open-api.json**, and **faked-routes.json**. Just like that, you have generated open-api documentation, and all defined endpoints are populated with fake data that you can use while developing your frontend application. 
 
 In order to check the open-api documentation, you can copy the contents of the **open-api** file, go to [Swagger Editor](https://editor.swagger.io/), and paste it there. That will give you a nicely formatted documentation that you can share with your colleagues.
 
@@ -123,8 +144,8 @@ export function appConfig() {
 }
 ```
 
-You can now do your network requests to the defined endpoints as usual, and you will have a mocked API. 
+You can now do your network requests to the defined endpoints as usual, and you will have a mocked API. To see an example React application using the **faked-routes** injector, head over to the [examples](https://github.com/sradevski/aida/tree/master/examples) directory.
 
-As you can see, it can be really powerful to have your models defined using Aida. These are just some of the countless use-cases you can achieve when your models are defined in a standardized manner. If it is still blurry to you about how to use Aida, you can find some [complete examples here](https://github.com/sradevski/aida/tree/master/examples). After cloning the entire **examples** folder, you can check out the **react-mocked-http** for an example how to use Aida in a React application and mock your backend, or you can go to **open-api-docs** example to see how to generate OpenAPI/Swagger 3.0 documentation.
+As you can see, it can be really powerful to have your models defined using Aida. These are just some of the countless use-cases you can achieve when your models are defined in a standardized manner. If it is still blurry to you about how to use Aida, there are some [examples with usage guidelines](https://github.com/sradevski/aida/tree/master/examples).
 
 As a next step, you can check the [existing injectors](reference/existing-injectors.md), [existing consumers](reference/existing-consumers.md) and see how you can combine them and what workflow would fit your use-case. 

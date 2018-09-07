@@ -4,34 +4,30 @@ title: Installation
 sidebar_label: Installation
 ---
 
+> Note: You will need NodeJS 8+ and NPM, so go and install those if you haven't already.
 
 Let's go and install the command line interface for Aida.
-
-> Note: You will need NodeJS 8+ and NPM, so go and install those if you haven't already.
 
 ```
 npm install -g @aida/cli
 ```
+> You can, of course, install Aida locally, but we will install it globally to simplify the demonstration.
 
-Let's create a sample directory for our project, and a directory inside it that will store all the models.
+Let's create a sample directory for our project and a directory inside it that will store all the models.
 
 ```bash
 mkdir sampleDir
 cd sampleDir
-mkdir Models
+mkdir models
 ```
 
 We can create a config file using the interactive interface by running `aida init`, but to keep things simple just create a **.aidarc** file in the **sampleDir** directory, and just copy and paste the following config:
 
 ```
 {
-  "modelsDir": "./Models",
+  "modelsDir": "./models",
   "outputDir": "./",
   "injectors": [
-    {
-      "name": "routes",
-      "outputType": "none"
-    },
     {
       "name": "faked-model",
       "outputType": "file",
