@@ -29,6 +29,7 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
+    { search: true },
     { doc: 'getting-started/introduction', label: 'Docs' },
     { doc: 'reference/defined-types', label: 'Reference' },
     { page: 'help', label: 'Contributors' },
@@ -78,6 +79,14 @@ const siteConfig = {
   /* Open Graph and Twitter card images */
   ogImage: 'img/docusaurus.png',
   twitterImage: 'img/docusaurus.png',
+
+  algolia: {
+    apiKey: 'ae3f3ee64e52b3dfaba864c812893085',
+    indexName: 'aida',
+    algoliaOptions: {
+      facetFilters: ['language:LANGUAGE'],
+    },
+  },
 
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
