@@ -25,8 +25,8 @@
 <p>If you are more of a &quot;learn-by-example&quot; person, you can first check out <a href="https://github.com/sradevski/aida/tree/master/examples">the examples</a> first.</p>
 </blockquote>
 <p>Once you have everything set-up and ready, let's go ahead and write our first data model definition.</p>
-<p>Models in Aida are just JavaScript objects. Although the fact that we are using a programming language for the model definition might seem weird, considering it is not interoperable compared to a format such as JSON, it is much more powerful. It allows us to do things like referencing other models, writing validation code, writing fake data definition, and it allows us to utilize the entire JS ecosystem.</p>
-<p>Let's create a very simple <strong>User</strong> model with an <code>id</code> and <code>email</code> property. Go to the <strong>Models</strong> folder, create a <strong>User</strong> folder, and inside it create a file named <strong>User.core.js</strong>. This is where we define the core properties of a model.</p>
+<p>Models in Aida are just JavaScript objects. Although the fact that we are using a programming language for the model definition might seem weird, considering it is not interoperable compared to a format such as JSON, it is much more powerful. It allows us to do things like referencing other models, writing validation code, writing fake data definition, and it allows us to utilize the entire JS ecosystem. This might change in the future to something more interoperable as the tool evolves.</p>
+<p>Let's create a very simple <strong>User</strong> model with an <code>id</code> and <code>email</code> property. Go to the <strong>models</strong> folder, create a <strong>User</strong> folder, and inside it create a file named <strong>User.core.js</strong>. This is where we define the core properties of a model.</p>
 <pre><code class="hljs css languages- javascript"><span class="hljs-keyword">const</span> User = {
   <span class="hljs-attr">id</span>: {
     <span class="hljs-attr">vtype</span>: <span class="hljs-string">'string'</span>,
@@ -38,9 +38,8 @@
 
 exports.default = User;
 </code></pre>
-<p>Each model property has to contain a type, named <code>vtype</code> (we didn't simply use <code>type</code> in order to avoid collisions with model properties named <code>type</code>). You can find all defined types <a href="/aida/docs/reference/defined-types.html">here</a>. The <code>vtype</code> property denotes that the property is a <strong>primitive</strong>. Let's now add a nested object, an <code>address</code>.</p>
-<pre><code class="hljs css languages- javascript">
-<span class="hljs-keyword">const</span> Address = {
+<p>Each model property has to contain a type, named <code>vtype</code> (we didn't simply use <code>type</code> in order to avoid collisions with model properties named <code>type</code>). You can find all defined types that can be used as a value of <code>vtype</code> <a href="/aida/docs/reference/defined-types.html">here</a>. The <code>vtype</code> property denotes that the property is a <strong>primitive</strong>. Aida can recognize whether a property is a <strong>composite</strong> or a <strong>primitive</strong> by the presence of the <code>vtype</code> property on a <strong>primitive</strong>. Let's now add a <strong>composite</strong> nested object, an <code>address</code> property to the <code>User</code> model.</p>
+<pre><code class="hljs css languages- javascript"><span class="hljs-keyword">const</span> Address = {
   <span class="hljs-attr">city</span>: {
     <span class="hljs-attr">vtype</span>: <span class="hljs-string">'string'</span>,
   },
@@ -49,21 +48,25 @@ exports.default = User;
   }
 }
 
-<span class="hljs-keyword">const</span> User = {
-  ..., <span class="hljs-comment">//All other properties</span>
+<span class="hljs-comment">//...The User code</span>
+</code></pre>
+<p>Let's add the address property to our <code>User</code> object now.</p>
+<pre><code class="hljs css languages- javascript"><span class="hljs-keyword">const</span> User = {
+  <span class="hljs-comment">//...Existing properties</span>
   address: Address,
 };
 
 exports.default = User;
 </code></pre>
-<p>Simple as that! We can use the <code>address</code> model definition throughout the entire stack, having a consistent definition of an address. We can, of course, cherry-pick only the properties we want, and it is very easy to do so, as it is just a JavaScript object. Aida can recognize whether it is a <strong>composite</strong> or a <strong>primitive</strong> by the presence of the <code>vtype</code> property on a <strong>primitive</strong>. Let's try specifying a property as an array of some type:</p>
+<p>Simple as that! We can put the <code>Address</code> model in another file and use it throughout the entire stack, having a consistent definition of an address. We can also cherry-pick only the properties we want instead of the entire <code>Address</code> model and it is very easy to do so, as it is just a JavaScript object.</p>
+<p>Let's try specifying another <strong>composite</strong> property, an array of some type:</p>
 <pre><code class="hljs css languages- javascript"><span class="hljs-keyword">const</span> User = {
   ..., <span class="hljs-comment">//All other properties</span>
   phoneNumbers: [{<span class="hljs-attr">vtype</span>: <span class="hljs-string">'string'</span>}],
 };
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> User;
+exports.default = User;
 </code></pre>
-<p>Doing that defined phoneNumbers as a list of strings. You can nest your data models as deeply as it is necessary.</p>
+<p>Doing that defined phoneNumbers as a list of strings. You can also have nested objects in your data models as deep as it is necessary.</p>
 <p>We have seen how we can define a model with both <strong>primitive</strong> and <strong>composite</strong> properties, but we can't do much with these models (except generate type definitions and schemas for different languages and technologies). Let's spice things up a bit and enrich our models next.</p>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/aida/docs/getting-started/installation.html">← Installation</a><a class="docs-next button" href="/aida/docs/getting-started/enriching-the-model.html">Enriching Your Model →</a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/aida/" class="nav-home"><img src="/aida/img/aida.svg" alt="Aida" width="66" height="58"/></a><div><h5>Docs</h5><a href="/aida/docs/en/getting-started/introduction.html">Getting Started</a><a href="/aida/docs/en/reference/defined-types.html">Reference</a></div><div><h5>Community</h5><a href="https://spectrum.chat/aida">Project Chat</a></div><div><h5>More</h5><a href="https://github.com/sradevski/aida">GitHub</a><a class="github-button" href="https://github.com/sradevski/aida" data-icon="octicon-star" data-count-href="/sradevski/aida/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2018 Stevche Radevski</section></footer></div></body></html>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/aida/docs/getting-started/installation.html">← Installation</a><a class="docs-next button" href="/aida/docs/getting-started/enriching-the-model.html">Enriching Your Model →</a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/aida/" class="nav-home"><img src="/aida/img/aida.svg" alt="Aida" width="66" height="58"/></a><div><h5>Docs</h5><a href="/aida/docs/getting-started/introduction.html">Getting Started</a><a href="/aida/docs/reference/defined-types.html">Reference</a></div><div><h5>Community</h5><a href="https://spectrum.chat/aida">Project Chat</a></div><div><h5>More</h5><a href="https://github.com/sradevski/aida">GitHub</a><a class="github-button" href="https://github.com/sradevski/aida" data-icon="octicon-star" data-count-href="/sradevski/aida/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2018 Stevche Radevski</section></footer></div></body></html>
