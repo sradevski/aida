@@ -1,6 +1,6 @@
 # Aida - Unified data modeling
 
-Aida provides a data and endpoint modeling structure. You can document your data models from different parts of the system in one place, while sharing commonalities between them. Aida allows you to unify how your data models and endpoints are defined, with all the necessary metadata being co-located. 
+Aida is a data and endpoint modeling tool. You can document your data models from different parts of the system in one place and share commonalities between them, representing a single source of truth. It allows you to unify how your data models and endpoints are defined, with all the necessary metadata being co-located.
 
 Once everything is defined and ready to be used, the possibilities are endless. Some of the use-cases for Aida are:
 
