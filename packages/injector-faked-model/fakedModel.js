@@ -1,23 +1,27 @@
 import { populateWithFaker } from '@aida/utils/dist/faker';
 
-const seed = 12;
-const defaultOptions = {
-  modelType: 'core',
-};
-
 //fakedModel returns an object with either all or only whitelisted or blacklisted models, where each property contains an array of faked data for that model type.
 export default function main(models) {
   return {
     ...models,
     fakedModel: {
-      execute: (options = {}) =>
-        getFakedModel(models, { ...defaultOptions, ...options }),
+      execute: (options = {}) => {
+        const ownOpts = {
+          blacklist: options.blacklist,
+          whitelist: options.whitelist,
+          itemsPerModel: options.itemsPerModel || 1,
+          modelType: options.modelType || 'core',
+          seed: options.seed || 12,
+        };
+
+        return getFakedModel(models, ownOpts);
+      },
     },
   };
 }
 
-function getFakedModel(models, options = {}) {
-  const { blacklist, whitelist, itemsPerModel, modelType } = options;
+function getFakedModel(models, options) {
+  const { blacklist, whitelist, itemsPerModel, modelType, seed } = options;
   const allModels = models._raw;
 
   return Object.keys(allModels).reduce((fakedModel, defName) => {
@@ -29,6 +33,7 @@ function getFakedModel(models, options = {}) {
       fakedModel[defName] = getFakeDataForModel(
         allModels[defName][modelType],
         itemsPerModel,
+        seed,
       );
     }
 
@@ -36,7 +41,7 @@ function getFakedModel(models, options = {}) {
   }, {});
 }
 
-function getFakeDataForModel(modelDef, itemsPerModel = 1) {
+function getFakeDataForModel(modelDef, itemsPerModel, seed) {
   const fakerCrawlerOptions = {
     fakerIterations: itemsPerModel,
   };

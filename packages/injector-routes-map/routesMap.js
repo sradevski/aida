@@ -5,8 +5,14 @@ export default function main(models) {
   return {
     ...models,
     routesMap: {
-      execute: ({ category } = {}) =>
-        getRoutesMap(models.routes.execute({ baseUri: '', category })),
+      execute: (options = {}) => {
+        const routesOpts = {
+          baseUri: options.baseUri || '',
+          category: options.category,
+        };
+
+        return getRoutesMap(models.routes.execute(routesOpts));
+      },
     },
   };
 }

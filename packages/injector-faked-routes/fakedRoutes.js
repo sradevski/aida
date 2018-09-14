@@ -1,26 +1,37 @@
 import { getHttpMethods } from '@aida/utils/dist/configParsers';
 import { populateWithFaker } from '@aida/utils/dist/faker';
 
-const seed = 12;
-
 //fakedRoutes returns each of the defined endpoints with response and request parts populated with fake data.
 export default function main(models) {
   return {
     ...models,
     fakedRoutes: {
-      execute: ({ category } = {}) =>
-        getfakedRoutes(models.routes.execute('', { category })),
+      execute: (options = {}) => {
+        const routesOpts = {
+          baseUri: options.baseUri || '',
+          category: options.category,
+        };
+
+        const ownOpts = {
+          seed: options.seed || 12,
+        };
+
+        return getFakedRoutes(models.routes.execute(routesOpts), ownOpts);
+      },
     },
   };
 }
 
-function getfakedRoutes(routes) {
+function getFakedRoutes(routes, options) {
   return Object.keys(routes).reduce((fakedRoutes, routeKey) => {
     const routeDetails = getHttpMethods(routes[routeKey]).reduce(
       (routeDetails, methodName) => {
         const methodFields = routes[routeKey][methodName];
-        const response = populateAllResponseStatuses(methodFields.response);
-        const request = populateRequest(methodFields.request);
+        const response = populateAllResponseStatuses(
+          methodFields.response,
+          options,
+        );
+        const request = populateRequest(methodFields.request, options);
 
         routeDetails[methodName] = {
           operationId: methodFields.operationId,
@@ -37,7 +48,7 @@ function getfakedRoutes(routes) {
   }, {});
 }
 
-function populateRequest(request) {
+function populateRequest(request, options) {
   if (!request) {
     return {};
   }
@@ -47,40 +58,40 @@ function populateRequest(request) {
     .reduce((populatedRequest, dataLocation) => {
       populatedRequest[dataLocation] = populateWithFaker(
         request[dataLocation],
-        { seed },
+        { seed: options.seed },
       );
 
       return populatedRequest;
     }, {});
 }
 
-function populateAllResponseStatuses(response) {
+function populateAllResponseStatuses(response, options) {
   return Object.keys(response).reduce((populatedResponse, responseStatus) => {
     const body = response[responseStatus].body;
     const headers = response[responseStatus].headers;
 
     populatedResponse[responseStatus] = {
-      'application/json': populateBody(body),
-      headers: populateHeaders(headers),
+      'application/json': populateBody(body, options),
+      headers: populateHeaders(headers, options),
     };
 
     return populatedResponse;
   }, {});
 }
 
-function populateBody(body) {
+function populateBody(body, options) {
   if (body) {
-    return populateWithFaker(body, { seed });
+    return populateWithFaker(body, { seed: options.seed });
   }
 
   return undefined;
 }
 
-function populateHeaders(headers) {
+function populateHeaders(headers, options) {
   if (headers) {
     return Object.keys(headers).reduce((populatedHeaders, headerName) => {
       populatedHeaders[headerName] = populateWithFaker(headers[headerName], {
-        seed,
+        seed: options.seed,
       });
 
       return populatedHeaders;

@@ -2,22 +2,28 @@ export default function main(models) {
   return {
     ...models,
     routes: {
-      execute: ({ baseUri, category } = {}) =>
-        getFlatRoutes(models, baseUri, category),
+      execute: (options = {}) => {
+        const ownOpts = {
+          baseUri: options.baseUri || '',
+          category: options.category,
+        };
+
+        return getFlatRoutes(models, ownOpts);
+      },
     },
   };
 }
 
 //getFlatRoutes returns all the defined routes in a flat structure. This is used as the basis for several other injectors.
-function getFlatRoutes(models, baseUri = '', category) {
+function getFlatRoutes(models, options) {
   return Object.values(models._raw).reduce((flatRoutes, model) => {
     if (!model.endpoints) {
       return flatRoutes;
     }
-    const endpointData = getEndpoints(model.endpoints, category);
+    const endpointData = getEndpoints(model.endpoints, options.category);
 
     const modelRoutes = Object.keys(endpointData).reduce((modelPaths, path) => {
-      modelPaths[baseUri + path] = endpointData[path];
+      modelPaths[options.baseUri + path] = endpointData[path];
       return modelPaths;
     }, {});
 

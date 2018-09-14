@@ -1,33 +1,36 @@
 import { getModelType, getHttpMethods } from '@aida/utils/dist/configParsers';
 import aidaToOpenApiType from './typeConversion';
 
-const defaultRootProperties = {
-  openapi: '3.0.0',
-  info: {
-    title: 'The title of the application',
-    version: '1.0.0',
-  },
-};
-
 //generates a openapi.json file that can be used with any openapi-based tool.
 export default function main(models) {
   return {
     ...models,
     openApi: {
-      execute: ({ category, rootProps = {} } = {}) =>
-        generateOpenApiDocs(models.routes.execute({ baseUri: '', category }), {
-          ...defaultRootProperties,
-          ...rootProps,
-        }),
+      execute: (options = {}) => {
+        const routesOpts = {
+          baseUri: options.baseUri || '',
+          category: options.category,
+        };
+
+        const ownOpts = {
+          openapi: '3.0.0',
+          info: {
+            title: options.title || 'MyApp',
+            version: options.version || '0.0.1',
+          },
+        };
+
+        return generateOpenApiDocs(models.routes.execute(routesOpts), ownOpts);
+      },
     },
   };
 }
 
-function generateOpenApiDocs(routes, rootProperties) {
+function generateOpenApiDocs(routes, options) {
   const openApiFormattedPaths = getOpenApiForRoutes(routes);
 
   const openApiDocs = {
-    ...rootProperties,
+    ...options,
     paths: openApiFormattedPaths,
   };
 
