@@ -1,12 +1,12 @@
 # Javascript Node CircleCI 2.0 configuration file
 version: 2
 
-aliases:
-  - &defaults
-    working_directory: ~/aida
-    docker:
-      - image: circleci/node:8.12
+default: &default
+  working_directory: ~/aida
+  docker:
+    - image: circleci/node:8.12
 
+aliases:
   - &restore-modules-cache:
       keys:
         - v1-dependencies-{{ checksum "package.json" }}
@@ -23,11 +23,14 @@ aliases:
       only:
         - master
 
+  - &filter-ignore-gh-pages
+    branches:
+      ignore: 
+        -gh-pages
+
 jobs:
   test-all:
-    <<: *defaults
-    branches:
-      ignore: gh-pages
+    <<: *default
     steps:
       - checkout
       - restore_cache: *restore-modules-cache
@@ -36,7 +39,7 @@ jobs:
       - run: npm test
 
   deploy-website:
-    <<: *defaults
+    <<: *default
     steps:
       - checkout
       - run:
@@ -51,7 +54,9 @@ workflows:
   version: 2
   test:
     jobs:
-      - test-all
+      - test-all:
+        filters: *filter-ignore-gh-pages
+
   website_deploy:
     jobs:
       - deploy-website:
