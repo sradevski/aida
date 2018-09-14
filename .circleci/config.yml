@@ -1,0 +1,58 @@
+# Javascript Node CircleCI 2.0 configuration file
+version: 2
+
+aliases:
+  - &defaults
+    working_directory: ~/aida
+    docker:
+      - image: circleci/node:8.12
+
+  - &restore-modules-cache:
+      keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+  - &save-modules-cache:
+      paths:
+        - node_modules
+      key: v1-dependencies-{{ checksum "package.json" }}
+
+  - &filter-only-master
+    branches:
+      only:
+        - master
+
+jobs:
+  test-all:
+    <<: *defaults
+    branches:
+      ignore: gh-pages
+    steps:
+      - checkout
+      - restore_cache: *restore-modules-cache
+      - run: npm install
+      - save_cache: *save-modules-cache
+      - run: npm test
+
+  deploy-website:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+        name: Deploying to GitHub Pages
+        command: |
+          git config --global user.email "sradevski@live.com"
+          git config --global user.name "Stevche Radevski"
+          echo "machine github.com login sradevski password $GITHUB_TOKEN" > ~/.netrc
+          cd website && npm install && GIT_USER=<GIT_USER> npm run publish-gh-pages
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-all
+  website_deploy:
+    jobs:
+      - deploy-website:
+        filters: *filter-only-master

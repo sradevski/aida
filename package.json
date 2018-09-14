@@ -14,7 +14,8 @@
     "flow": "flow",
     "audit": "npm audit",
     "lint": "eslint packages --fix ",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "publish": "lerna run build && npm run test && lerna publish"
   },
   "jest": {
     "testEnvironment": "node",
