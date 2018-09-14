@@ -26,7 +26,7 @@ aliases:
   - &filter-ignore-gh-pages
       branches:
         ignore: 
-          -gh-pages
+          - gh-pages
 
 jobs:
   test-all:
@@ -48,7 +48,7 @@ jobs:
             git config --global user.email "sradevski@live.com"
             git config --global user.name "Stevche Radevski"
             echo "machine github.com login sradevski password $GITHUB_TOKEN" > ~/.netrc
-            cd website && npm install && GIT_USER=<GIT_USER> npm run publish-gh-pages
+            cd website && npm install && GIT_USER=sradevski npm run publish-gh-pages
 
 workflows:
   version: 2
@@ -60,4 +60,5 @@ workflows:
   website_deploy:
     jobs:
       - deploy-website:
+          type: approval
           filters: *filter-only-master
