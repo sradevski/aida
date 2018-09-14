@@ -16,7 +16,7 @@ export function populateWithFaker(model, options) {
 }
 
 const defaultArrayFakerProps = {
-  fakerIterations: Math.round((Math.random() + 0.5) * 20),
+  fakerIterations: 10,
   areEntriesUnique: false,
   uniqueOn: undefined,
 };
