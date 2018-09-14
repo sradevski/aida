@@ -1,6 +1,6 @@
 {
   "name": "@aida/consumer-faked-http",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Mocks XHR and Fetch API and responds with faked data",
   "repository": "https://github.com/sradevski/aida/tree/master/packages/consumer-faked-http",
   "author": "Stevche Radevski <sradevski@live.com>",
