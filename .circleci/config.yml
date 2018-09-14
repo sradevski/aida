@@ -19,14 +19,14 @@ aliases:
       key: v1-dependencies-{{ checksum "package.json" }}
 
   - &filter-only-master
-    branches:
-      only:
-        - master
+      branches:
+        only:
+          - master
 
   - &filter-ignore-gh-pages
-    branches:
-      ignore: 
-        -gh-pages
+      branches:
+        ignore: 
+          -gh-pages
 
 jobs:
   test-all:
@@ -43,21 +43,21 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Deploying to GitHub Pages
-        command: |
-          git config --global user.email "sradevski@live.com"
-          git config --global user.name "Stevche Radevski"
-          echo "machine github.com login sradevski password $GITHUB_TOKEN" > ~/.netrc
-          cd website && npm install && GIT_USER=<GIT_USER> npm run publish-gh-pages
+          name: Deploying to GitHub Pages
+          command: |
+            git config --global user.email "sradevski@live.com"
+            git config --global user.name "Stevche Radevski"
+            echo "machine github.com login sradevski password $GITHUB_TOKEN" > ~/.netrc
+            cd website && npm install && GIT_USER=<GIT_USER> npm run publish-gh-pages
 
 workflows:
   version: 2
   test:
     jobs:
       - test-all:
-        filters: *filter-ignore-gh-pages
+          filters: *filter-ignore-gh-pages
 
   website_deploy:
     jobs:
       - deploy-website:
-        filters: *filter-only-master
+          filters: *filter-only-master
