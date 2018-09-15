@@ -7,16 +7,17 @@ default: &default
     - image: circleci/node:8.12
 
 aliases:
-  - &restore-modules-cache:
-      keys:
-        - v1-dependencies-{{ checksum "package.json" }}
-        # fallback to using the latest cache if no exact match is found
-        - v1-dependencies-
+  - &restore-cache
+    keys:
+      - v2-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+      # Fallback in case checksum fails
+      - v2-dependencies-{{ .Branch }}-
 
-  - &save-modules-cache:
-      paths:
-        - node_modules
-      key: v1-dependencies-{{ checksum "package.json" }}
+  - &save-cache
+    paths:
+      - node_modules
+    key: v2-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+
 
   - &filter-only-master
       branches:
@@ -33,10 +34,10 @@ jobs:
     <<: *default
     steps:
       - checkout
-      - restore_cache: *restore-modules-cache
+      - restore_cache: *restore-cache
       - run: npm install
-      - save_cache: *save-modules-cache
-      - run: npm test
+      - save_cache: *save-cache
+      - run: npm run test
 
   deploy-website:
     <<: *default
