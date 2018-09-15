@@ -36,6 +36,7 @@ jobs:
       - checkout
       - restore_cache: *restore-cache
       - run: npm install
+      - run: npm run bootstrap
       - save_cache: *save-cache
       - run: npm run test
 

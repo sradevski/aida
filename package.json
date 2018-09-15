@@ -15,6 +15,7 @@
     "audit": "npm audit",
     "lint": "eslint packages --fix ",
     "precommit": "lint-staged",
+    "bootstrap": "lerna bootstrap",
     "publish": "lerna run build && npm run test && lerna publish"
   },
   "jest": {
