@@ -1,6 +1,6 @@
 import swaggerParser from 'swagger-parser';
 import openApi from '../index.js';
-import routes from '@aida/routes';
+import routes from '@aida/injector-routes';
 
 const userObj = {
   id: {

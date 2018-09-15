@@ -1,5 +1,5 @@
 import fakedRoutes from '../index.js';
-import routes from '@aida/routes';
+import routes from '@aida/injector-routes';
 
 const aidaModels = {
   _raw: {
