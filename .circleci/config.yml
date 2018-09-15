@@ -18,12 +18,6 @@ aliases:
       - node_modules
     key: v2-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
 
-
-  - &filter-only-master
-      branches:
-        only:
-          - master
-
   - &filter-ignore-gh-pages
       branches:
         ignore: 
@@ -41,27 +35,9 @@ jobs:
       - run: npm run build
       - run: npm run test
 
-  deploy-website:
-    <<: *default
-    steps:
-      - checkout
-      - run:
-          name: Deploying to GitHub Pages
-          command: |
-            git config --global user.email "sradevski@live.com"
-            git config --global user.name "Stevche Radevski"
-            echo "machine github.com login sradevski password $GITHUB_TOKEN" > ~/.netrc
-            cd website && npm install && GIT_USER=sradevski npm run publish-gh-pages
-
 workflows:
   version: 2
   test:
     jobs:
       - test-all:
           filters: *filter-ignore-gh-pages
-
-  website_deploy:
-    jobs:
-      - deploy-website:
-          type: approval
-          filters: *filter-only-master
