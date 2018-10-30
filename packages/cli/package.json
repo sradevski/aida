@@ -1,6 +1,6 @@
 {
   "name": "@aida/cli",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "Aida command line client",
   "repository": "https://github.com/sradevski/aida/tree/master/packages/cli",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -20,7 +20,7 @@
     "aida": "./dist/index.js"
   },
   "dependencies": {
-    "@aida/core": "0.0.2",
+    "@aida/core": "^0.0.5",
     "chalk": "^2.4.1",
     "chokidar": "^2.0.3",
     "commander": "^2.19.0",
