@@ -16,7 +16,9 @@
     "lint": "eslint packages --fix",
     "build": "lerna run build",
     "bootstrap": "lerna bootstrap",
-    "publish": "lerna run build && npm run test && lerna publish"
+    "publish": "lerna run build && npm run test && lerna publish",
+    "outdated": "lerna exec --no-bail -- npm outdated",
+    "update": "lerna exec --no-bail -- npm update --no-package-lock && lerna bootstrap"
   },
   "husky": {
     "hooks": {
