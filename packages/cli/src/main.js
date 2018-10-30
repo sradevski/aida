@@ -2,7 +2,6 @@ import chalk from 'chalk';
 import program from 'commander';
 import inquirer from 'inquirer';
 import * as aida from '@aida/core';
-
 import {
   createConfigFile,
   outputToFile,
@@ -19,8 +18,15 @@ import camelCase from 'lodash/camelCase';
 const CONFIG_FILENAME = '.aidarc';
 
 export default function main() {
+  const args = [...process.argv];
+
+  //Commander doesn't support a default command execution, so we just add the desired command manually.
+  if (args.length === 2) {
+    args.push('run');
+  }
+
   program
-    .version('0.0.1', '-v, --version')
+    .version('0.0.3', '-v, --version')
     .option(
       '-S --models-dir <path>',
       'Set the directory for your models. It overrides the config file settings.',
@@ -53,7 +59,7 @@ export default function main() {
       watch();
     });
 
-  program.parse(process.argv);
+  program.parse(args);
 }
 
 function run(options) {
@@ -65,6 +71,8 @@ function run(options) {
     cliConfig.injectors.map(x => x.name),
   );
 
+  checkMissingInjectors(missingInjectorNames);
+
   const aidaCoreConfig = {
     injectors: Object.values(existingInjectors),
     models: {
@@ -73,13 +81,6 @@ function run(options) {
       blacklistDirectories: [],
     },
   };
-
-  error(
-    `The injectors ${chalk.red.bold(
-      missingInjectorNames.join(', '),
-    )}, specified in the config are not installed in your local node_modules folder (where .aidarc is located). Did you forget to do 'npm install'?`,
-    missingInjectorNames.length > 0,
-  );
 
   console.log(
     chalk.yellow(
@@ -114,6 +115,22 @@ function run(options) {
   });
 
   console.log(chalk.green(`Done!`));
+}
+
+function checkMissingInjectors(missingInjectorNames) {
+  if (missingInjectorNames.length > 0) {
+    const fullInjectorNames = missingInjectorNames
+      .map(injectorName => {
+        return `@aida/injector-${injectorName}@latest`;
+      })
+      .join(' ');
+
+    const errorMessage = `Dependent injectors are missing from your local node_modules folder. Run ${chalk.green.bold(
+      `npm i --save-dev ${fullInjectorNames}`,
+    )} to install them.`;
+
+    error(errorMessage, true);
+  }
 }
 
 function outputInjectorResult(injector, injectorExecute, defaultOutputDir) {
