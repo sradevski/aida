@@ -20,10 +20,10 @@
     "aida": "./dist/index.js"
   },
   "dependencies": {
-    "@aida/core": "^0.0.2",
+    "@aida/core": "0.0.2",
     "chalk": "^2.4.1",
     "chokidar": "^2.0.3",
-    "commander": "^2.15.1",
-    "inquirer": "^5.2.0"
+    "commander": "^2.19.0",
+    "inquirer": "^6.2.0"
   }
 }

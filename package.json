@@ -13,11 +13,21 @@
     "test:coverage": "jest --coverage",
     "flow": "flow",
     "audit": "npm audit",
-    "lint": "eslint packages --fix ",
-    "precommit": "lint-staged",
+    "lint": "eslint packages --fix",
     "build": "lerna run build",
     "bootstrap": "lerna bootstrap",
     "publish": "lerna run build && npm run test && lerna publish"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "packages/**/*.{js,mjs,jsx,css}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "jest": {
     "testEnvironment": "node",
@@ -42,31 +52,25 @@
       "!e2e/**"
     ]
   },
-  "lint-staged": {
-    "packages/**/*.{js,mjs,jsx,css}": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.2.6",
+    "babel-eslint": "^10.0.1",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-preset-flow": "^6.23.0",
-    "eslint": "^5.4.0",
-    "eslint-plugin-flowtype": "^2.50.0",
-    "eslint-plugin-jest": "^21.21.0",
-    "eslint-plugin-prettier": "^2.6.2",
-    "flow-bin": "^0.78.0",
-    "husky": "^0.14.3",
-    "jest": "^23.5.0",
-    "lerna": "^2.11.0",
-    "lint-staged": "^7.2.2",
-    "nodemon": "^1.18.3",
-    "prettier": "^1.14.2"
+    "eslint": "^5.8.0",
+    "eslint-plugin-flowtype": "^3.1.4",
+    "eslint-plugin-jest": "^21.26.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "flow-bin": "^0.85.0",
+    "husky": "^1.1.2",
+    "jest": "^23.6.0",
+    "lerna": "^3.4.3",
+    "lint-staged": "^8.0.3",
+    "nodemon": "^1.18.5",
+    "prettier": "^1.14.3"
   },
   "dependencies": {
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.11"
   }
 }
