@@ -70,13 +70,13 @@ describe('The aida core run function', () => {
     });
   });
 
-  test('Ignores blacklisted files and directories', () => {
+  test('Ignores excluded files and directories', () => {
     const result = run({
       injectors: [],
       models: {
         location: modelsPath,
-        blacklistFiles: ['Account.core.js'],
-        blacklistDirectories: ['Ignore'],
+        excludeFiles: ['Account.core.js'],
+        excludeDirectories: ['Ignore'],
       },
     });
 

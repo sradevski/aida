@@ -50,11 +50,11 @@ describe('Faked model', () => {
     expect(keys).not.toContain('Profile');
   });
 
-  test('returns only whitelisted models, even if blacklist is provided', () => {
+  test('returns only included models, even if exclude is provided', () => {
     const keys = Object.keys(
       execute({
-        whitelist: ['User'],
-        blacklist: ['User'],
+        include: ['User'],
+        exclude: ['User'],
       }),
     );
 
@@ -62,8 +62,8 @@ describe('Faked model', () => {
     expect(keys).not.toContain('Account');
   });
 
-  test('returns only models not in blacklist', () => {
-    const keys = Object.keys(execute({ blacklist: ['Account'] }));
+  test('returns only models not in exclude', () => {
+    const keys = Object.keys(execute({ exclude: ['Account'] }));
     expect(keys).toContain('User');
     expect(keys).not.toContain('Account');
   });

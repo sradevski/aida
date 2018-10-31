@@ -77,8 +77,8 @@ function run(options) {
     injectors: Object.values(existingInjectors),
     models: {
       location: modelsPath,
-      blacklistFiles: [],
-      blacklistDirectories: [],
+      excludeFiles: [],
+      excludeDirectories: [],
     },
   };
 

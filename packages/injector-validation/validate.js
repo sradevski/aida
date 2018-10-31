@@ -33,11 +33,11 @@ function getModelsWithValidators(models) {
   return modelsWithValidators;
 }
 
-const blacklistedTypes = ['endpoints'];
+const excludedTypes = ['endpoints'];
 
 function getValidatorsForModel(model) {
   return Object.keys(model)
-    .filter(modelType => !blacklistedTypes.includes(modelType))
+    .filter(modelType => !excludedTypes.includes(modelType))
     .reduce((modelTypes, modelType) => {
       modelTypes[modelType] = getValidatorsForType(model[modelType]);
       return modelTypes;

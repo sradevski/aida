@@ -46,8 +46,8 @@ Object.keys(fakedModels).forEach(modelName => {
 
 ### `options`
 
-- `blacklist`: An array of model names for which data should not be generated. If a `whitelist` is provided, it only uses the `whitelist` models, ignoring the `blacklist` ones.
-- `whitelist`: An array of model names for which data should be generated. If provided, it will only include the models in the `whitelist`. If neither `blacklist` nor `whitelist` is provided, it generates data for all models.
+- `exclude`: An array of model names for which data should not be generated. If a `include` is provided, it only uses the `include` models, ignoring the `exclude` ones.
+- `include`: An array of model names for which data should be generated. If provided, it will only include the models in the `include`. If neither `exclude` nor `include` is provided, it generates data for all models.
 - `itemsPerModel`: The number of fake objects (items) to be generated per model. Defaults to `1`.
 - `modelType`: The model type for which the data should be generated. Defaults to 'core'.
 - `seed`: An integer to serve as the seed for the random data generation. Defaults to `12`.

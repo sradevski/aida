@@ -20,18 +20,18 @@ function executeInjectors(config) {
   return injectors(models);
 }
 
-const defaultBlacklistFiles = ['.DS_Store'];
+const defaultExcludeFiles = ['.DS_Store'];
 
 function generateModelsObject(modelsConfig) {
   const models = { _raw: {} };
-  const { location, blacklistFiles, blacklistDirectories } = modelsConfig;
-  const extendedBlacklist = [...blacklistFiles, ...defaultBlacklistFiles];
+  const { location, excludeFiles, excludeDirectories } = modelsConfig;
+  const extendedExcludeFiles = [...excludeFiles, ...defaultExcludeFiles];
 
   const fileslist = traverseFileSystem(location);
   const filesToUse = fileslist.filter(
     file =>
-      !extendedBlacklist.includes(file.filename) &&
-      blacklistDirectories.findIndex(directoryPath =>
+      !extendedExcludeFiles.includes(file.filename) &&
+      excludeDirectories.findIndex(directoryPath =>
         file.location.includes(directoryPath),
       ) === -1,
   );
@@ -55,8 +55,8 @@ function getDefaultConfig() {
   return {
     injectors: [],
     models: {
-      blacklistDirectories: [],
-      blacklistFiles: [],
+      excludeDirectories: [],
+      excludeFiles: [],
     },
   };
 }
