@@ -16,7 +16,11 @@ export default function run(passedConfig = {}) {
 
 function executeInjectors(config) {
   const models = generateModelsObject(config.models);
-  const injectors = pipe(...config.injectors);
+  const configuredInjectorRuntimes = config.injectors.map(injector => models =>
+    injector.runtime(models, injector.config),
+  );
+
+  const injectors = pipe(...configuredInjectorRuntimes);
   return injectors(models);
 }
 

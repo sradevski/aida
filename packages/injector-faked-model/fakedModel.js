@@ -1,17 +1,18 @@
 import { populateWithFaker } from '@aida/utils/dist/faker';
 
 //fakedModel returns an object with either all or only includeed or excluded models, where each property contains an array of faked data for that model type.
-export default function main(models) {
+export default function main(models, options = {}) {
   return {
     ...models,
     fakedModel: {
-      execute: (options = {}) => {
+      execute: (overriddenOptions = {}) => {
         const ownOpts = {
-          exclude: options.exclude,
-          include: options.include,
-          itemsPerModel: options.itemsPerModel || 1,
-          modelType: options.modelType || 'core',
-          seed: options.seed || 12,
+          exclude: overriddenOptions.exclude || options.exclude,
+          include: overriddenOptions.include || options.include,
+          itemsPerModel:
+            overriddenOptions.itemsPerModel || options.itemsPerModel || 1,
+          modelType: overriddenOptions.modelType || options.modelType || 'core',
+          seed: overriddenOptions.seed || options.seed || 12,
         };
 
         return getFakedModel(models, ownOpts);

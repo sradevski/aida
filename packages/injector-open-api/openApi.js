@@ -2,14 +2,14 @@ import { getModelType, getHttpMethods } from '@aida/utils/dist/configParsers';
 import aidaToOpenApiType from './typeConversion';
 
 //generates a openapi.json file that can be used with any openapi-based tool.
-export default function main(models) {
+export default function main(models, options = {}) {
   return {
     ...models,
     openApi: {
-      execute: (options = {}) => {
+      execute: (overriddenOptions = {}) => {
         const routesOpts = {
-          baseUri: options.baseUri || '',
-          category: options.category,
+          baseUri: overriddenOptions.baseUri || options.baseUri || '',
+          category: overriddenOptions.category || options.category,
         };
 
         const ownOpts = {

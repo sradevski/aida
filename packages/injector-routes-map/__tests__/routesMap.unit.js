@@ -115,9 +115,10 @@ describe('The routes map injector', () => {
           },
         },
       }),
-    ).routesMap.execute({
-      category: 'Free',
-    });
+      {
+        category: 'Free',
+      },
+    ).routesMap.execute();
 
     expect(flatRoutes).toEqual({ getUser: '/user/{id}' });
   });

@@ -67,14 +67,19 @@ function run(options) {
   const cliConfig = getConfig(options);
 
   const modelsPath = resolveFromCurrentDir(cliConfig.modelsDir);
-  const { existingInjectors, missingInjectorNames } = getInjectors(
+  const { existingInjectorRuntimes, missingInjectorNames } = getInjectors(
     cliConfig.injectors.map(x => x.name),
   );
 
   checkMissingInjectors(missingInjectorNames);
 
+  const injectors = Object.keys(existingInjectorRuntimes).map(injectorName => ({
+    runtime: existingInjectorRuntimes[injectorName],
+    config: cliConfig.injectors.find(x => x.name === injectorName).options,
+  }));
+
   const aidaCoreConfig = {
-    injectors: Object.values(existingInjectors),
+    injectors,
     models: {
       location: modelsPath,
       excludeFiles: [],
@@ -93,7 +98,7 @@ function run(options) {
   console.log(
     chalk.yellow(
       `Running injectors: ${chalk.yellow.bold(
-        Object.keys(existingInjectors).join(', '),
+        Object.keys(existingInjectorRuntimes).join(', '),
       )}`,
     ),
   );
@@ -141,7 +146,7 @@ function outputInjectorResult(injector, injectorExecute, defaultOutputDir) {
       `${injector.name}.json`,
     );
 
-    const res = injectorExecute(injector.options);
+    const res = injectorExecute();
 
     if (typeof res === 'string' || res instanceof String) {
       return outputToFile(res, outputPath);
@@ -159,7 +164,9 @@ function getInjectors(injectorNames) {
       );
 
       if (pathExists(location)) {
-        injectors.existingInjectors[injectorName] = require(location).default;
+        injectors.existingInjectorRuntimes[
+          injectorName
+        ] = require(location).default;
       } else {
         injectors.missingInjectorNames.push(injectorName);
       }
@@ -167,7 +174,7 @@ function getInjectors(injectorNames) {
       return injectors;
     },
     {
-      existingInjectors: {},
+      existingInjectorRuntimes: {},
       missingInjectorNames: [],
     },
   );

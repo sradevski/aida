@@ -45,7 +45,10 @@ describe('The aida core run function', () => {
     });
 
     const result = run({
-      injectors: [mockInjector1, mockInjector2],
+      injectors: [
+        { runtime: mockInjector1, config: {} },
+        { runtime: mockInjector2, config: {} },
+      ],
       models: { location: `${modelsPath}/Account` },
     });
 
@@ -60,7 +63,7 @@ describe('The aida core run function', () => {
     });
 
     const result = run({
-      injectors: [mockInjector],
+      injectors: [{ runtime: mockInjector, config: {} }],
       models: { location: `${modelsPath}/Account` },
     });
 

@@ -110,17 +110,19 @@ describe('The routes injector', () => {
   });
 
   test('returns the routes with base url prepended to them', () => {
-    const flatRoutes = routes(aidaModels).routes.execute({
+    const flatRoutes = routes(aidaModels, {
       baseUri: 'www.test.com',
-    });
+    }).routes.execute();
     expect(Object.keys(flatRoutes)).toEqual([
       'www.test.com/users',
       'www.test.com/users/{id}',
     ]);
   });
 
-  test('returns endpoints only for the specified categories', () => {
-    const flatRoutes = routes(aidaModels).routes.execute({
+  test('returns endpoints only for the specified overridden categories', () => {
+    const flatRoutes = routes(aidaModels, {
+      category: 'Premium',
+    }).routes.execute({
       category: 'Free',
     });
 

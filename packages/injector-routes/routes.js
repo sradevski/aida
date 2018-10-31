@@ -1,11 +1,11 @@
-export default function main(models) {
+export default function main(models, options = {}) {
   return {
     ...models,
     routes: {
-      execute: (options = {}) => {
+      execute: (overriddenOptions = {}) => {
         const ownOpts = {
-          baseUri: options.baseUri || '',
-          category: options.category,
+          baseUri: overriddenOptions.baseUri || options.baseUri || '',
+          category: overriddenOptions.category || options.category,
         };
 
         return getFlatRoutes(models, ownOpts);

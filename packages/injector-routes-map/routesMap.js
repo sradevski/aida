@@ -1,14 +1,14 @@
 import { getHttpMethods } from '@aida/utils/dist/configParsers';
 
 //routesMap returns a map of operationId: route while maintaining the placeholders for path variables.
-export default function main(models) {
+export default function main(models, options = {}) {
   return {
     ...models,
     routesMap: {
-      execute: (options = {}) => {
+      execute: (overriddenOptions = {}) => {
         const routesOpts = {
-          baseUri: options.baseUri || '',
-          category: options.category,
+          baseUri: overriddenOptions.baseUri || options.baseUri || '',
+          category: overriddenOptions.category || options.category,
         };
 
         return getRoutesMap(models.routes.execute(routesOpts));

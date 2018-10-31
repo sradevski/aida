@@ -2,14 +2,14 @@ import { getHttpMethods } from '@aida/utils/dist/configParsers';
 import { populateWithFaker } from '@aida/utils/dist/faker';
 
 //fakedRoutes returns each of the defined endpoints with response and request parts populated with fake data.
-export default function main(models) {
+export default function main(models, options = {}) {
   return {
     ...models,
     fakedRoutes: {
-      execute: (options = {}) => {
+      execute: (overriddenOptions = {}) => {
         const routesOpts = {
-          baseUri: options.baseUri || '',
-          category: options.category,
+          baseUri: overriddenOptions.baseUri || options.baseUri || '',
+          category: overriddenOptions.category || options.category,
         };
 
         const ownOpts = {
