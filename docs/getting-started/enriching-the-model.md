@@ -17,7 +17,7 @@ const Address = {
     faker: { 
       faker: 'address.streetAddress',
       options: {
-        seed: 10,
+        useFullAddress: true,
       },
     },
   }

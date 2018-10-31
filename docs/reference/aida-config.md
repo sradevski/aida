@@ -35,9 +35,9 @@ A sample config structure is as follows:
 }
 ```
 
+Note that all injectors accept a single `options` object in the **.aidarc** config file. The options object can contain either own properties, or properties defined in the options of its dependencies in order to override them.
 
-
-### General Options
+## General Options
 
 <table>
   <tr>
@@ -89,7 +89,7 @@ A sample config structure is as follows:
   </tr>
 </table>
 
-### Injector Options
+## Injector Options
 
 
 <table>

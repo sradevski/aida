@@ -7,7 +7,7 @@ The roles of the CLI are:
 - Provide a simple interface to interact with **aida**
 - Provide an interactive `init` function to set up all required settings
 - `run` a pipeline pre-defined in the settings without any additional config
-- watch over definition files and rerun the pre-defined pipeline on change.
+- `watch` over definition files and rerun the pre-defined pipeline on change.
 - Output results to the specified output type.
 
 

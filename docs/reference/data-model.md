@@ -6,7 +6,7 @@ sidebar_label: Data Model
 
 Each property of the data model can be a **primitive** or a **composite**. A **composite** is either an object or an array of **primitives** and/or **composites**. A **primitive** is marked as one by having a `vtype` property, holding one of the [defined primitive types](reference/defined-types.md).
 
-### Primitive
+## Primitive
 
 ``` javascript
 {
@@ -14,7 +14,7 @@ Each property of the data model can be a **primitive** or a **composite**. A **c
 }
 ```
 
-### Composite (Object)
+## Composite (Object)
 ``` javascript
 {
   name: {
@@ -23,7 +23,7 @@ Each property of the data model can be a **primitive** or a **composite**. A **c
 }
 ```
 
-### Composite (Array)
+## Composite (Array)
 ``` javascript
 [
   {
@@ -32,7 +32,7 @@ Each property of the data model can be a **primitive** or a **composite**. A **c
 ]
 ```
 
-### Common Properties
+## Common Properties
 
 Aside from the `vtype` property, other properties will depend almost entirely by what each injector needs. However, it is practical to have some properties standardized which can be used by multiple injectors. So far, the following properties are recommended to be used:
 

@@ -8,11 +8,11 @@ The purpose of defining types in Aida is to standardize types to a certain exten
 
 Each type is symbolic, in a sense that it doesn't have an entirely concrete definition. It will be up to injectors to decide the mapping between the Aida types and the types defined in the target technology. For example, the `int64` type in Aida might be mapped to `long` for **Avro**, and `bigint` for **MySQL**.
 
-### Logical Types
+## Logical Types
 
 - bool
 
-### Numeric Types
+## Numeric Types
 
 - decimal
 - double
@@ -23,7 +23,7 @@ Each type is symbolic, in a sense that it doesn't have an entirely concrete defi
 - byte
 
 
-### Temporal Types
+## Temporal Types
 
 - date
 - datetime
@@ -31,7 +31,7 @@ Each type is symbolic, in a sense that it doesn't have an entirely concrete defi
 - timestamp
 - year
 
-### Other Types
+## Other Types
 
 - string
 - bytes

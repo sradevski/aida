@@ -23,8 +23,10 @@ You can find all the documentation about Aida at [Aida's website](https://sradev
 
 ## What Does "Aida" Mean?
 
-The name "Aida" comes from the Japanese kanji **間**, which can mean "in-between" - signifying something that sits between different parts of a system, with the goal of enabling smoother integration between the parts. 
+The name "Aida" comes from the Japanese kanji **間**, which can mean "in-between" - signifying, in this case, something that sits between different parts of a system, with the goal of enabling smoother integration between the parts. 
 
 ## Contributing
 
-TBD
+We use Lerna to manage the Aida monorepo. You can setup your development enviornment just by running `git clone` on the repo and run `lerna bootstrap` to install all dependencies. You can run the CLI using `lerna run cli` if you wish to manually test Aida.
+
+Pull requests should be done against the `master` branch. Any pull request for a code change should be accompanied with unit tests.

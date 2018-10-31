@@ -6,7 +6,7 @@ sidebar_label: Existing Consumers
 
 Anyone who has created an injector that is generic enough can create a pull request with its code and documentation and it will be merged into the monorepo of Aida.
 
-### Consumers maintained by the core team
+## Consumers maintained by the core team
 
 
 <table>
@@ -28,6 +28,6 @@ Anyone who has created an injector that is generic enough can create a pull requ
   </tr>
 </table>
 
-### 3rd party consumers
+## 3rd party consumers
 
 None Yet.

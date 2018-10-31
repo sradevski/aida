@@ -6,7 +6,7 @@ sidebar_label: Existing Injectors
 
 Anyone who has created an injector that is generic enough can create a pull request with its code and documentation and it will be merged into the monorepo of Aida.
 
-### Injectors maintained by the core team
+## Injectors maintained by the core team
 
 <table>
   <tr>
@@ -51,6 +51,6 @@ Anyone who has created an injector that is generic enough can create a pull requ
   </tr>
 </table>
 
-### 3rd party injectors
+## 3rd party injectors
 
 None Yet.

@@ -22,10 +22,10 @@ The resulting object after the core has passed it through all injectors will loo
     },
   },
   injectedFunction1: {
-    execute: () => {...}
+    execute: (options) => {...}
   },
   injectedFunction2: {
-    execute: () => {...}
+    execute: (options) => {...}
   },
   ...
 }
