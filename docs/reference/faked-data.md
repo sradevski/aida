@@ -37,7 +37,7 @@ const User = {
 
 If you are passing a **string**, it has to be one of the methods supported by **Faker.js**, found [here](https://github.com/Marak/faker.js#api-methods).
 
-If you are passing an **array**, it can contain any number of entries that will be randomly selected based on the `seed` property passed to the relevant injectors.
+If you are passing an **array**, it can contain any number of entries that will be randomly selected based on the `seed` passed to the injectors that will generate the fake data.
 
 If you are passing an **object**, it can take the following properties:
 - `faker` - It can take either a string or an array, as described previously

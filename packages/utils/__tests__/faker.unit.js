@@ -220,6 +220,10 @@ describe('The faker function', () => {
             vtype: 'integer',
             faker: 'random.uuid',
           },
+          type: {
+            vtype: 'string',
+            faker: ['first', 'second', 'third'],
+          },
         },
         { seed: 5 },
       );
@@ -228,5 +232,6 @@ describe('The faker function', () => {
     const secondCall = func();
 
     expect(firstCall.id).toBe(secondCall.id);
+    expect(firstCall.type).toBe(secondCall.type);
   });
 });
