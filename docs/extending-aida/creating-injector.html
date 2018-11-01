@@ -24,21 +24,26 @@
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Creating A Custom Injector</h1></header><article><div><span><p>Injectors are what make Aida useful. The idea behind injectors is each injector in the pipeline &quot;injects&quot; a function of their own, thus enriching the model that was originally passed.</p>
 <h2><a class="anchor" aria-hidden="true" id="rules-and-conventions"></a><a href="#rules-and-conventions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Rules and Conventions</h2>
 <ul>
-<li>Each injector accepts a single parameter (usually called <code>models</code>) through which they can access the models information, as well as injected functionality from previous injectors in the pipeline</li>
-<li>Each injector has to be pure (shouldn't modify the passed models).</li>
+<li>Each injector accepts two parameters:
+<ul>
+<li><code>models</code> - you can access the models information, as well as injected functionality from previous injectors in the pipeline,</li>
+<li><code>options</code> - the various options your injector should take</li>
+</ul></li>
+<li>Each injector has to be pure (shouldn't modify the passed models or options).</li>
 <li>Each injector should default-export a single function (usually named <code>main</code>)</li>
 <li>The name of the property the injector &quot;injects&quot; into the returning object should match the name of the injector package (after the <code>@aida/injector-</code> part) in camelCase. For example <code>@aida/injector-routes-map</code> becomes <code>routesMap</code>.</li>
-<li>The injected property should have a single function named <code>execute</code> that accepts a single <code>options</code> object that can contain any options the injector has defined. Each injector can define its own <code>options</code> properties, so there is no standardization in that aspect. The <code>execute</code> function will return the expected result for that injector.</li>
+<li>The injected property should have a single function named <code>execute</code> that accepts a single <code>overriddenOptions</code> object that can pass the same options as before in order to override them if desired by dependent injectors. This is why it is recommended that you make sure there are no name collisions between your options and the options accepted by your dependencies. The <code>execute</code> function will return the expected result for that injector.</li>
 </ul>
 <h2><a class="anchor" aria-hidden="true" id="example"></a><a href="#example" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example</h2>
 <pre><code class="hljs css languages- javascript"><span class="hljs-comment">//This has to be default exported.</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params">models</span>) </span>{
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params">models, options = {}</span>) </span>{
   <span class="hljs-keyword">return</span> {
     ...models, <span class="hljs-comment">//All models and everything the previous injectors in the pipeline have injected.</span>
     myInjector: {
       <span class="hljs-comment">//This property has to be called `execute`.</span>
-      execute: <span class="hljs-function">(<span class="hljs-params">options = {}</span>) =&gt;</span> {
-        <span class="hljs-keyword">return</span> myInjectorResults(options); <span class="hljs-comment">//This returns something useful for the user.</span>
+      execute: <span class="hljs-function">(<span class="hljs-params">overriddenOptions = {}</span>) =&gt;</span> {
+        <span class="hljs-keyword">const</span> mergedOptions = deepMerge(overriddenOptions, options) <span class="hljs-comment">//You should deep merge the options here, using an imaginary function in this case.</span>
+        <span class="hljs-keyword">return</span> myInjectorResults(mergedOptions); <span class="hljs-comment">//This returns something useful for the user.</span>
       },
     },
   };
