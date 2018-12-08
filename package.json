@@ -7,7 +7,7 @@
   "author": "Stevche Radevski <sradevski@live.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest --ci",
+    "test": " jest --ci",
     "test:update": "jest -u",
     "test:watch": "jest --watch -u",
     "test:coverage": "jest --coverage",
