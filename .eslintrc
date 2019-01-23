@@ -7,12 +7,10 @@
   },
   "plugins": [
     "prettier",
-    "jest",
-    "flowtype"
+    "jest"
   ],
   "extends": [
-      "eslint:recommended",
-      "plugin:flowtype/recommended"
+      "eslint:recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 8,
