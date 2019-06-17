@@ -63,7 +63,7 @@ describe('stringify object', () => {
   a: 1,
   b: {
     c: 2,
-    d: "test"
+    d: 'test'
   }
 }`;
     expect(result).toBe(expected);

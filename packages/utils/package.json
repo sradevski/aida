@@ -15,7 +15,7 @@
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
   },
   "dependencies": {
-    "code-stringify": "^1.2.3",
+    "code-stringify": "^2.0.3",
     "faker": "^4.1.0"
   }
 }

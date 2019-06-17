@@ -1,0 +1,25 @@
+{
+  "name": "@aida/consumer-sdk",
+  "version": "0.0.1",
+  "description": "Generates an SDK based on your model endpoints",
+  "repository": "https://github.com/sradevski/aida/tree/master/packages/consumer-sdk",
+  "author": "Stevche Radevski <sradevski@live.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
+  },
+  "keywords": [
+    "aida",
+    "sdk",
+    "data modeling",
+    "generate sdk"
+  ],
+  "dependencies": {}
+}

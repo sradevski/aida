@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@aida/injector-routes": "0.0.6",
-    "swagger-parser": "^6.0.2"
+    "swagger-parser": "^7.0.0"
   },
   "dependencies": {
     "@aida/utils": "0.0.6"

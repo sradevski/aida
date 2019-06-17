@@ -23,13 +23,13 @@
     "faker"
   ],
   "dependencies": {
-    "@pollyjs/adapter": "^1.4.1",
-    "@pollyjs/adapter-fetch": "^1.4.2",
-    "@pollyjs/adapter-xhr": "^1.4.2",
-    "@pollyjs/core": "^1.4.2",
-    "url-parse": "^1.4.4"
+    "@pollyjs/adapter": "^2.4.0",
+    "@pollyjs/adapter-fetch": "^2.5.0",
+    "@pollyjs/adapter-xhr": "^2.5.0",
+    "@pollyjs/core": "^2.5.0",
+    "url-parse": "^1.4.7"
   },
   "devDependencies": {
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^2.6.0"
   }
 }
