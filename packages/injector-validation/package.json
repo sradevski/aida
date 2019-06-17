@@ -1,6 +1,6 @@
 {
   "name": "@aida/injector-validation",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Aida injector to validation functions for each model",
   "repository": "https://github.com/sradevski/aida/tree/master/packages/injector-validation",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -16,6 +16,6 @@
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
   },
   "dependencies": {
-    "@aida/utils": "0.0.6"
+    "@aida/utils": "^0.0.7"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@aida/core",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Aida core library",
   "repository": "https://github.com/sradevski/aida/tree/master/packages/core",
   "author": "Stevche Radevski <sradevski@live.com>",

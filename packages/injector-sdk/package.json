@@ -1,6 +1,6 @@
 {
   "name": "@aida/consumer-sdk",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "description": "Generates an SDK based on your model endpoints",
   "repository": "https://github.com/sradevski/aida/tree/master/packages/consumer-sdk",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -20,6 +20,5 @@
     "sdk",
     "data modeling",
     "generate sdk"
-  ],
-  "dependencies": {}
+  ]
 }

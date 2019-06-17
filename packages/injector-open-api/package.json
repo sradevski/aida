@@ -1,6 +1,6 @@
 {
   "name": "@aida/injector-open-api",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Aida injector to generate a openapi/swagger-compliant specifications json",
   "repository": "https://github.com/sradevski/aida/tree/master/packages/injector-open-api",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -16,10 +16,10 @@
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
   },
   "devDependencies": {
-    "@aida/injector-routes": "0.0.6",
+    "@aida/injector-routes": "^0.0.7",
     "swagger-parser": "^7.0.0"
   },
   "dependencies": {
-    "@aida/utils": "0.0.6"
+    "@aida/utils": "^0.0.7"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@aida/injector-routes-map",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Aida injector to create a map of all operation ids and their accompanying routes",
   "repository": "https://github.com/sradevski/aida/tree/master/packages/injector-routes-map",
   "author": "Stevche Radevski <sradevski@live.com>",
@@ -16,9 +16,9 @@
     "build": "babel ./ --ignore node_modules,__tests__,__mocks__,coverage,dist --out-dir dist/"
   },
   "devDependencies": {
-    "@aida/injector-routes": "0.0.6"
+    "@aida/injector-routes": "^0.0.7"
   },
   "dependencies": {
-    "@aida/utils": "0.0.6"
+    "@aida/utils": "^0.0.7"
   }
 }
